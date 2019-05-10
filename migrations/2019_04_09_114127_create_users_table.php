@@ -28,17 +28,25 @@ class CreateUsersTable extends Migration
                     User::STATUS_RESTORE_PASSWORD, User::STATUS_BANNED])->default(User::STATUS_NOT_CONFIRMED)
                     ->comment('Состояние');
                 $table->json(User::DATA)->comment('Дополнительные параметры');
-                $table->integer(User::GROUP_ID)->default(0)->comment('Идентификатор роли ACL');
+
                 $table->char(User::SITE_ID, 3)->default('001')->comment('Код сайта');
                 $table->enum(User::LANG, ['ru', 'en'])->comment('Код языка')->default('ru');
                 $table->string(User::HASH, 32)->nullable();
-                $table->index(User::GROUP_ID, 'IDX_users_group_id');
+
                 $table->index(User::SITE_ID, 'IDX_users_site_id');
                 $table->timestamps();
                 $table->softDeletes();
             });
             DB::statement("ALTER TABLE `users` comment 'Учетные записи пользователей'");
+
         }
+        $user = User::create([
+            User::EMAIL => 'admin@fastdog.ru',
+            User::PASSWORD => \Hash::make('qwerty'),
+            User::STATUS => User::STATUS_ACTIVE,
+            User::TYPE => User::USER_TYPE_ADMIN,
+            User::DATA => json_encode([]),
+        ]);
 
         if (!Schema::hasTable('password_resets')) {
             Schema::create('password_resets', function (Blueprint $table) {

@@ -26,7 +26,7 @@ class CreateUsersConfig extends Migration
                 $table->unique(UserConfig::ALIAS, 'UK_users_config_alias');
 
             });
-            DB::statement("ALTER TABLE `content_config` comment 'Параметры модуля Пользователи'");
+            DB::statement("ALTER TABLE `users_config` comment 'Параметры модуля Пользователи'");
         }
     }
 
@@ -37,6 +37,6 @@ class CreateUsersConfig extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('content_config');
+        Schema::dropIfExists('users_config');
     }
 }

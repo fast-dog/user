@@ -96,23 +96,6 @@ class User extends Authenticatable implements TableModelInterface
     /**
      * Дополнительные параметры модели
      *
-     * Объект json содержащий все базовые типы поддерживаемые в разделе администрирования,
-     * набор данных может значительно отличатся в зависимости от типа модели
-     *
-     * <pre>
-     * {
-     *  "properties": [
-     *                  {
-     *                      "name": "Массив дополнительных параметров для отображения модели",
-     *                      "value": "Y",
-     *                      "sort": 100,
-     *                      "type": "system"
-     *                  }
-     *                ],
-     * }
-     * </pre>
-     *
-     *
      * @const string
      */
     const DATA = 'data';
@@ -146,11 +129,6 @@ class User extends Authenticatable implements TableModelInterface
      */
     const HASH = 'hash';
 
-    /**
-     * ИД роли ACL
-     * @const string
-     */
-    const GROUP_ID = 'group_id';
 
     /**
      * Уникальный идентификатор пользователя
@@ -196,7 +174,7 @@ class User extends Authenticatable implements TableModelInterface
      * @var array $fillable
      */
     protected $fillable = [
-        self::EMAIL, self::PASSWORD, self::GROUP_ID, self::TYPE, self::DATA, self::SITE_ID, self::STATUS,
+        self::EMAIL, self::PASSWORD, self::TYPE, self::DATA, self::SITE_ID, self::STATUS,
         self::LANG, self::HASH, self::LAST_VISIT,
     ];
 
@@ -229,10 +207,10 @@ class User extends Authenticatable implements TableModelInterface
      *
      * Для получения дополнительных данных вызывается событие GetUserData
      *
-     * @see \FastDog\User\Listeners\SetUserData::handle()
-     *
      * @param bool $fireEvent
      * @return array
+     * @see \FastDog\User\Listeners\SetUserData::handle()
+     *
      */
     public function getData($fireEvent = true)
     {
@@ -261,9 +239,9 @@ class User extends Authenticatable implements TableModelInterface
      *
      * В зависимоти от типа учетной записи будет возвращать модель профилья
      *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      * @see  \FastDog\User\Models\Profile\UserProfile::getData()
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function profile()
     {
