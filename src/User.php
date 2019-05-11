@@ -2,7 +2,8 @@
 
 namespace FastDog\User;
 
-
+use FastDog\Core\Interfaces\MenuInterface;
+use FastDog\Core\Interfaces\Components as Components;
 use FastDog\Core\Interfaces\ModuleInterface;
 use FastDog\Core\Models\DomainManager;
 use FastDog\User\Controllers\Site\CabinetController;
@@ -21,19 +22,8 @@ use Illuminate\Support\Facades\File;
  * @version 0.2.0
  * @author Андрей Мартынов <d.g.dev482@gmail.com>
  */
-class User extends UserModel implements ModuleInterface
+class User extends UserModel
 {
-
-    /**
-     * Имя родительского списка доступа
-     *
-     * из за реализации ACL в пакете kodeine/laravel-acl
-     * нужно использовать имя верхнего уровня: action.__CLASS__::SITE_ID::access_level
-     *
-     *
-     * @var string
-     */
-    protected $aclName = '';
 
     /**
      * Идентификатор модуля
@@ -168,17 +158,6 @@ class User extends UserModel implements ModuleInterface
 
 
     /**
-     * События обрабатываемые модулем
-     *
-     * @return array
-     */
-    public function initEvents(): array
-    {
-
-    }
-
-
-    /**
      * Доступные шаблоны
      *
      * @param  $paths
@@ -249,16 +228,16 @@ class User extends UserModel implements ModuleInterface
     {
         return [
             ['id' => 'user_login', 'name' => 'Пользователи :: Авторизация', 'sort' => 400],
-            ['id' => 'user_registration', 'name' => 'Пользователи :: Регистрация', 'sort' => 401],
-            ['id' => 'user_restore_password', 'name' => 'Пользователи :: Восстановление пароля', 'sort' => 402],
-            ['id' => 'user_cabinet', 'name' => 'Пользователи :: Личный кабинет', 'sort' => 403],
-            ['id' => 'user_cabinet_edit', 'name' => 'Пользователи :: Личный кабинет (редактирование)', 'sort' => 404],
+            ['id' => 'user_registration', 'name' => 'Пользователи :: Регистрация', 'sort' => 410],
+            ['id' => 'user_restore_password', 'name' => 'Пользователи :: Восстановление пароля', 'sort' => 420],
+            ['id' => 'user_cabinet', 'name' => 'Пользователи :: Личный кабинет', 'sort' => 430],
+            ['id' => 'user_cabinet_edit', 'name' => 'Пользователи :: Личный кабинет (редактирование)', 'sort' => 440],
             ['id' => 'user_cabinet_settings', 'name' => 'Пользователи :: Личный кабинет - настройки', 'sort' => 450],
             ['id' => 'user_cabinet_messages', 'name' => 'Пользователи :: Личный кабинет - сообщения', 'sort' => 460],
             ['id' => 'user_cabinet_new_messages', 'name' => 'Пользователи :: Личный кабинет - новое сообщение', 'sort' => 470],
             ['id' => 'user_cabinet_favorites', 'name' => 'Пользователи :: Личный кабинет - закладки', 'sort' => 480],
             ['id' => 'user_cabinet_billing', 'name' => 'Пользователи :: Личный кабинет - счет', 'sort' => 490],
-            ['id' => 'user_logout', 'name' => 'Пользователи :: Выход', 'sort' => 400],
+            ['id' => 'user_logout', 'name' => 'Пользователи :: Выход', 'sort' => 500],
         ];
     }
 
@@ -272,7 +251,7 @@ class User extends UserModel implements ModuleInterface
     {
         $result = [];
         $paths = array_first(\Config::get('view.paths'));
-        $templates_paths = array_first($this->data->{'templates_paths'});
+        $templates_paths = resource_path('/views/fast_dog/users');
         if (isset($this->data->menu)) {
             foreach ($this->data->menu as $item) {
                 if (isset($item->id)) {
@@ -314,15 +293,6 @@ class User extends UserModel implements ModuleInterface
         return $this->data;
     }
 
-    /**
-     * Возвращает возможные типы меню
-     *
-     * @return mixed
-     */
-    public function _getPublicMenuType()
-    {
-        return [];
-    }
 
     /**
      * Возвращает возможные типы модулей
@@ -369,10 +339,10 @@ class User extends UserModel implements ModuleInterface
      * Возвращает маршрут компонента
      *
      * @param Request $request
-     * @param Menu $item
+     * @param MenuInterface $item
      * @return mixed
      */
-    public function getMenuRoute($request, $item)
+    public function getMenuRoute(Request $request, MenuInterface $item): array
     {
         $result = [];
         if (isset($item->data->type)) {
@@ -477,101 +447,13 @@ class User extends UserModel implements ModuleInterface
 
 
     /**
-     * Инициализация уровней доступа ACL
-     *
-     * @return null
-     */
-    public function initAcl()
-    {
-        $domainList = DomainManager::getAccessDomainList();
-        foreach ($domainList as $domain) {
-            if ($domain['id'] !== '000') {
-                /**
-                 * Имя раздела разрешений должно быть в нижнем регистре из за
-                 * особенностей реализации методов в пакете kodeine/laravel-acl
-                 */
-                $name = strtolower(__CLASS__ . '::' . $domain['id']);
-
-                $roleGuest = DomainManager::getRoleGuest($domain['id']);
-                $data = [
-                    'name' => $name,
-                    'slug' => [
-                        'create' => false,
-                        'view' => false,
-                        'update' => false,
-                        'delete' => false,
-                        'api' => false,
-                    ],
-                    'description' => \GuzzleHttp\json_encode([
-                        'module_name' => 'Пользователи',
-                        'description' => 'ACL для домена #' . $domain['id'],
-                    ]),
-                ];
-                $permGuest = Permission::where([
-                    'name' => $data['name'] . '::guest',
-                ])->first();
-
-                if (!$permGuest) {
-                    $data['name'] = $name . '::guest';
-                    $permGuest = Permission::create($data);
-                    $roleGuest->assignPermission($permGuest);
-                } else {
-                    Permission::where('id', $permGuest->id)->update([
-                        'slug' => json_encode($data['slug']),
-                    ]);
-                }
-                $permUser = Permission::where([
-                    'name' => $data['name'] . '::user',
-                ])->first();
-                if (!$permUser) {
-                    $data['inherit_id'] = $permGuest->id;
-                    $data['name'] = $name . '::user';
-                    $permUser = Permission::create($data);
-                } else {
-                    Permission::where('id', $permUser->id)->update([
-                        'slug' => json_encode($data['slug']),
-                    ]);
-                }
-                if ($permUser) {
-                    $roleUser = DomainManager::getRoleUser($domain['id']);
-                    if ($roleUser) {
-                        $roleUser->assignPermission($permUser);
-                    }
-
-                    $roleAdmin = DomainManager::getRoleAdmin($domain['id']);
-                    $data['slug'] = [
-                        'view' => true,
-                        'create' => true,
-                        'update' => true,
-                        'delete' => true,
-                        'api' => true,
-                    ];
-                    $permAdmin = Permission::where([
-                        'name' => $data['name'] . '::admin',
-                    ])->first();
-                    if (!$permAdmin) {
-                        $data['name'] = $name . '::admin';
-                        $data['inherit_id'] = $permUser->id;
-                        $permAdmin = Permission::create($data);
-                        $roleAdmin->assignPermission($permAdmin);
-                    } else {
-                        Permission::where('id', $permAdmin->id)->update([
-                            'slug' => json_encode($data['slug']),
-                        ]);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
      * Метод возвращает отображаемый в публичной части контнет
      *
      * @param Components $module
      * @return null|string
      * @throws \Throwable
      */
-    public function getContent(Components $module):string
+    public function getContent(Components $module): string
     {
         $result = '';
 
@@ -656,17 +538,6 @@ class User extends UserModel implements ModuleInterface
         return $config;
     }
 
-
-    /**
-     * Определяет заблокированного пользователя
-     *
-     * @return bool
-     */
-    public function isBanned()
-    {
-        return $this->{self::STATUS} == self::STATUS_BANNED;
-    }
-
     /**
      * Меню администратора
      *
@@ -679,22 +550,26 @@ class User extends UserModel implements ModuleInterface
         $result = [];
 
         array_push($result, [
-            'name' => '<i class="fa fa-table"></i> ' . trans('app.Управление'),
+            'icon' => 'fa-table',
+            'name' => trans('app.Управление'),
             'route' => '/users/items',
         ]);
 
         array_push($result, [
-            'name' => '<i class="fa fa-table"></i> ' . trans('app.Подписки'),
+            'icon' => 'fa-table',
+            'name' => trans('app.Подписки'),
             'route' => '/users/subscribe',
         ]);
 
         array_push($result, [
-            'name' => '<i class="fa fa-envelope"></i> ' . trans('app.Рассылки'),
+            'icon' => 'fa-envelope',
+            'name' => trans('app.Рассылки'),
             'route' => '/users/mailing',
         ]);
 
         array_push($result, [
-            'name' => '<i class="fa fa-gears"></i> ' . trans('app.Настройки'),
+            'icon' => 'fa-gears',
+            'name' => trans('app.Настройки'),
             'route' => '/users/configuration',
         ]);
 
@@ -706,6 +581,7 @@ class User extends UserModel implements ModuleInterface
      * Возвращает массив таблиц для резервного копирования
      *
      * @return array
+     * @deprecated
      */
     public function getTables(): array
     {

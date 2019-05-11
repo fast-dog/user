@@ -34,6 +34,7 @@ class UserServiceProvider extends LaravelServiceProvider
         $this->handleConfigs();
         $this->handleRoutes();
         $this->handleMigrations();
+        $this->handleViews();
     }
 
     /**
@@ -82,5 +83,14 @@ class UserServiceProvider extends LaravelServiceProvider
     private function handleRoutes(): void
     {
         $this->loadRoutesFrom(__DIR__ . '/../routes/routes.php');
+    }
+
+    /**
+     * Определение представлении пакета (шаблонов по умолчанию)
+     */
+    private function handleViews(): void
+    {
+        $this->publishes([__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR =>
+            public_path('vendor/fast_dog/' . self::NAME)], 'public');
     }
 }
