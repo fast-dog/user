@@ -6,10 +6,6 @@ namespace FastDog\User\Models;
 use FastDog\Admin\Models\Desktop;
 use FastDog\Core\Models\BaseModel;
 
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-
 /**
  * Парамтеры
  *

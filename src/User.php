@@ -7,8 +7,10 @@ use FastDog\Core\Interfaces\ModuleInterface;
 use FastDog\Core\Models\DomainManager;
 use FastDog\User\Controllers\Site\CabinetController;
 use FastDog\User\Controllers\Site\UserController;
+use FastDog\User\Models\MessageManager;
 use FastDog\User\Models\User as UserModel;
 
+use FastDog\User\Models\UserConfig;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -243,7 +245,7 @@ class User extends UserModel implements ModuleInterface
      *
      * @return null|array
      */
-    public function getMenuType()
+    public function getMenuType(): array
     {
         return [
             ['id' => 'user_login', 'name' => 'Пользователи :: Авторизация', 'sort' => 400],
@@ -266,7 +268,7 @@ class User extends UserModel implements ModuleInterface
      * @param bool $includeTemplates
      * @return array
      */
-    public function getModuleInfo($includeTemplates = true)
+    public function getModuleInfo($includeTemplates = true): array
     {
         $result = [];
         $paths = array_first(\Config::get('view.paths'));
@@ -294,10 +296,10 @@ class User extends UserModel implements ModuleInterface
     /**
      * Устанавливает параметры в контексте объекта
      *
-     * @param $data
+     * @param $data \StdClass
      * @return mixed
      */
-    public function setConfig($data)
+    public function setConfig(\StdClass $data): void
     {
         $this->data = $data;
     }
@@ -307,7 +309,7 @@ class User extends UserModel implements ModuleInterface
      *
      * @return mixed
      */
-    public function getConfig()
+    public function getConfig(): \StdClass
     {
         return $this->data;
     }
@@ -327,7 +329,7 @@ class User extends UserModel implements ModuleInterface
      *
      * @return mixed
      */
-    public function getModuleType()
+    public function getModuleType(): array
     {
         $paths = array_first(\Config::get('view.paths'));
 
@@ -569,7 +571,7 @@ class User extends UserModel implements ModuleInterface
      * @return null|string
      * @throws \Throwable
      */
-    public function getContent(Components $module)
+    public function getContent(Components $module):string
     {
         $result = '';
 
@@ -610,7 +612,7 @@ class User extends UserModel implements ModuleInterface
      *
      * @return string
      */
-    public function getModuleDir()
+    public function getModuleDir(): string
     {
         return dirname(__FILE__);
     }
@@ -620,7 +622,7 @@ class User extends UserModel implements ModuleInterface
      *
      * @return array
      */
-    public function getDesktopWidget()
+    public function getDesktopWidget(): array
     {
         return [];
     }
@@ -654,52 +656,6 @@ class User extends UserModel implements ModuleInterface
         return $config;
     }
 
-    /**
-     * Схема установки модуля
-     *
-     * @param $allSteps
-     * @return mixed
-     */
-    public function getInstallStep(&$allSteps)
-    {
-        $last = array_last(array_keys($allSteps));
-
-        $allSteps[$last]['step'] = 'user_init';
-        $allSteps['user_init'] = [
-            'title_step' => trans('app.Модуль Пользователи: создание таблиц'),
-            'step' => 'user_table',
-            'stop' => false,
-            'install' => function ($request) {
-                User::createDbSchema();
-                UserEmails::createDbSchema();
-                sleep(1);
-            },
-        ];
-
-        $allSteps['user_table'] = [
-            'title_step' => trans('app.Модуль Пользователи: таблицы созданы успешно'),
-            'step' => 'install_acl',
-            'stop' => false,
-            'install' => function ($request) {
-                Role::createDbSchema();
-                Permission::createDbSchema();
-                UserProfile::createDbSchema();
-                UserProfileCorporate::createDbSchema();
-                UserConfig::createDbSchema();
-                sleep(1);
-            },
-        ];
-        $allSteps['install_acl'] = [
-            'title_step' => trans('app.Модуль Пользователи: ACL активированы'),
-            'step' => 'stop',
-            'stop' => false,
-            'install' => function ($request) {
-                sleep(1);
-            },
-        ];
-
-        return $allSteps;
-    }
 
     /**
      * Определяет заблокированного пользователя
@@ -751,7 +707,7 @@ class User extends UserModel implements ModuleInterface
      *
      * @return array
      */
-    public function getTables()
+    public function getTables(): array
     {
         $result = [];
         $entityDirectory = __DIR__ . DIRECTORY_SEPARATOR . 'Entity' . DIRECTORY_SEPARATOR;
