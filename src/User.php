@@ -242,34 +242,58 @@ class User extends UserModel
     }
 
     /**
-     * Возвращает информацию о модуле
-     *
-     * @param bool $includeTemplates
      * @return array
      */
-    public function getModuleInfo($includeTemplates = true): array
+    public function getTemplatesPaths(): array
     {
-        $result = [];
+        return [
+            "user_login" => "/users/login/*.blade.php",
+            "user_registration" => "/users/registration/*.blade.php",
+            "user_restore_password" => "/users/restore_password/*.blade.php",
+            "user_cabinet" => "/users/cabinet/*.blade.php",
+            "user_cabinet_edit" => "/users/cabinet/*.blade.php",
+            "user_cabinet_settings" => "/users/cabinet/settings/*.blade.php",
+            "user_cabinet_messages" => "/users/cabinet/messages/*.blade.php",
+            "user_cabinet_new_messages" => "/users/cabinet/messages/*.blade.php",
+            "user_cabinet_my_items" => "/users/cabinet/items/*.blade.php",
+            "user_cabinet_my_buying" => "/users/cabinet/buying/*.blade.php",
+            "user_cabinet_favorites" => "/users/cabinet/favorites/*.blade.php",
+            "user_cabinet_billing" => "/users/cabinet/billing/*.blade.php",
+            "user_cabinet_choose_buyer" => "/users/cabinet/*.blade.php",
+            "user_cabinet_add_opinion" => "/users/cabinet/reviews/*.blade.php",
+            "user_cabinet_add_opinion_buyer" => "/users/cabinet/reviews/*.blade.php",
+        ];
+    }
+
+    /**
+     * Возвращает информацию о модуле
+     *
+     * @return array
+     */
+    public function getModuleInfo(): array
+    {
         $paths = array_first(\Config::get('view.paths'));
-        $templates_paths = resource_path('/views/fast_dog/users');
-        if (isset($this->data->menu)) {
-            foreach ($this->data->menu as $item) {
-                if (isset($item->id)) {
-                    $templates = [];
-                    if ($includeTemplates && isset($templates_paths->{$item->id})) {
-                        $templates = $this->getTemplates($paths . $templates_paths->{$item->id});
-                    }
+        $templates_paths = $this->getTemplatesPaths();
+
+        return [
+            'id' => self::MODULE_ID,
+            'menu' => function () use ($paths, $templates_paths) {
+                $result = [];
+                foreach ($this->getMenuType() as $id => $item) {
                     array_push($result, [
-                        'id' => $item->id,
-                        'name' => $item->name,
-                        'templates' => $templates,
+                        'id' => $id,
+                        'name' => $item,
+                        'templates' => (isset($templates_paths[$id])) ? $this->getTemplates($paths . $templates_paths[$id]) : [],
                         'class' => __CLASS__,
                     ]);
                 }
-            }
-        }
 
-        return $result;
+                return $result;
+            },
+            'templates_paths' => $templates_paths,
+            'module_type' => $this->getMenuType(),
+            'admin_menu' => $this->getAdminMenuItems(),
+        ];
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace FastDog\User;
 
+use FastDog\Core\Models\ModuleManager;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
 /**
@@ -35,6 +36,12 @@ class UserServiceProvider extends LaravelServiceProvider
         $this->handleRoutes();
         $this->handleMigrations();
         $this->handleViews();
+
+        /**
+         * @var $moduleManager ModuleManager
+         */
+        $moduleManager = \App::make(ModuleManager::class);
+        $moduleManager->pushModule(User::MODULE_ID, (new User())->getModuleInfo(true));
     }
 
     /**
