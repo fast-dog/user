@@ -42,6 +42,7 @@ class UserServiceProvider extends LaravelServiceProvider
          */
         $moduleManager = \App::make(ModuleManager::class);
         $moduleManager->pushModule(User::MODULE_ID, (new User())->getModuleInfo(true));
+
     }
 
     /**
@@ -97,7 +98,11 @@ class UserServiceProvider extends LaravelServiceProvider
      */
     private function handleViews(): void
     {
-        $this->publishes([__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR =>
-            public_path('vendor/fast_dog/' . self::NAME)], 'public');
+        $this->loadViewsFrom(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR ,  self::NAME);
+
+        $this->publishes([
+            __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR =>
+                public_path('vendor/fast_dog/' . self::NAME)
+        ]);
     }
 }

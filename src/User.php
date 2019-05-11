@@ -3,7 +3,6 @@
 namespace FastDog\User;
 
 use FastDog\Core\Interfaces\MenuInterface;
-use FastDog\Core\Interfaces\Components as Components;
 use FastDog\Core\Interfaces\ModuleInterface;
 use FastDog\Core\Models\DomainManager;
 use FastDog\User\Controllers\Site\CabinetController;
@@ -293,6 +292,11 @@ class User extends UserModel
             'templates_paths' => $templates_paths,
             'module_type' => $this->getMenuType(),
             'admin_menu' => $this->getAdminMenuItems(),
+            'access' => function () {
+                return [
+                    '000',
+                ];
+            },
         ];
     }
 
@@ -571,65 +575,37 @@ class User extends UserModel
      */
     public function getAdminMenuItems()
     {
-        $result = [];
+        $result = [
+            'icon' => 'fa-users',
+            'name' => trans('app.Пользователи'),
+            'route' => '/users',
+            'children' => [],
+        ];
 
-        array_push($result, [
+        array_push($result['children'], [
             'icon' => 'fa-table',
             'name' => trans('app.Управление'),
             'route' => '/users/items',
         ]);
 
-        array_push($result, [
+        array_push($result['children'], [
             'icon' => 'fa-table',
             'name' => trans('app.Подписки'),
             'route' => '/users/subscribe',
         ]);
 
-        array_push($result, [
+        array_push($result['children'], [
             'icon' => 'fa-envelope',
             'name' => trans('app.Рассылки'),
             'route' => '/users/mailing',
         ]);
 
-        array_push($result, [
+        array_push($result['children'], [
             'icon' => 'fa-gears',
             'name' => trans('app.Настройки'),
             'route' => '/users/configuration',
         ]);
 
-
-        return $result;
-    }
-
-    /**
-     * Возвращает массив таблиц для резервного копирования
-     *
-     * @return array
-     * @deprecated
-     */
-    public function getTables(): array
-    {
-        $result = [];
-        $entityDirectory = __DIR__ . DIRECTORY_SEPARATOR . 'Entity' . DIRECTORY_SEPARATOR;
-        $files = \File::files($entityDirectory);
-        $directories = \File::directories($entityDirectory);
-        foreach ($directories as $directory) {
-            array_merge($files, \File::files($directory));
-        }
-
-        /** @var \Symfony\Component\Finder\SplFileInfo $file */
-        foreach ($files as $file) {
-
-            require_once $file->getPathname();
-            $class = '\App\\' . str_replace(['.php'], '', strstr($file->getPathname(), 'Modules'));
-
-            if (class_exists($class)) {
-                $class = new $class();
-                if (method_exists($class, 'getTable')) {
-                    array_push($result, $class->getTable());
-                }
-            }
-        }
 
         return $result;
     }
