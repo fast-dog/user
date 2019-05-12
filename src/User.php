@@ -291,7 +291,9 @@ class User extends UserModel
             },
             'templates_paths' => $templates_paths,
             'module_type' => $this->getMenuType(),
-            'admin_menu' => $this->getAdminMenuItems(),
+            'admin_menu' => function () {
+                return $this->getAdminMenuItems();
+            },
             'access' => function () {
                 return [
                     '000',
@@ -577,32 +579,32 @@ class User extends UserModel
     {
         $result = [
             'icon' => 'fa-users',
-            'name' => trans('app.Пользователи'),
+            'name' => trans('user::interface.Пользователи'),
             'route' => '/users',
             'children' => [],
         ];
 
         array_push($result['children'], [
             'icon' => 'fa-table',
-            'name' => trans('app.Управление'),
+            'name' => trans('user::interface.Управление'),
             'route' => '/users/items',
         ]);
 
         array_push($result['children'], [
             'icon' => 'fa-table',
-            'name' => trans('app.Подписки'),
+            'name' => trans('user::interface.Подписки'),
             'route' => '/users/subscribe',
         ]);
 
         array_push($result['children'], [
             'icon' => 'fa-envelope',
-            'name' => trans('app.Рассылки'),
+            'name' => trans('user::interface.Рассылки'),
             'route' => '/users/mailing',
         ]);
 
         array_push($result['children'], [
             'icon' => 'fa-gears',
-            'name' => trans('app.Настройки'),
+            'name' => trans('user::interface.Настройки'),
             'route' => '/users/configuration',
         ]);
 

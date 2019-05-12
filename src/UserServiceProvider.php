@@ -36,6 +36,7 @@ class UserServiceProvider extends LaravelServiceProvider
         $this->handleRoutes();
         $this->handleMigrations();
         $this->handleViews();
+        $this->handleLang();
 
         /**
          * @var $moduleManager ModuleManager
@@ -98,11 +99,24 @@ class UserServiceProvider extends LaravelServiceProvider
      */
     private function handleViews(): void
     {
-        $this->loadViewsFrom(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR ,  self::NAME);
+        $path = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR;
+        $this->loadViewsFrom($path, self::NAME);
 
         $this->publishes([
-            __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR =>
-                public_path('vendor/fast_dog/' . self::NAME)
+            $path => public_path('vendor/fast_dog/' . self::NAME),
         ]);
+    }
+
+    /**
+     * Определение локализации
+     */
+    private function handleLang(): void
+    {
+        $path = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'lang' . DIRECTORY_SEPARATOR;
+        $this->loadTranslationsFrom($path, self::NAME);
+        $this->publishes([
+            $path => resource_path('lang/vendor/fast_dog/' . self::NAME),
+        ]);
+
     }
 }
