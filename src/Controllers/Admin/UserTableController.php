@@ -9,10 +9,9 @@
 namespace FastDog\User\Controllers\Admin;
 
 
-use App\Core\BaseModel;
-use App\Core\Table\Interfaces\TableControllerInterface;
-use App\Core\Table\Traits\TableTrait;
-use App\Http\Controllers\Controller;
+use FastDog\Core\Http\Controllers\Controller;
+use FastDog\Core\Table\Interfaces\TableControllerInterface;
+use FastDog\Core\Table\Traits\TableTrait;
 use FastDog\User\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
@@ -98,5 +97,14 @@ class UserTableController extends Controller implements TableControllerInterface
     public function getDefaultSelectFields(): array
     {
         return [BaseModel::DELETED_AT];
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function items(Request $request): JsonResponse
+    {
+        // TODO: Implement items() method.
     }
 }

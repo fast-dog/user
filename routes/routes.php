@@ -16,7 +16,7 @@ Route::group([
      * Пользователи
      */
     // список пользователей
-    \Route::post('/users', array_replace_recursive($baseParameters, [
+    \Route::get('/users', array_replace_recursive($baseParameters, [
         'uses' => '\FastDog\User\Controllers\Admin\UserTableController@list',
 
     ]));
