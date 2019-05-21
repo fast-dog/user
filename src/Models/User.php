@@ -8,6 +8,7 @@ use FastDog\Core\Models\DomainManager;
 use FastDog\Core\Table\Filters\BaseFilter;
 use FastDog\Core\Table\Filters\Operator\BaseOperator;
 use FastDog\Core\Table\Interfaces\TableModelInterface;
+use FastDog\Media\Models\Gallery;
 use FastDog\User\Events\GetUserData;
 use FastDog\User\Events\UserAdminPrepare;
 use Carbon\Carbon;
@@ -169,6 +170,13 @@ class User extends Authenticatable implements TableModelInterface
     const SERVICE_ACCOUNT_ID = 7;
 
     /**
+     * Заглушка если нет фото
+     *
+     * @const string
+     */
+    const NO_PHOTO = '/vendor/fast_dog/user/img/no-photo.png';
+
+    /**
      * Массив полей автозаполнения
      *
      * @var array $fillable
@@ -324,22 +332,22 @@ class User extends Authenticatable implements TableModelInterface
                 }
             } else {
                 if ($resize !== false) {
-                    $thumbnail = Gallery::getPhotoThumb('/upload/images/users/noPhoto.png', $resize);
+                    $thumbnail = Gallery::getPhotoThumb(self::NO_PHOTO, $resize);
                     if ($thumbnail['exist']) {
                         $result = url($thumbnail['file']);
                     }
                 } else {
-                    $result = url('/upload/images/users/noPhoto.png');
+                    $result = url(self::NO_PHOTO);
                 }
             }
             if (null === $result) {
                 if ($resize !== false) {
-                    $thumbnail = Gallery::getPhotoThumb('/upload/images/users/noPhoto.png', $resize);
+                    $thumbnail = Gallery::getPhotoThumb(self::NO_PHOTO, $resize);
                     if ($thumbnail['exist']) {
                         $result = url($thumbnail['file']);
                     }
                 } else {
-                    $result = url('/upload/images/users/noPhoto.png');
+                    $result = url(self::NO_PHOTO);
                 }
             }
             if ($isRedis) {

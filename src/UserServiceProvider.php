@@ -38,6 +38,9 @@ class UserServiceProvider extends LaravelServiceProvider
         $this->handleViews();
         $this->handleLang();
 
+        $this->publishes([__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR =>
+            public_path('vendor/fast_dog/' . self::NAME)], 'public');
+
         /**
          * @var $moduleManager ModuleManager
          */
@@ -101,10 +104,6 @@ class UserServiceProvider extends LaravelServiceProvider
     {
         $path = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR;
         $this->loadViewsFrom($path, self::NAME);
-
-        $this->publishes([
-            $path => public_path('vendor/fast_dog/' . self::NAME),
-        ]);
     }
 
     /**
