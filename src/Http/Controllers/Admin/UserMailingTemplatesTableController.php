@@ -2,30 +2,30 @@
 /**
  * Created by PhpStorm.
  * User: dg
- * Date: 28.05.2018
- * Time: 7:40
+ * Date: 006 06.10.18
+ * Time: 14:03
  */
 
-namespace FastDog\User\Controllers\Admin;
+namespace FastDog\User\Http\Controllers\Admin;
 
 
-use FastDog\Core\Http\Controllers\Controller;
-use FastDog\Core\Table\Interfaces\TableControllerInterface;
-use FastDog\Core\Table\Traits\TableTrait;
-use FastDog\User\User;
+use App\Core\Table\Interfaces\TableControllerInterface;
+use App\Core\Table\Traits\TableTrait;
+use App\Http\Controllers\Controller;
+use FastDog\User\Entity\UserMailingTemplates;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 /**
- * Пользователи - таблица
+ * Class UserMailingTemplatesTableController
  *
- * @package FastDog\User\Controllers\Admin
+ * @package FastDog\User\Http\Controllers\Admin
  * @version 0.2.0
  * @author Андрей Мартынов <d.g.dev482@gmail.com>
  */
-class UserTableController extends Controller implements TableControllerInterface
+class UserMailingTemplatesTableController extends Controller implements TableControllerInterface
 {
     use  TableTrait;
 
@@ -38,7 +38,7 @@ class UserTableController extends Controller implements TableControllerInterface
     /**
      * Модель по которой будет осуществляться выборка данных
      *
-     * @var \FastDog\User\User|null $model
+     * @var \FastDog\User\Entity\UserMailingTemplates|null $model
      */
     protected $model = null;
 
@@ -54,16 +54,17 @@ class UserTableController extends Controller implements TableControllerInterface
 
     /**
      * ContentController constructor.
-     * @param User $model
+     * @param UserMailingTemplates $model
      */
-    public function __construct(User $model)
+    public function __construct(UserMailingTemplates $model)
     {
         parent::__construct();
         $this->model = $model;
         $this->accessKey = $this->model->getAccessKey();
         $this->initTable();
-        $this->page_title = trans('app.Пользователи');
+        $this->page_title = trans('app.Рассылки') . ' / ' . trans('app.Шаблоны');
     }
+
 
     /**
      * Таблица - Материалы
@@ -87,24 +88,5 @@ class UserTableController extends Controller implements TableControllerInterface
     public function getCols(): Collection
     {
         return $this->table->getCols();
-    }
-
-    /**
-     * Поля для выборки по умолчанию
-     *
-     * @return array
-     */
-    public function getDefaultSelectFields(): array
-    {
-        return [BaseModel::DELETED_AT];
-    }
-
-    /**
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function items(Request $request): JsonResponse
-    {
-        // TODO: Implement items() method.
     }
 }

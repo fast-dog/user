@@ -1,6 +1,6 @@
 <?php
 
-namespace FastDog\User\Controllers\Admin;
+namespace FastDog\User\Http\Controllers\Admin;
 
 
 

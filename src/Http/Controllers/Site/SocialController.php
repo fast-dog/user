@@ -6,7 +6,7 @@
  * Time: 11:42
  */
 
-namespace FastDog\User\Controllers\Site;
+namespace FastDog\User\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use FastDog\User\Social\FacebookServiceProvider;
@@ -20,7 +20,7 @@ use League\OAuth1\Client\Credentials\CredentialsException;
 /**
  * Поддержка авторизации\регистрации через социальные сети
  *
- * @package FastDog\User\Controllers\Site
+ * @package FastDog\User\Http\Controllers\Site
  * @version 0.2.0
  * @author Андрей Мартынов <d.g.dev482@gmail.com>
  */

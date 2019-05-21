@@ -6,7 +6,7 @@
  * Time: 17:25
  */
 
-namespace FastDog\User\Controllers\Admin;
+namespace FastDog\User\Http\Controllers\Admin;
 
 
 use App\Core\BaseModel;
@@ -23,7 +23,7 @@ use Illuminate\Support\Collection;
 
 /**
  * Class UserSubscribeTableController
- * @package FastDog\User\Controllers\Admin
+ * @package FastDog\User\Http\Controllers\Admin
  * @version 0.2.0
  * @author Андрей Мартынов <d.g.dev482@gmail.com>
  */

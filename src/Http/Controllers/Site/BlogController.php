@@ -6,12 +6,12 @@
  * Time: 17:40
  */
 
-namespace FastDog\User\Controllers\Site;
+namespace FastDog\User\Http\Controllers\Site;
 
 /**
  * Блог пользователей
  *
- * @package FastDog\User\Controllers\Site
+ * @package FastDog\User\Http\Controllers\Site
  * @version 0.2.0
  * @author Андрей Мартынов <d.g.dev482@gmail.com>
  */

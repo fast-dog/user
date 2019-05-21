@@ -6,7 +6,7 @@
  * Time: 8:43
  */
 
-namespace FastDog\User\Controllers\Site;
+namespace FastDog\User\Http\Controllers\Site;
 
 use App\Core\BaseModel;
 use App\Http\Controllers\HomeController;
@@ -39,7 +39,7 @@ use Nahid\Talk\Messages\Message;
 /**
  * Кабинет пользователя
  *
- * @package FastDog\User\Controllers\Site
+ * @package FastDog\User\Http\Controllers\Site
  * @version 0.2.0
  * @author Андрей Мартынов <d.g.dev482@gmail.com>
  */

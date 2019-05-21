@@ -1,6 +1,6 @@
 <?php
 
-namespace FastDog\User\Controllers\Admin;
+namespace FastDog\User\Http\Controllers\Admin;
 
 use FastDog\Admin\Http\Controllers\AdminController;
 use FastDog\Core\Models\DomainManager;
@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 /**
  * Администрирование
  *
- * @package FastDog\User\Controllers\Admin
+ * @package FastDog\User\Http\Controllers\Admin
  * @version 0.2.0
  * @author Андрей Мартынов <d.g.dev482@gmail.com>
  * @deprecated
