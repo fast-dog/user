@@ -17,13 +17,13 @@ Route::group([
      */
     // список пользователей
     \Route::get('/users', array_replace_recursive($baseParameters, [
-        'uses' => '\FastDog\User\Controllers\Admin\UserTableController@list',
+        'uses' => '\FastDog\User\Http\Controllers\Admin\UserTableController@list',
 
     ]));
     /**
      * Пользователи - редактирование
      */
-    $ctrl = '\FastDog\User\Controllers\Admin\UserFormController';
+    $ctrl = '\FastDog\User\Http\Controllers\Admin\UserFormController';
 
     // редактирование пользователя
     \Route::get('/user/{id?}', array_replace_recursive($baseParameters, [
@@ -43,7 +43,7 @@ Route::group([
     /**
      * Пользователи - API
      */
-    $ctrl = '\FastDog\User\Controllers\Admin\ApiController';
+    $ctrl = '\FastDog\User\Http\Controllers\Admin\ApiController';
 
     //сохранение параметров модуля
     \Route::post('/users/save-module-configurations', array_replace_recursive($baseParameters, [
@@ -67,7 +67,7 @@ Route::group([
     /**
      * Подписки на рассылку
      */
-    $ctrl = '\FastDog\User\Controllers\Admin\UserSubscribeTableController';
+    $ctrl = '\FastDog\User\Http\Controllers\Admin\UserSubscribeTableController';
 
     // таблица подписок
     \Route::post('/user/subscribe', array_replace_recursive($baseParameters, [
@@ -86,7 +86,7 @@ Route::group([
     /**
      * Рассылка - шаблоны - таблица
      */
-    $ctrl = '\FastDog\User\Controllers\Admin\UserMailingTemplatesTableController';
+    $ctrl = '\FastDog\User\Http\Controllers\Admin\UserMailingTemplatesTableController';
     //
     \Route::post('/user/mailing/templates', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@list',
@@ -95,7 +95,7 @@ Route::group([
     /**
      * Рассылка - шаблоны - форма
      */
-    $ctrl = '\FastDog\User\Controllers\Admin\UserMailingTemplatesFormController';
+    $ctrl = '\FastDog\User\Http\Controllers\Admin\UserMailingTemplatesFormController';
 
     // редактирование рассылки
     \Route::get('/user/mailing/template/{id?}', array_replace_recursive($baseParameters, [
@@ -110,7 +110,7 @@ Route::group([
     /**
      * Рассылка - таблица
      */
-    $ctrl = '\FastDog\User\Controllers\Admin\UserMailingTableController';
+    $ctrl = '\FastDog\User\Http\Controllers\Admin\UserMailingTableController';
     // список рассылок
     \Route::post('/user/mailing', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@list',
@@ -119,7 +119,7 @@ Route::group([
     /**
      * Рассылка - форма
      */
-    $ctrl = '\FastDog\User\Controllers\Admin\UserMailingFormController';
+    $ctrl = '\FastDog\User\Http\Controllers\Admin\UserMailingFormController';
     // редактирование рассылки
     \Route::get('/user/mailing/{id?}', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@getEditItem',
@@ -131,10 +131,10 @@ Route::group([
 });
 
 
-$ctrl = '\FastDog\User\Controllers\Site\UserController';
+$ctrl = '\FastDog\User\Http\Controllers\Site\UserController';
 
-//\Route::post('/login', '\FastDog\User\Controllers\Site\LoginController@postLogin');
-//\Route::get('/logout', '\FastDog\User\Controllers\Site\LoginController@logout');
+//\Route::post('/login', '\FastDog\User\Http\Controllers\Site\LoginController@postLogin');
+//\Route::get('/logout', '\FastDog\User\Http\Controllers\Site\LoginController@logout');
 
 \Route::post('/subscribe', $ctrl . '@postSubscribe');
 \Route::get('/subscribe/off', $ctrl . '@getSubscribeOff');
@@ -143,19 +143,19 @@ $ctrl = '\FastDog\User\Controllers\Site\UserController';
  * Не используется в проекте!!!
  *
  *
- * \Route::get('/confirm/{hash}', '\FastDog\User\Controllers\Site\LoginController@confirm');
- * \Route::get('/confirm-password/{hash}', '\FastDog\User\Controllers\Site\LoginController@confirmPassword');
- * \Route::post('/restore-password', '\FastDog\User\Controllers\Site\LoginController@sendPassword');
+ * \Route::get('/confirm/{hash}', '\FastDog\User\Http\Controllers\Site\LoginController@confirm');
+ * \Route::get('/confirm-password/{hash}', '\FastDog\User\Http\Controllers\Site\LoginController@confirmPassword');
+ * \Route::post('/restore-password', '\FastDog\User\Http\Controllers\Site\LoginController@sendPassword');
  *
- * $ctrl = '\FastDog\User\Controllers\Site\RegistrationController';
+ * $ctrl = '\FastDog\User\Http\Controllers\Site\RegistrationController';
  * \Route::post('/registration', $ctrl . '@postRegistration');
  *
  *
- * $ctrl = '\FastDog\User\Controllers\Site\SocialController';
+ * $ctrl = '\FastDog\User\Http\Controllers\Site\SocialController';
  * \Route::get('auth/{driver}', ['as' => 'socialAuth', 'uses' => $ctrl . '@redirectToProvider']);
  * \Route::get('auth/{driver}/callback', ['as' => 'socialAuthCallback', 'uses' => $ctrl . '@handleProviderCallback']);
  *
- * $ctrl = '\FastDog\User\Controllers\Site\CabinetController';
+ * $ctrl = '\FastDog\User\Http\Controllers\Site\CabinetController';
  * \Route::post('user/save-profile', ['as' => 'socialAuth', 'uses' => $ctrl . '@saveProfile']);
  * \Route::post('user/save-password', ['as' => 'socialAuth', 'uses' => $ctrl . '@postSavePassword']);
  *
