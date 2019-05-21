@@ -57,6 +57,7 @@ class UserServiceProvider extends LaravelServiceProvider
     public function register(): void
     {
         $this->app->register(UserEventServiceProvider::class);
+        $this->app->register(AuthServiceProvider::class);
     }
 
     /**

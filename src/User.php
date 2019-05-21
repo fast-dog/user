@@ -2,6 +2,7 @@
 
 namespace FastDog\User;
 
+use App\Core\Module\Components;
 use FastDog\Core\Interfaces\MenuInterface;
 use FastDog\Core\Interfaces\ModuleInterface;
 use FastDog\Core\Models\DomainManager;
@@ -12,6 +13,7 @@ use FastDog\User\Models\User as UserModel;
 
 use FastDog\User\Models\UserConfig;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 
 /**
@@ -271,7 +273,7 @@ class User extends UserModel
      */
     public function getModuleInfo(): array
     {
-        $paths = array_first(\Config::get('view.paths'));
+        $paths = Arr::first(\Config::get('view.paths'));
         $templates_paths = $this->getTemplatesPaths();
 
         return [
@@ -331,7 +333,7 @@ class User extends UserModel
      */
     public function getModuleType(): array
     {
-        $paths = array_first(\Config::get('view.paths'));
+        $paths = Arr::first(\Config::get('view.paths'));
 
         $result = [
             'id' => 'users',
@@ -608,6 +610,11 @@ class User extends UserModel
             'route' => '/users/configuration',
         ]);
 
+        array_push($result['children'], [
+            'icon' => 'fa-info',
+            'name' => trans('user::interface.Информация'),
+            'route' => '/users',
+        ]);
 
         return $result;
     }
