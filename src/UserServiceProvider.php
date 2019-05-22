@@ -58,6 +58,12 @@ class UserServiceProvider extends LaravelServiceProvider
     {
         $this->app->register(UserEventServiceProvider::class);
         $this->app->register(AuthServiceProvider::class);
+        $this->app->register(\Nahid\Talk\TalkServiceProvider::class);
+        /**
+         * Create aliases for the dependency.
+         */
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('Talk', \Nahid\Talk\Facades\Talk::class);
     }
 
     /**

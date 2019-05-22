@@ -30,12 +30,6 @@ class UserTableController extends Controller implements TableControllerInterface
     use  TableTrait;
 
     /**
-     * Имя  списка доступа
-     * @var string $accessKey
-     */
-    protected $accessKey = '';
-
-    /**
      * Модель по которой будет осуществляться выборка данных
      *
      * @var \FastDog\User\User|null $model
