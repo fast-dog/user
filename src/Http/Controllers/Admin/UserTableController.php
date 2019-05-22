@@ -1,4 +1,5 @@
 <?php
+
 namespace FastDog\User\Http\Controllers\Admin;
 
 
@@ -50,7 +51,7 @@ class UserTableController extends Controller implements TableControllerInterface
         $this->model = $model;
         $this->accessKey = $this->model->getAccessKey();
         $this->initTable();
-        $this->page_title = trans('app.Пользователи');
+        $this->page_title = trans('user::interface.Пользователи');
     }
 
     /**
@@ -62,7 +63,7 @@ class UserTableController extends Controller implements TableControllerInterface
     public function list(Request $request): JsonResponse
     {
         $result = self::paginate($request);
-        $this->breadcrumbs->push(['url' => false, 'name' => trans('app.Управление')]);
+        $this->breadcrumbs->push(['url' => false, 'name' => trans('user::interface.Управление')]);
 
         return $this->json($result, __METHOD__);
     }
