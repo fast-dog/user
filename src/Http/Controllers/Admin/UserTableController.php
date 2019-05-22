@@ -1,15 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dg
- * Date: 28.05.2018
- * Time: 7:40
- */
-
 namespace FastDog\User\Http\Controllers\Admin;
 
 
 use FastDog\Core\Http\Controllers\Controller;
+use FastDog\Core\Models\BaseModel;
 use FastDog\Core\Table\Interfaces\TableControllerInterface;
 use FastDog\Core\Table\Traits\TableTrait;
 use FastDog\User\User;
