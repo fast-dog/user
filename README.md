@@ -1,5 +1,5 @@
 <p align="center">
-  <img  src="/public/img/fast-dog.png">
+  <img  src="/assets/img/fast-dog.png">
 </p>
 
 # User pkg for FastDog CMS
