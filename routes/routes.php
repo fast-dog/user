@@ -8,21 +8,15 @@ Route::group([
 ], function () {
 
 
-    $baseParameters = ['middleware' => [
+    $baseParameters = ['middleware' => []];
 
-    ]];
 
-    /**
-     * Пользователи
-     */
     // список пользователей
-    \Route::get('/users', array_replace_recursive($baseParameters, [
+    \Route::post('/users', array_replace_recursive($baseParameters, [
         'uses' => '\FastDog\User\Http\Controllers\Admin\UserTableController@list',
-
     ]));
-    /**
-     * Пользователи - редактирование
-     */
+
+
     $ctrl = '\FastDog\User\Http\Controllers\Admin\UserFormController';
 
     // редактирование пользователя
