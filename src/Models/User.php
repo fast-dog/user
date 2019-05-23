@@ -787,7 +787,7 @@ class User extends Authenticatable implements TableModelInterface
                 'link' => 'user_profile',
             ],
             [
-                'name' => trans('app.Дата регистрации'),
+                'name' => trans('core::interface.Дата регистрации'),
                 'key' => User::CREATED_AT,
                 'width' => 150,
                 'link' => null,
@@ -823,7 +823,7 @@ class User extends Authenticatable implements TableModelInterface
                     BaseFilter::TYPE => BaseFilter::TYPE_SELECT,
                     BaseFilter::NAME => User::STATUS,
                     BaseFilter::DISPLAY => true,
-                    BaseFilter::PLACEHOLDER => trans('app.Состояние'),
+                    BaseFilter::PLACEHOLDER => trans('core::interface.Состояние'),
                     BaseFilter::DATA => User::getStatusList(),
                     BaseFilter::OPERATOR => (new BaseOperator())->getOperator(),
                 ],
@@ -834,7 +834,7 @@ class User extends Authenticatable implements TableModelInterface
                     BaseFilter::TYPE => BaseFilter::TYPE_DATETIME,
                     BaseFilter::NAME => User::CREATED_AT,
                     BaseFilter::DISPLAY => true,
-                    BaseFilter::PLACEHOLDER => trans('app.Дата регистрации'),
+                    BaseFilter::PLACEHOLDER => trans('core::interface.Дата регистрации'),
                     BaseFilter::OPERATOR => (new BaseOperator('BETWEEN', 'BETWEEN'))->getOperator(
                         [['id' => 'BETWEEN', 'name' => 'BETWEEN']]
                     ),
@@ -843,15 +843,5 @@ class User extends Authenticatable implements TableModelInterface
         ];
 
         return $default;
-    }
-
-    /**
-     * Возвращает ключ доступа к ACL
-     * @param string $type
-     * @return string
-     */
-    public function getAccessKey($type = 'guest'): string
-    {
-        return strtolower(\FastDog\User\User::class) . '::' . DomainManager::getSiteId() . '::' . $type;
     }
 }
