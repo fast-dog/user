@@ -1,16 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dg
- * Date: 28.02.2018
- * Time: 16:31
- */
-
 namespace FastDog\User\Listeners;
 
 
-use App\Core\Module\ModuleManager;
-use App\Modules\Config\Entity\DomainManager;
+
+use FastDog\Core\Models\DomainManager;
+use FastDog\Core\Models\ModuleManager;
 use FastDog\User\Events\UserAdminPrepare as UserAdminPrepareEvent;
 use FastDog\User\User;
 use Illuminate\Http\Request;
@@ -74,13 +68,6 @@ class UserAdminPrepare
         $data[User::SITE_ID] = array_first(array_filter(DomainManager::getAccessDomainList(),
             function ($element) use ($data) {
                 return $element['id'] == $data[User::SITE_ID];
-            }));
-
-        //Доступ
-        $data[User::GROUP_ID] = array_first(array_filter($item->getAclRoles(),
-            function ($element) use ($data) {
-
-                return (int)$element['id'] == (int)$data[User::GROUP_ID];
             }));
 
         if (!isset($data['item']['id'])) {
