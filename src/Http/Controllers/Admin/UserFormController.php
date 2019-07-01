@@ -6,6 +6,7 @@ namespace FastDog\User\Http\Controllers\Admin;
 use FastDog\Core\Form\Interfaces\FormControllerInterface;
 use FastDog\Core\Form\Traits\FormControllerTrait;
 use FastDog\Core\Http\Controllers\Controller;
+use FastDog\Core\Models\BaseModel;
 use FastDog\User\Events\UserRegistration;
 use FastDog\User\Events\UserUpdate;
 use FastDog\User\Models\User;
@@ -25,7 +26,7 @@ class UserFormController extends Controller implements FormControllerInterface
 {
     use FormControllerTrait;
 
-    public function __construct($model)
+    public function __construct(User $model)
     {
         $this->model = $model;
         $this->page_title = trans('app.Пользователи');
@@ -124,5 +125,13 @@ class UserFormController extends Controller implements FormControllerInterface
         \Event::fire(new UserUpdate($user, $request));
 
         return $this->json($result);
+    }
+
+    /**
+     * @param User $item
+     */
+    public function setItem(User $item): void
+    {
+        $this->item = $item;
     }
 }

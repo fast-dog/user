@@ -4,7 +4,7 @@ namespace FastDog\User\Listeners;
 
 
 use FastDog\Core\Models\ModuleManager;
-use FastDog\Media\Entity\GalleryItem;
+use FastDog\Media\Models\GalleryItem;
 use FastDog\User\Events\GetUserData;
 use FastDog\User\Models\Profile\UserProfile;
 use FastDog\User\Models\Profile\UserProfileCorporate;
