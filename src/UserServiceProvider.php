@@ -123,6 +123,5 @@ class UserServiceProvider extends LaravelServiceProvider
         $this->publishes([
             $path => resource_path('lang/vendor/fast_dog/' . self::NAME),
         ]);
-
     }
 }

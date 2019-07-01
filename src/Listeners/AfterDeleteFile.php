@@ -2,10 +2,10 @@
 
 namespace FastDog\User\Listeners;
 
-use App\Modules\Media\Entity\GalleryItem;
+use FastDog\Media\Models\GalleryItem;
 use FastDog\User\User;
 use Illuminate\Http\Request;
-use App\Modules\Media\Events\AfterDeleteFile as EventAfterDeleteFile;
+use FastDog\Media\Events\AfterDeleteFile as EventAfterDeleteFile;
 
 /**
  * После удаления файла

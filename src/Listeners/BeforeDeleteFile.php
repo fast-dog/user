@@ -2,10 +2,8 @@
 
 namespace FastDog\User\Listeners;
 
-use App\Modules\Media\Entity\GalleryItem;
-use FastDog\User\Entity\User;
 use Illuminate\Http\Request;
-use App\Modules\Media\Events\BeforeDeleteFile as EventBeforeDeleteFile;
+use FastDog\Media\Events\BeforeDeleteFile as EventBeforeDeleteFile;
 
 /**
  * Перед удалением файла

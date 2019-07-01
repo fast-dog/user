@@ -2,14 +2,14 @@
 
 namespace FastDog\User\Listeners;
 
-
-use App\Core\Module\ModuleManager;
-use App\Modules\Media\Entity\GalleryItem;
-use FastDog\User\Entity\UserMailing;
-use FastDog\User\Entity\UserMailingTemplates;
+use FastDog\Core\Models\ModuleManager;
+use FastDog\Media\Models\GalleryItem;
 use FastDog\User\Events\UserMailingAdminPrepare as EventUserMailingAdminPrepare;
 
+use FastDog\User\Models\UserMailing;
+use FastDog\User\Models\UserMailingTemplates;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 /**
  * При редактирование в разделе администрирования
@@ -49,7 +49,7 @@ class UserMailingAdminPrepare
         $item = $event->getItem();
 
         //Состояние
-        $data[UserMailing::TEMPLATE_ID] = array_first(array_filter(UserMailingTemplates::getList(), function ($element) use ($data) {
+        $data[UserMailing::TEMPLATE_ID] = Arr::first(array_filter(UserMailingTemplates::getList(), function ($element) use ($data) {
             return ($element['id'] == $data[UserMailing::TEMPLATE_ID]);
         }));
 

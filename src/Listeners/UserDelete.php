@@ -2,8 +2,7 @@
 
 namespace FastDog\User\Listeners;
 
-use App\Modules\Catalog\Entity\CatalogItems;
-use FastDog\User\Entity\UserReviews;
+
 use FastDog\User\Events\UserUpdate;
 use FastDog\User\User;
 use Illuminate\Http\Request;

@@ -3,8 +3,9 @@
 namespace FastDog\User\Listeners;
 
 
-use App\Core\Module\ModuleManager;
-use App\Modules\Media\Entity\GalleryItem;
+
+use FastDog\Core\Models\ModuleManager;
+use FastDog\Media\Models\GalleryItem;
 use FastDog\User\Events\UserMailingTemplatesAdminPrepare as EventUserMailingTemplatesAdminPrepare;
 
 use Illuminate\Http\Request;

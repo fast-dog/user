@@ -2,11 +2,11 @@
 
 namespace FastDog\User\Listeners;
 
-use App\Modules\Config\Entity\Emails;
-use App\Modules\Media\Entity\Gallery;
-use App\Modules\Media\Entity\GalleryItem;
-use FastDog\User\Entity\UserConfig;
+
+use FastDog\Media\Models\Gallery;
+use FastDog\Media\Models\GalleryItem;
 use FastDog\User\Events\UserRegistration as UserRegistrationEvent;
+use FastDog\User\Models\UserConfig;
 use FastDog\User\User;
 use Illuminate\Http\Request;
 

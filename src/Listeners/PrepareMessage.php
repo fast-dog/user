@@ -3,12 +3,14 @@
 namespace FastDog\User\Listeners;
 
 
-use App\Modules\Config\Entity\DomainManager;
-use App\Modules\Media\Entity\Gallery;
-use App\Modules\Media\Entity\GalleryItem;
+
+use FastDog\Core\Models\DomainManager;
+use FastDog\Media\Models\Gallery;
+use FastDog\Media\Models\GalleryItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Nette\Mail\Message;
+use Nahid\Talk\Messages\Message;
+
 
 /**
  * Информация о сообщение чата

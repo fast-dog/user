@@ -1,20 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dg
- * Date: 28.02.2018
- * Time: 16:31
- */
-
 namespace FastDog\User\Listeners;
 
 
-use App\Core\FormFieldTypes;
-use App\Core\Module\ModuleManager;
-use App\Modules\Config\Entity\DomainManager;
-use FastDog\User\Entity\Profile\UserProfile;
-use FastDog\User\Entity\Profile\UserProfileCorporate;
+
+use FastDog\Core\Models\DomainManager;
+use FastDog\Core\Models\FormFieldTypes;
+use FastDog\Core\Models\ModuleManager;
 use FastDog\User\Events\UserAdminPrepare as UserAdminPrepareEvent;
+use FastDog\User\Models\Profile\UserProfile;
+use FastDog\User\Models\Profile\UserProfileCorporate;
 use FastDog\User\User;
 use Illuminate\Http\Request;
 
@@ -116,14 +110,14 @@ class UserItemSetEditForm
                             'active' => DomainManager::checkIsDefault(),
                             'css_class' => 'col-sm-12',
                         ],
-                        [
-                            'id' => User::GROUP_ID,
-                            'type' => FormFieldTypes::TYPE_SELECT,
-                            'name' => User::GROUP_ID,
-                            'label' => trans('app.Роль ACL'),
-                            'css_class' => 'col-sm-12',
-                            'items' => $item->getAclRoles(),
-                        ],
+//                        [
+//                            'id' => User::GROUP_ID,
+//                            'type' => FormFieldTypes::TYPE_SELECT,
+//                            'name' => User::GROUP_ID,
+//                            'label' => trans('app.Роль ACL'),
+//                            'css_class' => 'col-sm-12',
+//                            'items' => $item->getAclRoles(),
+//                        ],
                         [
                             'id' => User::CREATED_AT,
                             'type' => FormFieldTypes::TYPE_DATE,
@@ -157,15 +151,15 @@ class UserItemSetEditForm
                             'items' => User::getAllTypeCorporate(),//
                             'expression' => 'function(item){ return (item.type == "corporate"); }',
                         ],
-                        [
-                            'id' => UserProfileCorporate::TITLE,
-                            'type' => FormFieldTypes::TYPE_TEXT,
-                            'name' => UserProfileCorporate::LEGAL_ENTITY,
-                            'label' => trans('app.Наименование организации'),
-                            'css_class' => 'col-sm-6',
-                            'form_group' => false,
-                            'expression' => 'function(item){ return (item.type == "corporate"); }',
-                        ],
+//                        [
+//                            'id' => UserProfileCorporate::TITLE,
+//                            'type' => FormFieldTypes::TYPE_TEXT,
+//                            'name' => UserProfileCorporate::LEGAL_ENTITY,
+//                            'label' => trans('app.Наименование организации'),
+//                            'css_class' => 'col-sm-6',
+//                            'form_group' => false,
+//                            'expression' => 'function(item){ return (item.type == "corporate"); }',
+//                        ],
                         [
                             'id' => UserProfileCorporate::INN,
                             'type' => FormFieldTypes::TYPE_TEXT,

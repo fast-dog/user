@@ -2,9 +2,10 @@
 
 namespace FastDog\User\Listeners;
 
-use FastDog\User\Entity\Profile\UserProfile;
-use FastDog\User\Entity\Profile\UserProfileCorporate;
+
 use FastDog\User\Events\UserUpdate;
+use FastDog\User\Models\Profile\UserProfile;
+use FastDog\User\Models\Profile\UserProfileCorporate;
 use FastDog\User\User;
 use Illuminate\Http\Request;
 

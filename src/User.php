@@ -3,11 +3,11 @@
 namespace FastDog\User;
 
 use App\Core\Module\Components;
+use FastDog\Config\Models\Translate;
 use FastDog\Core\Interfaces\MenuInterface;
-use FastDog\Core\Interfaces\ModuleInterface;
 use FastDog\Core\Models\DomainManager;
-use FastDog\User\Controllers\Site\CabinetController;
-use FastDog\User\Controllers\Site\UserController;
+use FastDog\User\Http\Controllers\Site\CabinetController;
+use FastDog\User\Http\Controllers\Site\UserController;
 use FastDog\User\Models\MessageManager;
 use FastDog\User\Models\User as UserModel;
 

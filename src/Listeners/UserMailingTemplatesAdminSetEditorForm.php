@@ -2,9 +2,9 @@
 
 namespace FastDog\User\Listeners;
 
-use App\Core\FormFieldTypes;
-use FastDog\User\Entity\UserMailingTemplates;
+use FastDog\Core\Models\FormFieldTypes;
 use FastDog\User\Events\UserMailingTemplatesAdminPrepare as EventUserMailingTemplatesAdminPrepare;
+use FastDog\User\Models\UserMailingTemplates;
 use Illuminate\Http\Request;
 
 /**

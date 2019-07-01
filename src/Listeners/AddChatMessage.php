@@ -2,8 +2,7 @@
 
 namespace FastDog\User\Listeners;
 
-
-use App\Modules\Media\Entity\GalleryItem;
+use FastDog\Media\Models\GalleryItem;
 use FastDog\User\User;
 use Illuminate\Http\Request;
 use Nahid\Talk\Messages\Message;

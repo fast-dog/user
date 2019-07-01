@@ -8,6 +8,7 @@ use FastDog\Core\Models\ModuleManager;
 use FastDog\User\Events\UserAdminPrepare as UserAdminPrepareEvent;
 use FastDog\User\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 /**
  * Обработка данных в разделе администрирования
@@ -55,17 +56,17 @@ class UserAdminPrepare
         $data = $event->getData();
 
         //Состояние
-        $data[User::STATUS] = array_first(array_filter(User::getStatusList(), function ($element) use ($data) {
+        $data[User::STATUS] = Arr::first(array_filter(User::getStatusList(), function ($element) use ($data) {
             return ($element['id'] == $data[User::STATUS]);
         }));
 
         //Состояние
-        $data[User::TYPE] = array_first(array_filter(User::getAllType(), function ($element) use ($data) {
+        $data[User::TYPE] = Arr::first(array_filter(User::getAllType(), function ($element) use ($data) {
             return ($element['id'] == $data[User::TYPE]);
         }));
 
         //Доступ
-        $data[User::SITE_ID] = array_first(array_filter(DomainManager::getAccessDomainList(),
+        $data[User::SITE_ID] = Arr::first(array_filter(DomainManager::getAccessDomainList(),
             function ($element) use ($data) {
                 return $element['id'] == $data[User::SITE_ID];
             }));

@@ -2,10 +2,10 @@
 
 namespace FastDog\User\Listeners;
 
-use App\Modules\Media\Entity\Gallery;
-use App\Modules\Media\Entity\GalleryItem;
-use App\Modules\Media\Events\AfterUploadFile as EventAfterUploadFile;
 
+use FastDog\Media\Events\AfterUploadFile as EventAfterUploadFile;
+use FastDog\Media\Models\Gallery;
+use FastDog\Media\Models\GalleryItem;
 use FastDog\User\User;
 use Illuminate\Http\Request;
 
