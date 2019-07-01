@@ -18,11 +18,11 @@ class CreateUsersProfile extends Migration
             Schema::create('users_profile', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer(UserProfile::USER_ID)->default(0)->comment('Идентификатор пользователя');
-                $table->string(UserProfile::NAME, 50)->comment('Имя');
-                $table->string(UserProfile::SURNAME, 50)->comment('Фамилия');
-                $table->string(UserProfile::PATRONYMIC, 50)->comment('Отчество');
-                $table->string(UserProfile::PHONE, 50)->comment('Контактный телефон');
-                $table->json('data')->comment('Дополнительные параметры');
+                $table->string(UserProfile::NAME, 50)->nullable()->comment('Имя');
+                $table->string(UserProfile::SURNAME, 50)->nullable()->comment('Фамилия');
+                $table->string(UserProfile::PATRONYMIC, 50)->nullable()->comment('Отчество');
+                $table->string(UserProfile::PHONE, 50)->nullable()->comment('Контактный телефон');
+                $table->json('data')->nullable()->comment('Дополнительные параметры');
                 $table->timestamps();
                 $table->softDeletes();
                 $table->unique(UserProfile::USER_ID, 'UK_users_profile_user_id');

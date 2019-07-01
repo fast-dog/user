@@ -4,6 +4,7 @@ namespace FastDog\User\Models;
 
 
 use FastDog\Core\Models\BaseModel;
+
 use FastDog\Core\Models\DomainManager;
 use FastDog\Core\Table\Filters\BaseFilter;
 use FastDog\Core\Table\Filters\Operator\BaseOperator;
@@ -230,7 +231,6 @@ class User extends Authenticatable implements TableModelInterface
             self::SITE_ID => $this->{self::SITE_ID},
             self::DATA => $this->{self::DATA},
             self::STATUS => $this->{self::STATUS},
-            self::GROUP_ID => $this->{self::GROUP_ID},
         ];
 
         event(new GetUserData($data, $this));

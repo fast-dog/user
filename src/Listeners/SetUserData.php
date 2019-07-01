@@ -2,12 +2,13 @@
 
 namespace FastDog\User\Listeners;
 
-use App\Core\Module\ModuleManager;
-use App\Modules\Media\Entity\GalleryItem;
-use FastDog\User\Entity\Profile\UserProfile;
-use FastDog\User\Entity\Profile\UserProfileCorporate;
-use FastDog\User\Entity\UserEmails;
+
+use FastDog\Core\Models\ModuleManager;
+use FastDog\Media\Entity\GalleryItem;
 use FastDog\User\Events\GetUserData;
+use FastDog\User\Models\Profile\UserProfile;
+use FastDog\User\Models\Profile\UserProfileCorporate;
+use FastDog\User\Models\UserEmails;
 use FastDog\User\User;
 use Illuminate\Http\Request;
 

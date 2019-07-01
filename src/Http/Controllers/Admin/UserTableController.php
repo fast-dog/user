@@ -49,7 +49,7 @@ class UserTableController extends Controller implements TableControllerInterface
     {
         parent::__construct();
         $this->model = $model;
-        $this->accessKey = $this->model->getAccessKey();
+
         $this->initTable();
         $this->page_title = trans('user::interface.Пользователи');
     }

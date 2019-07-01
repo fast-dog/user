@@ -1,22 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dg
- * Date: 28.05.2018
- * Time: 8:54
- */
 
 namespace FastDog\User\Http\Controllers\Admin;
 
-use App\Core\Acl\Role;
-use App\Core\Form\Interfaces\FormControllerInterface;
-use App\Core\Form\Traits\FormControllerTrait;
-use App\Http\Controllers\Controller;
-use App\Modules\Config\Entity\DomainManager;
-use App\Modules\Config\Entity\Emails;
-use FastDog\User\Entity\User;
+
+use FastDog\Core\Form\Interfaces\FormControllerInterface;
+use FastDog\Core\Form\Traits\FormControllerTrait;
+use FastDog\Core\Http\Controllers\Controller;
 use FastDog\User\Events\UserRegistration;
 use FastDog\User\Events\UserUpdate;
+use FastDog\User\Models\User;
 use FastDog\User\Request\AddUser;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -33,7 +25,7 @@ class UserFormController extends Controller implements FormControllerInterface
 {
     use FormControllerTrait;
 
-    public function __construct(User $model)
+    public function __construct($model)
     {
         $this->model = $model;
         $this->page_title = trans('app.Пользователи');
