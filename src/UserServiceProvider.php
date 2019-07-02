@@ -47,6 +47,9 @@ class UserServiceProvider extends LaravelServiceProvider
         $moduleManager = \App::make(ModuleManager::class);
         $moduleManager->pushModule(User::MODULE_ID, (new User())->getModuleInfo(true));
 
+        $this->commands([
+            \FastDog\User\Console\Commands\TestUsers::class,
+        ]);
     }
 
     /**
