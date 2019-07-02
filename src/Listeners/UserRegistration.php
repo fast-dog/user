@@ -55,22 +55,25 @@ class UserRegistration
 
                 break;
         }
-        if ($config !== null && $config->can('registration_confirm')) {
-            Emails::send('user_registration_confirm', [
-                'title_header' => 'Регистрационная информация',
-                'email' => $user->{User::EMAIL},
-                'password' => $this->request->input(User::PASSWORD),
-                'to' => $user->{User::EMAIL},
-                'confirm_link' => url('/confirm/' . base64_encode($user->{User::HASH}), [], config('app.use_ssl')),
-            ]);
-        } else {
-            Emails::send('user_registration', [
-                'title_header' => 'Регистрационная информация',
-                'email' => $user->{User::EMAIL},
-                'password' => $this->request->input(User::PASSWORD),
-                'to' => $user->{User::EMAIL},
-            ]);
+        if (!\App::runningInConsole()) {
+            if ($config !== null && $config->can('registration_confirm')) {
+                Emails::send('user_registration_confirm', [
+                    'title_header' => 'Регистрационная информация',
+                    'email' => $user->{User::EMAIL},
+                    'password' => $this->request->input(User::PASSWORD),
+                    'to' => $user->{User::EMAIL},
+                    'confirm_link' => url('/confirm/' . base64_encode($user->{User::HASH}), [], config('app.use_ssl')),
+                ]);
+            } else {
+                Emails::send('user_registration', [
+                    'title_header' => 'Регистрационная информация',
+                    'email' => $user->{User::EMAIL},
+                    'password' => $this->request->input(User::PASSWORD),
+                    'to' => $user->{User::EMAIL},
+                ]);
+            }
         }
+
 
         /**
          * Загруженный через социальные сети аватар
