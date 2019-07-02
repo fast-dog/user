@@ -74,10 +74,9 @@ class TestUsers extends Command
 
             $user = User::create($data);
 
-            \Event::fire(new UserRegistration($user));
+            event(new UserRegistration($user));
 
-
-            \Event::fire(new UserUpdate($user, app()->request));
+            event(new UserUpdate($user, app()->request));
         }
     }
 }

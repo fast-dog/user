@@ -3,6 +3,7 @@
 namespace FastDog\User\Listeners;
 
 
+use FastDog\Config\Models\Emails;
 use FastDog\Media\Models\Gallery;
 use FastDog\Media\Models\GalleryItem;
 use FastDog\User\Events\UserRegistration as UserRegistrationEvent;
