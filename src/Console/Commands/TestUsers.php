@@ -5,7 +5,7 @@ namespace FastDog\User\Console\Commands;
 
 use FastDog\User\Events\UserRegistration;
 use FastDog\User\Events\UserUpdate;
-use FastDog\User\Models\User;
+use FastDog\User\User;
 use Illuminate\Console\Command;
 
 /**
