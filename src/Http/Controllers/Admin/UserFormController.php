@@ -3,10 +3,11 @@
 namespace FastDog\User\Http\Controllers\Admin;
 
 
+use FastDog\Config\Models\Emails;
 use FastDog\Core\Form\Interfaces\FormControllerInterface;
 use FastDog\Core\Form\Traits\FormControllerTrait;
 use FastDog\Core\Http\Controllers\Controller;
-use FastDog\Core\Models\BaseModel;
+use FastDog\Core\Models\DomainManager;
 use FastDog\User\Events\UserRegistration;
 use FastDog\User\Events\UserUpdate;
 use FastDog\User\Models\User;
@@ -29,7 +30,7 @@ class UserFormController extends Controller implements FormControllerInterface
     public function __construct(User $model)
     {
         $this->model = $model;
-        $this->page_title = trans('app.Пользователи');
+        $this->page_title = trans('user::interface.Пользователи');
         parent::__construct();
     }
 
@@ -39,7 +40,7 @@ class UserFormController extends Controller implements FormControllerInterface
      */
     public function getEditItem(Request $request): JsonResponse
     {
-        $this->breadcrumbs->push(['url' => '/users/items', 'name' => trans('app.Управление')]);
+        $this->breadcrumbs->push(['url' => '/users/items', 'name' => trans('user::interface.Управление')]);
 
         $result = $this->getItemData($request);
         if ($this->item) {
@@ -55,7 +56,7 @@ class UserFormController extends Controller implements FormControllerInterface
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postUserDelete(Request $request)
+    protected function postUserDelete(Request $request)
     {
         $result = ['success' => true];
         $ids = $request->input('ids');
@@ -63,7 +64,7 @@ class UserFormController extends Controller implements FormControllerInterface
             User::whereIn('id', $ids)->delete();
         }
 
-        return $this->json($result);
+        return $this->json($result, __METHOD__);
     }
 
     /**
@@ -75,18 +76,18 @@ class UserFormController extends Controller implements FormControllerInterface
         $result = [
             'success' => true,
         ];
+        if ($request->has('ids')) {
+            return $this->postUserDelete($request);
+        }
 
         $id = $request->input('id');
-        /**
-         * @var $user User
-         */
+        /** @var User $user */
         $user = User::find($id);
 
         $data = [
             User::EMAIL => $request->input(User::EMAIL),
             User::TYPE => $request->input(User::TYPE . '.id'),
             User::STATUS => $request->input(User::STATUS . '.id'),
-            User::GROUP_ID => $request->input(User::GROUP_ID . '.id'),
         ];
 
         if ($request->has(User::PASSWORD) && ($request->input(User::PASSWORD) !== '')) {
@@ -112,19 +113,9 @@ class UserFormController extends Controller implements FormControllerInterface
             $user = User::create($data);
             \Event::fire(new UserRegistration($user));
         }
-        if ($user->{User::GROUP_ID} <> $data[User::GROUP_ID]) {
-            $oldRole = Role::find($user->{User::GROUP_ID});
-            if ($oldRole) {
-                $user->revokeRole($oldRole);
-            }
-            $newRole = Role::find($data[User::GROUP_ID]);
-            if ($newRole) {
-                $user->assignRole($newRole);
-            }
-        }
         \Event::fire(new UserUpdate($user, $request));
 
-        return $this->json($result);
+        return $this->json($result, __METHOD__);
     }
 
     /**

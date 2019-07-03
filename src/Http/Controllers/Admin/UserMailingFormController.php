@@ -1,28 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dg
- * Date: 021 21.09.18
- * Time: 11:29
- */
-
 namespace FastDog\User\Http\Controllers\Admin;
 
-use App\Core\Acl\Role;
-use App\Core\Form\Interfaces\FormControllerInterface;
-use App\Core\Form\Traits\FormControllerTrait;
-use App\Http\Controllers\Controller;
-use App\Modules\Config\Entity\DomainManager;
-use App\Modules\Config\Entity\Emails;
-use FastDog\User\Entity\User;
-use FastDog\User\Entity\UserMailing;
-use FastDog\User\Entity\UserMailingProcess;
-use FastDog\User\Events\UserRegistration;
-use FastDog\User\Events\UserUpdate;
+
+use FastDog\Core\Form\Interfaces\FormControllerInterface;
+use FastDog\Core\Form\Traits\FormControllerTrait;
+use FastDog\Core\Http\Controllers\Controller;
 use FastDog\User\Jobs\SendMailing;
+use FastDog\User\Models\UserMailing;
+use FastDog\User\Models\UserMailingProcess;
 use FastDog\User\Request\AddMailing;
-use FastDog\User\Request\AddUser;
-use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -43,7 +29,7 @@ class UserMailingFormController extends Controller implements FormControllerInte
     public function __construct(UserMailing $model)
     {
         $this->model = $model;
-        $this->page_title = trans('app.Рассылки');
+        $this->page_title = trans('user::interface.Рассылки');
         parent::__construct();
     }
 
@@ -53,7 +39,7 @@ class UserMailingFormController extends Controller implements FormControllerInte
      */
     public function getEditItem(Request $request): JsonResponse
     {
-        $this->breadcrumbs->push(['url' => '/users/mailing', 'name' => trans('app.Управление')]);
+        $this->breadcrumbs->push(['url' => '/users/mailing', 'name' => trans('user::interface.Управление')]);
 
         $result = $this->getItemData($request);
         if ($this->item) {

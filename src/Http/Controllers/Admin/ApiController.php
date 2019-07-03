@@ -5,6 +5,7 @@ namespace FastDog\User\Http\Controllers\Admin;
 
 
 
+use FastDog\Admin\Models\Desktop;
 use FastDog\Core\Http\Controllers\Controller;
 use FastDog\Core\Models\DomainManager;
 use FastDog\Core\Models\ModuleManager;
@@ -26,7 +27,8 @@ class ApiController extends Controller
      */
     public function __construct()
     {
-        $this->page_title = trans('app.Пользователи');
+        parent::__construct();
+        $this->page_title = trans('user::interface.Пользователи');
     }
 
     /**
@@ -39,11 +41,11 @@ class ApiController extends Controller
         $result = ['success' => true, 'items' => [
             [
                 'id' => User::USER_TYPE_USER,
-                'name' => trans('app.Пользователь'),
+                'name' => trans('user::interface.Пользователь'),
             ],
             [
                 'id' => User::USER_TYPE_ADMIN,
-                'name' => trans('app.Администратор'),
+                'name' => trans('user::interface.Администратор'),
             ],
         ]];
 
@@ -60,10 +62,10 @@ class ApiController extends Controller
     {
         $result = ['success' => true,
             'items' => [],
-            'page_title' => trans('app.Пользователи'),
+            'page_title' => trans('user::interface.Пользователи'),
             'breadcrumbs' => [
-                ['url' => '/', 'name' => trans('app.Главная')],
-                ['url' => false, 'name' => trans('app.Настройки')],
+                ['url' => '/', 'name' => trans('user::interface.Главная')],
+                ['url' => false, 'name' => trans('user::interface.Настройки')],
             ],
         ];
         $moduleManager = \App::make(ModuleManager::class);
@@ -134,39 +136,6 @@ class ApiController extends Controller
         }
 
         array_push($result['items'], UserConfig::getAllConfig());
-
-        return $this->json($result, __METHOD__);
-    }
-
-    /**
-     * Изменение доступа к модулю
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postAccess(Request $request)
-    {
-        $result = ['success' => false];
-
-        $role = Role::where([
-            Role::NAME => $request->input('role'),
-        ])->first();
-        if ($role) {
-            $permission = Permission::where(function (Builder $query) use ($request, $role) {
-                $query->where(Permission::NAME, $request->input('permission') . '::' . $role->slug);
-            })->first();
-
-            if ($permission) {
-                if (isset($permission->slug[$request->input('accessName')])) {
-                    $permission_slug = $permission->slug;
-                    $permission_slug[$request->input('accessName')] = ($request->input('accessValue') == 'Y') ? true : false;
-                    Permission::where('id', $permission->id)->update([
-                        'slug' => \GuzzleHttp\json_encode($permission_slug),
-                    ]);
-                }
-            }
-            $result['acl'] = Config::getAcl(DomainManager::getSiteId(), strtolower(User::class));
-        }
 
         return $this->json($result, __METHOD__);
     }

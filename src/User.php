@@ -2,15 +2,14 @@
 
 namespace FastDog\User;
 
-use App\Core\Module\Components;
 use FastDog\Config\Models\Translate;
 use FastDog\Core\Interfaces\MenuInterface;
 use FastDog\Core\Models\DomainManager;
+use FastDog\Core\Module\Components;
 use FastDog\User\Http\Controllers\Site\CabinetController;
 use FastDog\User\Http\Controllers\Site\UserController;
 use FastDog\User\Models\MessageManager;
 use FastDog\User\Models\User as UserModel;
-
 use FastDog\User\Models\UserConfig;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -28,122 +27,63 @@ class User extends UserModel
 
     /**
      * Идентификатор модуля
-     *
      * @const string
      */
     const MODULE_ID = 'user';
 
     /**
      * Маршрут: авторизация
-     *
      * @const string
      */
     const TYPE_LOGIN = 'user_login';
 
     /**
      * Маршрут: выход
-     *
      * @const string
      */
     const TYPE_LOGOUT = 'user_logout';
 
     /**
      * Маршрут: регистрация
-     *
      * @const string
      */
     const TYPE_REGISTRATION = 'user_registration';
 
     /**
      * Маршрут: восстановление доступа
-     *
      * @const string
      */
     const TYPE_RESTORE_PASSWORD = 'user_restore_password';
 
     /**
      * Маршрут: личный кабинет
-     *
      * @const string
      */
     const TYPE_CABINET = 'user_cabinet';
 
     /**
      * Маршрут: личный кабинет (редактирование данных профиля)
-     *
      * @const string
      */
     const TYPE_CABINET_EDIT = 'user_cabinet_edit';
 
     /**
      * Маршрут: личный кабинет - настройки
-     *
      * @const string
      */
     const TYPE_CABINET_SETTINGS = 'user_cabinet_settings';
 
     /**
      * Маршрут: личный кабинет - сообщения
-     *
      * @const string
      */
     const TYPE_CABINET_MESSAGES = 'user_cabinet_messages';
 
     /**
      * Маршрут: личный кабинет - новое сообщение
-     *
      * @const string
      */
     const TYPE_CABINET_NEW_MESSAGES = 'user_cabinet_new_messages';
-
-
-    /**
-     * Маршрут: личный кабинет - мои объявления
-     * @const string
-     */
-    const TYPE_CABINET_MY_ITEMS = 'user_cabinet_my_items';
-
-    /**
-     * Маршрут: личный кабинет - список покупок
-     * @const string
-     */
-    const TYPE_CABINET_MY_BUYING = 'user_cabinet_my_buying';
-
-    /**
-     * Маршрут: личный кабинет - закладки|избранное
-     * @const string
-     */
-    const TYPE_CABINET_FAVORITES = 'user_cabinet_favorites';
-
-    /**
-     * Маршрут: личный кабинет - счет
-     * @const string
-     */
-    const TYPE_CABINET_BILLING = 'user_cabinet_billing';
-
-    /**
-     * Маршрут: Личный кабинет - выбор покупателя на товар
-     * @const string
-     */
-    const TYPE_CABINET_CHOOSE_BUYER = 'user_cabinet_choose_buyer';
-
-    /**
-     * Маршрут: Пользователи :: Добавление отзыва продавцу
-     * @const string
-     */
-    const TYPE_CABINET_ADD_OPINION = 'user_cabinet_add_opinion';
-
-    /**
-     * Маршрут: Пользователи :: Добавление отзыва покупателю
-     * @const string
-     */
-    const TYPE_CABINET_ADD_OPINION_BUYER = 'user_cabinet_add_opinion_buyer';
-
-    /**
-     * Маршрут: Блог
-     * @const string
-     */
-    const TYPE_BLOG = 'user_blog';
 
     /**
      * @const string
@@ -152,7 +92,6 @@ class User extends UserModel
 
     /**
      * Параметры конфигурации описанные в module.json
-     *
      * @var null|object $data
      */
     protected $data;
@@ -198,7 +137,7 @@ class User extends UserModel
                         $templateName = implode('.', $tmp);
 
                         $templateName = str_replace(['.blade.php'], [''], $templateName);
-                        $name = array_last(explode('.', $templateName));
+                        $name = Arr::last(explode('.', $templateName));
 
                         if (isset($description[$name])) {
                             $name = $description[$name];
@@ -228,17 +167,17 @@ class User extends UserModel
     public function getMenuType(): array
     {
         return [
-            ['id' => 'user_login', 'name' => 'Пользователи :: Авторизация', 'sort' => 400],
-            ['id' => 'user_registration', 'name' => 'Пользователи :: Регистрация', 'sort' => 410],
-            ['id' => 'user_restore_password', 'name' => 'Пользователи :: Восстановление пароля', 'sort' => 420],
-            ['id' => 'user_cabinet', 'name' => 'Пользователи :: Личный кабинет', 'sort' => 430],
-            ['id' => 'user_cabinet_edit', 'name' => 'Пользователи :: Личный кабинет (редактирование)', 'sort' => 440],
-            ['id' => 'user_cabinet_settings', 'name' => 'Пользователи :: Личный кабинет - настройки', 'sort' => 450],
-            ['id' => 'user_cabinet_messages', 'name' => 'Пользователи :: Личный кабинет - сообщения', 'sort' => 460],
-            ['id' => 'user_cabinet_new_messages', 'name' => 'Пользователи :: Личный кабинет - новое сообщение', 'sort' => 470],
-            ['id' => 'user_cabinet_favorites', 'name' => 'Пользователи :: Личный кабинет - закладки', 'sort' => 480],
-            ['id' => 'user_cabinet_billing', 'name' => 'Пользователи :: Личный кабинет - счет', 'sort' => 490],
-            ['id' => 'user_logout', 'name' => 'Пользователи :: Выход', 'sort' => 500],
+            ['id' => 'user_login', 'name' => trans('user::menu.Пользователи :: Авторизация'), 'sort' => 400],
+            ['id' => 'user_registration', 'name' => trans('user::menu.Пользователи :: Регистрация'), 'sort' => 410],
+            ['id' => 'user_restore_password', 'name' => trans('user::menu.Пользователи :: Восстановление пароля'), 'sort' => 420],
+            ['id' => 'user_cabinet', 'name' => trans('user::menu.Пользователи :: Личный кабинет'), 'sort' => 430],
+            ['id' => 'user_cabinet_edit', 'name' => trans('user::menu.Пользователи :: Личный кабинет (редактирование)'), 'sort' => 440],
+            ['id' => 'user_cabinet_settings', 'name' => trans('user::menu.Пользователи :: Личный кабинет - настройки'), 'sort' => 450],
+            ['id' => 'user_cabinet_messages', 'name' => trans('user::menu.Пользователи :: Личный кабинет - сообщения'), 'sort' => 460],
+            ['id' => 'user_cabinet_new_messages', 'name' => trans('user::menu.Пользователи :: Личный кабинет - новое сообщение'), 'sort' => 470],
+            ['id' => 'user_cabinet_favorites', 'name' => trans('user::menu.Пользователи :: Личный кабинет - закладки'), 'sort' => 480],
+            ['id' => 'user_cabinet_billing', 'name' => trans('user::menu.Пользователи :: Личный кабинет - счет'), 'sort' => 490],
+            ['id' => 'user_logout', 'name' => trans('user::menu.Пользователи :: Выход'), 'sort' => 500],
         ];
     }
 
@@ -338,26 +277,26 @@ class User extends UserModel
         $result = [
             'id' => 'users',
             'instance' => __CLASS__,
-            'name' => trans('app.Пользователи'),
+            'name' => trans('user::interface.Пользователи'),
             'items' => [
                 [
                     'id' => 'messages',
-                    'name' => trans('app.Пользователи') . ' :: ' . trans('app.Личные сообщения'),
+                    'name' => trans('user::interface.Пользователи') . ' :: ' . trans('user::modules.Личные сообщения'),
                     'templates' => $this->getTemplates($paths . '/modules/users/messages/*.blade.php'),
                 ],
                 [
                     'id' => 'login',
-                    'name' => trans('app.Пользователи') . ' :: ' . trans('app.Авторизация пользователя'),
+                    'name' => trans('user::interface.Пользователи') . ' :: ' . trans('user::modules.Авторизация пользователя'),
                     'templates' => $this->getTemplates($paths . '/modules/users/auth/*.blade.php'),
                 ],
                 [
                     'id' => 'registration',
-                    'name' => trans('app.Пользователи') . ' :: ' . trans('app.Регистрация пользователя'),
+                    'name' => trans('user::interface.Пользователи') . ' :: ' . trans('user::modules.Регистрация пользователя'),
                     'templates' => $this->getTemplates($paths . '/modules/users/registration/*.blade.php'),
                 ],
                 [
                     'id' => 'subscribe',
-                    'name' => trans('app.Пользователи') . ' :: ' . trans('app.Подписка на рассылку'),
+                    'name' => trans('user::interface.Пользователи') . ' :: ' . trans('user::modules.Подписка на рассылку'),
                     'templates' => $this->getTemplates($paths . '/modules/users/subscribe/*.blade.php'),
                 ],
             ],
@@ -521,15 +460,6 @@ class User extends UserModel
         return $result;
     }
 
-    /**
-     * Метод возвращает директорию модуля
-     *
-     * @return string
-     */
-    public function getModuleDir(): string
-    {
-        return dirname(__FILE__);
-    }
 
     /**
      * Возвращает параметры блоков добавляемых на рабочий стол администратора
@@ -584,12 +514,22 @@ class User extends UserModel
             'name' => trans('user::interface.Пользователи'),
             'route' => '/users',
             'children' => [],
+            'interface' => [
+                'routes' => [
+                    'path' => '/users/',
+                    'name' => 'users',
+                ],
+            ],
         ];
 
         array_push($result['children'], [
             'icon' => 'fa-table',
             'name' => trans('user::interface.Управление'),
             'route' => '/users/items',
+            'interface' => [
+                'component' => 'table',
+
+            ],
         ]);
 
         array_push($result['children'], [

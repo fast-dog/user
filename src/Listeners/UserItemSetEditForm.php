@@ -1,7 +1,6 @@
 <?php
+
 namespace FastDog\User\Listeners;
-
-
 
 use FastDog\Core\Models\DomainManager;
 use FastDog\Core\Models\FormFieldTypes;
@@ -142,15 +141,15 @@ class UserItemSetEditForm
                     'name' => trans('app.Профиль'),
                     'active' => false,
                     'fields' => [
-                        [
-                            'id' => UserProfileCorporate::LEGAL_ENTITY,
-                            'type' => FormFieldTypes::TYPE_SELECT,
-                            'name' => UserProfileCorporate::LEGAL_ENTITY,
-                            'label' => trans('app.Форма юридического лица'),
-                            'css_class' => 'col-sm-6', 'form_group' => false,
-                            'items' => User::getAllTypeCorporate(),//
-                            'expression' => 'function(item){ return (item.type == "corporate"); }',
-                        ],
+//                        [
+//                            'id' => UserProfileCorporate::LEGAL_ENTITY,
+//                            'type' => FormFieldTypes::TYPE_SELECT,
+//                            'name' => UserProfileCorporate::LEGAL_ENTITY,
+//                            'label' => trans('app.Форма юридического лица'),
+//                            'css_class' => 'col-sm-6', 'form_group' => false,
+//                            'items' => User::getAllTypeCorporate(),//
+//                            'expression' => 'function(item){ return (item.type == "corporate"); }',
+//                        ],
 //                        [
 //                            'id' => UserProfileCorporate::TITLE,
 //                            'type' => FormFieldTypes::TYPE_TEXT,

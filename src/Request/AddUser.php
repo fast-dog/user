@@ -33,10 +33,14 @@ class AddUser extends FormRequest
      */
     public function rules()
     {
-        return [
-            'email' => 'required|email',
-            'type' => 'required',
-        ];
+        if (!$this->has('ids')) {
+            return [
+                'email' => 'required|email',
+                'type' => 'required',
+            ];
+        }
+
+        return [];
     }
 
     /**
@@ -57,7 +61,8 @@ class AddUser extends FormRequest
         $validator = parent::getValidatorInstance();
         $validator->after(function () use ($validator) {
             $input = $this->all();
-            if (!$input['id']) {
+
+            if (!$this->has('id') && !$this->has('ids')) {
                 $check = User::where(function (Builder $query) use ($input) {
                     $query->where('email', $input['email']);
                 })->first();
