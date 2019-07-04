@@ -514,22 +514,12 @@ class User extends UserModel
             'name' => trans('user::interface.Пользователи'),
             'route' => '/users',
             'children' => [],
-            'interface' => [
-                'routes' => [
-                    'path' => '/users/',
-                    'name' => 'users',
-                ],
-            ],
         ];
 
         array_push($result['children'], [
             'icon' => 'fa-table',
             'name' => trans('user::interface.Управление'),
             'route' => '/users/items',
-            'interface' => [
-                'component' => 'table',
-
-            ],
         ]);
 
         array_push($result['children'], [
