@@ -167,7 +167,7 @@ class UserItemSetEditForm
                             'label' => trans('user::forms.profile.fields.inn'),
                             'css_class' => 'col-sm-6',
                             'form_group' => false,
-                            'expression' => 'function(item){ return (item.type == "corporate"); }',
+                            'expression' => 'function(item){ return (item.type.id == "corporate"); }',
                         ],
                         [
                             'id' => UserProfileCorporate::CPP,
@@ -176,7 +176,7 @@ class UserItemSetEditForm
                             'label' => trans('user::forms.profile.fields.cpp'),
                             'css_class' => 'col-sm-6',
                             'form_group' => false,
-                            'expression' => 'function(item){ return (item.type == "corporate"); }',
+                            'expression' => 'function(item){ return (item.type.id == "corporate"); }',
                         ],
                         [
                             'id' => UserProfileCorporate::OKPO,
@@ -185,7 +185,7 @@ class UserItemSetEditForm
                             'label' => trans('user::forms.profile.fields.okpo'),
                             'css_class' => 'col-sm-6',
                             'form_group' => false,
-                            'expression' => 'function(item){ return (item.type == "corporate"); }',
+                            'expression' => 'function(item){ return (item.type.id == "corporate"); }',
                         ],
                         //... <--  Все заполнять нет смысла, используется в 1 из 100 проектов и набор полей инивидуален,
                         //..       при необходимости использовать событие для изменения полей профиля
@@ -196,7 +196,7 @@ class UserItemSetEditForm
                             'label' => trans('user::forms.profile.fields.name'),
                             'css_class' => 'col-sm-6',
                             'form_group' => false,
-                            'expression' => 'function(item){ return (item.type == "user" || item.type == "admin"); }',
+                            'expression' => 'function(item){ return (item.type.id == "user" || item.type.id == "admin"); }',
                         ],
                         [
                             'id' => UserProfile::PATRONYMIC,
@@ -205,7 +205,7 @@ class UserItemSetEditForm
                             'label' => trans('user::forms.profile.fields.patronymic'),
                             'css_class' => 'col-sm-6',
                             'form_group' => false,
-                            'expression' => 'function(item){ return (item.type == "user" || item.type == "admin"); }',
+                            'expression' => 'function(item){ return (item.type.id == "user" || item.type.id == "admin"); }',
                         ],
                     ],
                 ],
