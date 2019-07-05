@@ -785,6 +785,7 @@ class User extends Authenticatable implements TableModelInterface
                 'key' => User::EMAIL,
                 'domain' => true,
                 'link' => 'user_profile',
+                'show' => true,
             ],
             [
                 'name' => trans('core::interface.Дата регистрации'),
@@ -792,6 +793,7 @@ class User extends Authenticatable implements TableModelInterface
                 'width' => 150,
                 'link' => null,
                 'class' => 'text-center',
+                'show' => true,
             ],
             [
                 'name' => '#',
@@ -799,6 +801,14 @@ class User extends Authenticatable implements TableModelInterface
                 'link' => null,
                 'width' => 80,
                 'class' => 'text-center',
+                'show' => true,
+                'modal' => [
+                    'title' => 'Пользователь',
+                    'fields' => [
+                        User::EMAIL,
+                        User::CREATED_AT,
+                    ],
+                ],
             ],
         ];
     }
