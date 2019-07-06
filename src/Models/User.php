@@ -830,7 +830,7 @@ class User extends Authenticatable implements TableModelInterface
                     BaseFilter::NAME => \FastDog\User\Models\User::EMAIL,
                     BaseFilter::PLACEHOLDER => 'Email',
                     BaseFilter::TYPE => BaseFilter::TYPE_TEXT,
-                    BaseFilter::DISPLAY => false,
+                    BaseFilter::DISPLAY => true,
                     BaseFilter::OPERATOR => (new BaseOperator('LIKE', 'LIKE'))->getOperator(),
 
                 ],
