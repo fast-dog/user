@@ -802,18 +802,14 @@ class User extends Authenticatable implements TableModelInterface
                 'width' => 80,
                 'class' => 'text-center',
                 'show' => true,
-                'modal' => [
-                    'title' => 'Пользователь',
-                    'fields' => [
-                        User::EMAIL,
-                        User::CREATED_AT,
-                    ],
-                ],
+                'modal' => true,
             ],
         ];
     }
 
     /**
+     * Набор фильтров для таблицы
+     *
      * @return array
      */
     public function getAdminFilters(): array
@@ -853,5 +849,61 @@ class User extends Authenticatable implements TableModelInterface
         ];
 
         return $default;
+    }
+
+    /**
+     * Данные предпросмотра в таблице
+     *
+     * @param $id
+     * @return array
+     */
+    public function getModalData($id): array
+    {
+        $result = [];
+        self::where('id', $id)->get()->each(function (self $item) use (&$result) {
+            $data = $item->getData();
+
+            $result = [
+                'print' => false,
+                'table' => [
+                    'rows' => [
+                        [
+                            'type' => 'image',
+                            'name' => 'photo',
+                            'src' => $item->getPhoto('100'),
+                            'label' => trans('user::interface.Фотография'),
+                        ],
+                        [
+                            'type' => 'string',
+                            'name' => 'type',
+                            'value' => $this->getRoleName(),
+                            'label' => trans('user::interface.Тип учетной записи'),
+                        ],
+                        [
+                            'type' => 'string',
+                            'name' => 'email',
+                            'value' => $data[self::EMAIL],
+                            'label' => 'Email',
+                        ],
+                        [
+                            'type' => 'separator',
+                            'label' => trans('user::interface.Профиль'),
+                        ],
+                        [
+                            'type' => 'string',
+                            'name' => 'name',
+                            'value' => $item->getName(),
+                            'label' => trans('user::interface.ФИО'),
+                        ],
+                    ],
+                ],
+            ];
+
+            if (env('APP_DEBUG')) {
+                $result['_data'] = $data;
+            }
+        });
+
+        return $result;
     }
 }

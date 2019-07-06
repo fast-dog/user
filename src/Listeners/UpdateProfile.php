@@ -54,11 +54,14 @@ class UpdateProfile
                 }
                 $data = $this->request->input('profile');
 
-                if ($this->request->has(UserProfile::NAME)) {
-                    $data[UserProfile::NAME] = $this->request->input(UserProfile::NAME);
+                if ($this->request->has('profile_' . UserProfile::NAME)) {
+                    $data[UserProfile::NAME] = $this->request->input('profile_' . UserProfile::NAME);
                 }
-                if ($this->request->has(UserProfile::SURNAME)) {
-                    $data[UserProfile::SURNAME] = $this->request->input(UserProfile::SURNAME);
+                if ($this->request->has('profile_' . UserProfile::SURNAME)) {
+                    $data[UserProfile::SURNAME] = $this->request->input('profile_' . UserProfile::SURNAME);
+                }
+                if ($this->request->has('profile_' . UserProfile::PATRONYMIC)) {
+                    $data[UserProfile::PATRONYMIC] = $this->request->input('profile_' . UserProfile::PATRONYMIC);
                 }
 
                 if ($this->request->has(UserProfile::CITY_ID)) {
@@ -70,7 +73,7 @@ class UpdateProfile
                 UserProfile::where('id', $item->id)->update($data);
                 break;
             case User::USER_TYPE_CORPORATE:
-                $data  = [
+                $data = [
                     'legal_entity' => $this->request->input('profile.legal_entity'),
                     'title' => $this->request->input('profile.title'),
                     'country_id' => $this->request->input('profile.country_id'),
@@ -114,7 +117,7 @@ class UpdateProfile
 
                     //'data' => json_encode($this->request->input('profile.data')),
                 ];
-                UserProfileCorporate::where('id',$this->request->input('profile.id'))->update($data);
+                UserProfileCorporate::where('id', $this->request->input('profile.id'))->update($data);
 
                 break;
         }

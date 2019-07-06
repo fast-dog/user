@@ -64,8 +64,8 @@ class SetUserData
 
         if (($user->id > 0) && (isset($user->profile->data) && ($user->profile->data !== null))) {
             $user->profile->data = json_decode($user->profile->data);
-           // if (!isset($user->profile->data->phone_mask)) {
-               // $user->profile->data->phone_mask = $phoneMask;
+            // if (!isset($user->profile->data->phone_mask)) {
+            // $user->profile->data->phone_mask = $phoneMask;
             //}
             $_data = $user->profile->data;
         } else {
@@ -90,7 +90,7 @@ class SetUserData
                 if (!isset($_data->soc)) {
                     $_data->soc = (object)[
                         'g' => '',
-                        'f' => ''
+                        'f' => '',
                     ];
                 }
                 if (!isset($_data->children)) {
@@ -106,6 +106,9 @@ class SetUserData
                         $user->profile->birth : '',
                     'data' => $_data,
                 ];
+                foreach ($data['profile'] as $key => $value) {
+                    $data['profile_' . $key] = $value;
+                }
                 break;
             case User::USER_TYPE_CORPORATE:
                 if ($user->profile == null) {
