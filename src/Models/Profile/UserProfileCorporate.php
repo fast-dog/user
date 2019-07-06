@@ -2,9 +2,7 @@
 
 namespace FastDog\User\Models\Profile;
 
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Профиль Юридического лица
@@ -13,7 +11,7 @@ use Illuminate\Support\Facades\Schema;
  * @version 0.2.0
  * @author Андрей Мартынов <d.g.dev482@gmail.com>
  */
-class UserProfileCorporate extends AbstractProfile
+class UserProfileCorporate extends Model
 {
 
     const USER_ID = 'user_id';
