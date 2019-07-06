@@ -865,6 +865,7 @@ class User extends Authenticatable implements TableModelInterface
 
             $result = [
                 'print' => false,
+                'title' => $item->getName() . ' <small>' . $data[User::EMAIL] . '</small>',
                 'table' => [
                     'rows' => [
                         [
