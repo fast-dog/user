@@ -52,20 +52,28 @@ class UpdateProfile
                         UserProfile::USER_ID => $user->id,
                     ]);
                 }
-                $data = $this->request->input('profile');
+                $data = [
+                    'data' => $this->request->input('profile.data'),
+                ];// $this->request->input('profile');
 
                 if ($this->request->has('profile_' . UserProfile::NAME)) {
                     $data[UserProfile::NAME] = $this->request->input('profile_' . UserProfile::NAME);
                 }
+
                 if ($this->request->has('profile_' . UserProfile::SURNAME)) {
                     $data[UserProfile::SURNAME] = $this->request->input('profile_' . UserProfile::SURNAME);
                 }
+
                 if ($this->request->has('profile_' . UserProfile::PATRONYMIC)) {
                     $data[UserProfile::PATRONYMIC] = $this->request->input('profile_' . UserProfile::PATRONYMIC);
                 }
 
-                if ($this->request->has(UserProfile::CITY_ID)) {
-                    $data[UserProfile::CITY_ID] = $this->request->input(UserProfile::CITY_ID);
+                if ($this->request->has('profile_' . UserProfile::ADDRESS)) {
+                    $data[UserProfile::ADDRESS] = $this->request->input('profile_' . UserProfile::ADDRESS);
+                }
+
+                if ($this->request->has('profile_' . UserProfile::PHONE)) {
+                    $data[UserProfile::PHONE] = $this->request->input('profile_' . UserProfile::PHONE);
                 }
 
                 $data['data'] = (isset($data['data'])) ? json_encode($data['data']) : json_encode([]);

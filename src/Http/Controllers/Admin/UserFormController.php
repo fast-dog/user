@@ -111,9 +111,9 @@ class UserFormController extends Controller implements FormControllerInterface
         } else {
             $data[User::STATUS] = User::STATUS_ACTIVE;
             $user = User::create($data);
-            \Event::fire(new UserRegistration($user));
+            event(new UserRegistration($user));
         }
-        \Event::fire(new UserUpdate($user, $request));
+        event(new UserUpdate($user, $request));
 
         return $this->json($result, __METHOD__);
     }

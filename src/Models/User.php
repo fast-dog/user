@@ -13,6 +13,7 @@ use FastDog\Media\Models\Gallery;
 use FastDog\User\Events\GetUserData;
 use FastDog\User\Events\UserAdminPrepare;
 use Carbon\Carbon;
+use FastDog\User\Models\Profile\UserProfile;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -367,7 +368,8 @@ class User extends Authenticatable implements TableModelInterface
         if (isset($this->profile) && $this->profile) {
             $name = $this->profile->name;
             if ($name) {
-                return $name . ' ' . $this->profile->surname;
+                return $name . ' ' . $this->profile->patronymic . ' ' .
+                    ' ' . $this->profile->surname;
             }
         }
 
@@ -549,9 +551,9 @@ class User extends Authenticatable implements TableModelInterface
         $result = [
             'address' => $this->getAddress(),
             'age' => $this->getAge(),
-            'children' => $this->getChildren(),
-            'about' => $this->getAbout(),
-            'location' => $this->getLocation(),
+//            'children' => $this->getChildren(),
+//            'about' => $this->getAbout(),
+//            'location' => $this->getLocation(),
         ];
 
         return $result;
@@ -564,20 +566,28 @@ class User extends Authenticatable implements TableModelInterface
      */
     public function getAddress()
     {
-        $result = null;
+        return $this->profile->{UserProfile::ADDRESS};
+    }
 
-        /**
-         * @var $userLocality BaseModel
-         */
-        $userLocality = $this->profile->city;
+    /**
+     * Полный адрес
+     *
+     * @return string
+     */
+    public function getFullAddress(): string
+    {
+        $result = ['<strong>' . $this->getName() . '</strong>',];
+        if ($address = $this->getAddress()) {
+            array_push($result, $address);
+        }
+        array_push($result, $this->{User::EMAIL});
 
-        if ($userLocality) {
-            $result = [Str::title($userLocality->{BaseModel::NAME})];
-
-            return implode(', ', $result);
+        $phone = $this->profile->{UserProfile::PHONE};
+        if ($phone) {
+            array_push($result, $phone);
         }
 
-        return $result;
+        return implode('<br>', $result);
     }
 
     /**
@@ -887,6 +897,12 @@ class User extends Authenticatable implements TableModelInterface
                             'label' => 'Email',
                         ],
                         [
+                            'type' => 'string',
+                            'name' => 'phone',
+                            'value' => $data['profile_phone'],
+                            'label' => trans('user::interface.Контактный телефон'),
+                        ],
+                        [
                             'type' => 'separator',
                             'label' => trans('user::interface.Профиль'),
                         ],
@@ -895,6 +911,17 @@ class User extends Authenticatable implements TableModelInterface
                             'name' => 'name',
                             'value' => $item->getName(),
                             'label' => trans('user::interface.ФИО'),
+                        ],
+                        [
+                            'type' => 'string',
+                            'name' => 'address',
+                            'value' => $item->getFullAddress(),
+                            'label' => trans('user::interface.Адрес'),
+                        ],
+                        [
+                            'type' => 'map',
+                            'name' => 'address_map',
+                            'value' => $item->getAddress(),
                         ],
                     ],
                 ],

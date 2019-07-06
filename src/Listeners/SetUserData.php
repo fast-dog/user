@@ -84,9 +84,7 @@ class SetUserData
                         ]);
                     }
                 }
-                if (!isset($_data->location)) {
-                    $_data->location = '';
-                }
+
                 if (!isset($_data->soc)) {
                     $_data->soc = (object)[
                         'g' => '',
@@ -101,7 +99,7 @@ class SetUserData
                     'surname' => isset($user->profile->surname) ? $user->profile->surname : '',
                     'patronymic' => isset($user->profile->patronymic) ? $user->profile->patronymic : '',
                     'phone' => isset($user->profile->phone) ? $user->profile->phone : '',
-                    'delivery' => (isset($user->profile->delivery)) ? $user->profile->delivery : '',
+                    'address' => (isset($user->profile->address)) ? $user->profile->address : '',
                     'birth' => (isset($user->profile->birth) && $user->profile->birth != '0000-00-00') ?
                         $user->profile->birth : '',
                     'data' => $_data,

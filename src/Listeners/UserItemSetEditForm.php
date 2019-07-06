@@ -59,8 +59,8 @@ class UserItemSetEditForm
 
 
         $result['form'] = [
-            'create_url' => 'user/add',
-            'update_url' => 'user/add',
+            'create_url' => 'users/update',
+            'update_url' => 'users/update',
             'tabs' => (array)[
                 (object)[
                     'id' => 'user-general-tab',
@@ -163,7 +163,7 @@ class UserItemSetEditForm
                         [
                             'id' => UserProfileCorporate::INN,
                             'type' => FormFieldTypes::TYPE_TEXT,
-                            'name' => UserProfileCorporate::INN,
+                            'name' => 'profile_' . UserProfileCorporate::INN,
                             'label' => trans('user::forms.profile.fields.inn'),
                             'css_class' => 'col-sm-6',
                             'form_group' => false,
@@ -172,7 +172,7 @@ class UserItemSetEditForm
                         [
                             'id' => UserProfileCorporate::CPP,
                             'type' => FormFieldTypes::TYPE_TEXT,
-                            'name' => UserProfileCorporate::CPP,
+                            'name' => 'profile_' . UserProfileCorporate::CPP,
                             'label' => trans('user::forms.profile.fields.cpp'),
                             'css_class' => 'col-sm-6',
                             'form_group' => false,
@@ -181,7 +181,7 @@ class UserItemSetEditForm
                         [
                             'id' => UserProfileCorporate::OKPO,
                             'type' => FormFieldTypes::TYPE_TEXT,
-                            'name' => UserProfileCorporate::OKPO,
+                            'name' => 'profile_' . UserProfileCorporate::OKPO,
                             'label' => trans('user::forms.profile.fields.okpo'),
                             'css_class' => 'col-sm-6',
                             'form_group' => false,
@@ -192,8 +192,17 @@ class UserItemSetEditForm
                         [
                             'id' => UserProfile::NAME,
                             'type' => FormFieldTypes::TYPE_TEXT,
-                            'name' => UserProfile::NAME,
+                            'name' => 'profile_' . UserProfile::NAME,
                             'label' => trans('user::forms.profile.fields.name'),
+                            'css_class' => 'col-sm-6',
+                            'form_group' => false,
+                            'expression' => 'function(item){ return (item.type.id == "user" || item.type.id == "admin"); }',
+                        ],
+                        [
+                            'id' => UserProfile::SURNAME,
+                            'type' => FormFieldTypes::TYPE_TEXT,
+                            'name' => 'profile_' . UserProfile::SURNAME,
+                            'label' => trans('user::forms.profile.fields.surname'),
                             'css_class' => 'col-sm-6',
                             'form_group' => false,
                             'expression' => 'function(item){ return (item.type.id == "user" || item.type.id == "admin"); }',
@@ -201,10 +210,30 @@ class UserItemSetEditForm
                         [
                             'id' => UserProfile::PATRONYMIC,
                             'type' => FormFieldTypes::TYPE_TEXT,
-                            'name' => UserProfile::PATRONYMIC,
+                            'name' => 'profile_' . UserProfile::PATRONYMIC,
                             'label' => trans('user::forms.profile.fields.patronymic'),
                             'css_class' => 'col-sm-6',
                             'form_group' => false,
+                            'expression' => 'function(item){ return (item.type.id == "user" || item.type.id == "admin"); }',
+                        ],
+                        [
+                            'id' => UserProfile::ADDRESS,
+                            'type' => FormFieldTypes::TYPE_ADDRESS,
+                            'name' => 'profile_' . UserProfile::ADDRESS,
+                            'label' => trans('user::forms.profile.fields.address'),
+                            'css_class' => 'col-sm-6',
+                            'form_group' => false,
+                            'token' => config('core.DADATA_TOKEN'),
+                            'expression' => 'function(item){ return (item.type.id == "user" || item.type.id == "admin"); }',
+                        ],
+                        [
+                            'id' => UserProfile::PHONE,
+                            'type' => FormFieldTypes::TYPE_TEXT,
+                            'name' => 'profile_' . UserProfile::PHONE,
+                            'label' => trans('user::forms.profile.fields.phone'),
+                            'css_class' => 'col-sm-6',
+                            'form_group' => false,
+                            'mask' => '+9 (999) 999-99-99?99',
                             'expression' => 'function(item){ return (item.type.id == "user" || item.type.id == "admin"); }',
                         ],
                     ],

@@ -4,9 +4,6 @@ namespace FastDog\User\Models\Profile;
 
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
 /**
  * Профиль пользователя
@@ -54,10 +51,9 @@ class UserProfile extends Model
     const DATA = 'data';
 
     /**
-     * Идентификатор города\населенного пункта ФИАС
      * @const string
      */
-    const CITY_ID = 'city_id';
+    const ADDRESS = 'address';
 
     /**
      * Название таблицы
@@ -72,17 +68,8 @@ class UserProfile extends Model
      * @var array $fillable
      */
     public $fillable = [self::USER_ID, self::NAME, self::SURNAME, self::PATRONYMIC, self::PHONE, self::DATA,
-        self::CITY_ID];
+        self::ADDRESS];
 
-    /**
-     * Отношение к местоположению
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function city()
-    {
-//        return $this->hasOne('App\Core\Location\Place', \App\Core\Location\Place::FIAS_AOGUID, self::CITY_ID);
-    }
 
     /**
      * Подробные данные по модели
@@ -98,9 +85,7 @@ class UserProfile extends Model
             self::PATRONYMIC => $this->{self::PATRONYMIC},
             self::PHONE => $this->{self::PHONE},
             self::DATA => $this->{self::DATA},
-            self::CITY_ID => $this->{self::CITY_ID},
+            self::ADDRESS => $this->{self::ADDRESS},
         ];
     }
-
-
 }

@@ -22,6 +22,7 @@ class CreateUsersProfile extends Migration
                 $table->string(UserProfile::SURNAME, 50)->nullable()->comment('Фамилия');
                 $table->string(UserProfile::PATRONYMIC, 50)->nullable()->comment('Отчество');
                 $table->string(UserProfile::PHONE, 50)->nullable()->comment('Контактный телефон');
+                $table->string(UserProfile::ADDRESS, 255)->nullable()->comment('Адрес');
                 $table->json('data')->nullable()->comment('Дополнительные параметры');
                 $table->timestamps();
                 $table->softDeletes();
