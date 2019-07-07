@@ -2,7 +2,8 @@
 
 namespace FastDog\User;
 
-use App\Policies\UserPolicy;
+
+use FastDog\User\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 /**

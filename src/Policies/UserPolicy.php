@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Policies;
+namespace FastDog\User\Policies;
 
 use FastDog\User\Models\User;
 
