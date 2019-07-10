@@ -79,7 +79,7 @@ class UserMailingTemplatesAdminPrepare implements AdminPrepareEventInterface
      * @param $data
      * @return void
      */
-    public function setData($data): void
+    public function setData(array $data): void
     {
         $this->data = $data;
     }

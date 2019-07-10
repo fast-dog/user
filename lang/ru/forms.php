@@ -25,4 +25,13 @@ return [
             'phone' => 'Телефон',
         ],
     ],
+    'mailing' => [
+        'name' => 'Название',
+        'subject' => 'Тема сообщения',
+        'html' => 'HTML текст',
+        'access' => 'Доступ',
+        'template' => 'Шаблон',
+        'date_create' => 'Дата создания',
+        'date_sending' => 'Дата рассылки',
+    ],
 ];

@@ -5,6 +5,7 @@ namespace FastDog\User\Events;
 
 use FastDog\Core\Interfaces\AdminPrepareEventInterface;
 use FastDog\User\Models\UserMailing;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Обработка данных перед редактированием
@@ -45,7 +46,7 @@ class UserMailingAdminPrepare implements AdminPrepareEventInterface
     /**
      * @return array
      */
-    public function getResult()
+    public function getResult(): array
     {
         return $this->result;
     }
@@ -53,7 +54,7 @@ class UserMailingAdminPrepare implements AdminPrepareEventInterface
     /**
      * @param array $result
      */
-    public function setResult($result)
+    public function setResult(array $result): void
     {
         $this->result = $result;
     }
@@ -61,7 +62,7 @@ class UserMailingAdminPrepare implements AdminPrepareEventInterface
     /**
      * @return UserMailing
      */
-    public function getItem()
+    public function getItem(): Model
     {
         return $this->item;
     }
@@ -69,7 +70,7 @@ class UserMailingAdminPrepare implements AdminPrepareEventInterface
     /**
      * @return array
      */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
@@ -78,7 +79,7 @@ class UserMailingAdminPrepare implements AdminPrepareEventInterface
      * @param $data
      * @return void
      */
-    public function setData($data)
+    public function setData(array $data): void
     {
         $this->data = $data;
     }
