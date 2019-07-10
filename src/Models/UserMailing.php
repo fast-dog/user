@@ -103,11 +103,11 @@ class UserMailing extends BaseModel implements TableModelInterface
     public static function getStatusList(): array
     {
         return [
-            ['id' => self::STATE_DEFAULT, 'name' => 'По умолчанию'],
-            ['id' => self::STATE_READY, 'name' => 'Ожидание выполнения'],
-            ['id' => self::STATE_WORK, 'name' => 'В работе'],
-            ['id' => self::STATE_ERROR, 'name' => 'Прервана с ошибкой'],
-            ['id' => self::STATE_FINISH, 'name' => 'Успешно завершена'],
+            ['id' => self::STATE_DEFAULT, 'name' => trans('user::mailing.state.default')],
+            ['id' => self::STATE_READY, 'name' => trans('user::mailing.state.ready')],
+            ['id' => self::STATE_WORK, 'name' => trans('user::mailing.state.work')],
+            ['id' => self::STATE_ERROR, 'name' => trans('user::mailing.state.error')],
+            ['id' => self::STATE_FINISH, 'name' => trans('user::mailing.state.finish')],
         ];
     }
 
@@ -152,20 +152,20 @@ class UserMailing extends BaseModel implements TableModelInterface
     {
         return [
             [
-                'name' => 'Название',
+                'name' => trans('user::mailing.name'),
                 'key' => self::NAME,
                 'domain' => true,
                 'link' => 'mailing_item',
             ],
             [
-                'name' => trans('app.Дата регистрации'),
+                'name' => trans('user::mailing.date_registration'),
                 'key' => self::CREATED_AT,
                 'width' => 150,
                 'link' => null,
                 'class' => 'text-center',
             ],
             [
-                'name' => trans('app.Домен'),
+                'name' => trans('user::mailing.domain'),
                 'key' => self::SITE_ID,
                 'width' => 150,
                 'link' => null,
@@ -203,7 +203,7 @@ class UserMailing extends BaseModel implements TableModelInterface
                     BaseFilter::TYPE => BaseFilter::TYPE_DATETIME,
                     BaseFilter::NAME => User::CREATED_AT,
                     BaseFilter::DISPLAY => true,
-                    BaseFilter::PLACEHOLDER => trans('app.Дата регистрации'),
+                    BaseFilter::PLACEHOLDER => trans('user::mailing.date_registration'),
                     BaseFilter::OPERATOR => (new BaseOperator('BETWEEN', 'BETWEEN'))->getOperator(
                         [['id' => 'BETWEEN', 'name' => 'BETWEEN']]
                     ),
@@ -213,8 +213,8 @@ class UserMailing extends BaseModel implements TableModelInterface
                     BaseFilter::TYPE => BaseFilter::TYPE_SELECT,
                     BaseFilter::NAME => User::STATUS,
                     BaseFilter::DISPLAY => true,
-                    BaseFilter::PLACEHOLDER => trans('app.Состояние'),
-                    BaseFilter::DATA => User::getStatusList(),
+                    BaseFilter::PLACEHOLDER => trans('user::mailing.status'),
+                    BaseFilter::DATA => UserMailing::getStatusList(),
                     BaseFilter::OPERATOR => (new BaseOperator())->getOperator(),
                 ],
             ],

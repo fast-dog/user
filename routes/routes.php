@@ -75,7 +75,7 @@ Route::group([
         'uses' => $ctrl . '@postItemSelfUpdate',
     ]));
     //
-    \Route::get('/user/subscribe/csv', array_replace_recursive($baseParameters, [
+    \Route::get('/users/subscribe/csv', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@getSubscribeCsv',
     ]))->where(['id' => '[1-90]+']);
 
@@ -84,7 +84,7 @@ Route::group([
      */
     $ctrl = '\FastDog\User\Http\Controllers\Admin\UserMailingTemplatesTableController';
     //
-    \Route::post('/user/mailing/templates', array_replace_recursive($baseParameters, [
+    \Route::post('/users/mailing/templates', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@list',
     ]));
 
@@ -94,12 +94,12 @@ Route::group([
     $ctrl = '\FastDog\User\Http\Controllers\Admin\UserMailingTemplatesFormController';
 
     // редактирование рассылки
-    \Route::get('/user/mailing/template/{id?}', array_replace_recursive($baseParameters, [
+    \Route::get('/users/mailing/template/{id?}', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@getEditItem',
     ]))->where('id', '[1-90]+');
 
     // список рассылок
-    \Route::post('/user/mailing/template/save', array_replace_recursive($baseParameters, [
+    \Route::post('/users/mailing/template/save', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@postMailingTemplate',
     ]));
 
@@ -108,7 +108,7 @@ Route::group([
      */
     $ctrl = '\FastDog\User\Http\Controllers\Admin\UserMailingTableController';
     // список рассылок
-    \Route::post('/user/mailing', array_replace_recursive($baseParameters, [
+    \Route::post('/users/mailing', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@list',
     ]));
 
@@ -117,11 +117,11 @@ Route::group([
      */
     $ctrl = '\FastDog\User\Http\Controllers\Admin\UserMailingFormController';
     // редактирование рассылки
-    \Route::get('/user/mailing/{id?}', array_replace_recursive($baseParameters, [
+    \Route::get('/users/mailing/{id?}', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@getEditItem',
     ]))->where('id', '[1-90]+');
 
-    \Route::post('/user/mailing/save', array_replace_recursive($baseParameters, [
+    \Route::post('/users/mailing/save', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@postMailing',
     ]));
 });

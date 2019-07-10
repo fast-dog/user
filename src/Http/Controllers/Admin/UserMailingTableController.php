@@ -1,18 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dg
- * Date: 021 21.09.18
- * Time: 9:46
- */
 
 namespace FastDog\User\Http\Controllers\Admin;
 
 
-use App\Core\Table\Interfaces\TableControllerInterface;
-use App\Core\Table\Traits\TableTrait;
-use App\Http\Controllers\Controller;
-use FastDog\User\Entity\UserMailing;
+use FastDog\Core\Http\Controllers\Controller;
+use FastDog\Core\Table\Interfaces\TableControllerInterface;
+use FastDog\Core\Table\Traits\TableTrait;
+use FastDog\User\Models\UserMailing;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -28,16 +22,12 @@ class UserMailingTableController extends Controller implements TableControllerIn
 {
     use  TableTrait;
 
-    /**
-     * Имя  списка доступа
-     * @var string $accessKey
-     */
-    protected $accessKey = '';
+
 
     /**
      * Модель по которой будет осуществляться выборка данных
      *
-     * @var \FastDog\User\Entity\UserMailing|null $model
+     * @var \FastDog\User\Models\UserMailing|null $model
      */
     protected $model = null;
 
@@ -59,9 +49,8 @@ class UserMailingTableController extends Controller implements TableControllerIn
     {
         parent::__construct();
         $this->model = $model;
-        $this->accessKey = $this->model->getAccessKey();
         $this->initTable();
-        $this->page_title = trans('app.Рассылки');
+        $this->page_title = trans('user::interface.Рассылки');
     }
 
 
@@ -74,7 +63,7 @@ class UserMailingTableController extends Controller implements TableControllerIn
     public function list(Request $request): JsonResponse
     {
         $result = self::paginate($request);
-        $this->breadcrumbs->push(['url' => false, 'name' => trans('app.Управление')]);
+        $this->breadcrumbs->push(['url' => false, 'name' => trans('user::interface.Управление')]);
 
         return $this->json($result, __METHOD__);
     }
@@ -89,4 +78,12 @@ class UserMailingTableController extends Controller implements TableControllerIn
         return $this->table->getCols();
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function items(Request $request): JsonResponse
+    {
+        // TODO: Implement items() method.
+    }
 }
