@@ -1,11 +1,11 @@
 <?php
+
 namespace FastDog\User\Models;
 
 
 use Carbon\Carbon;
 use FastDog\Core\Models\BaseModel;
 use FastDog\Core\Models\Domain;
-use FastDog\Core\Models\DomainManager;
 use FastDog\Core\Table\Filters\BaseFilter;
 use FastDog\Core\Table\Filters\Operator\BaseOperator;
 use FastDog\Core\Table\Interfaces\TableModelInterface;
@@ -75,17 +75,17 @@ class UserEmailSubscribe extends BaseModel implements TableModelInterface
                 'name' => 'Email',
                 'key' => User::EMAIL,
                 'domain' => true,
-                'link' => 'user_profile',
+                'link' => null,
             ],
             [
-                'name' => trans('app.Дата регистрации'),
+                'name' => trans('user::interface.Дата регистрации'),
                 'key' => User::CREATED_AT,
                 'width' => 150,
                 'link' => null,
                 'class' => 'text-center',
             ],
             [
-                'name' => trans('app.Домен'),
+                'name' => trans('user::interface.Домен'),
                 'key' => self::SITE_ID,
                 'width' => 150,
                 'link' => null,
@@ -123,7 +123,7 @@ class UserEmailSubscribe extends BaseModel implements TableModelInterface
                     BaseFilter::TYPE => BaseFilter::TYPE_DATETIME,
                     BaseFilter::NAME => User::CREATED_AT,
                     BaseFilter::DISPLAY => true,
-                    BaseFilter::PLACEHOLDER => trans('app.Дата регистрации'),
+                    BaseFilter::PLACEHOLDER => trans('user::interface.Дата регистрации'),
                     BaseFilter::OPERATOR => (new BaseOperator('BETWEEN', 'BETWEEN'))->getOperator(
                         [['id' => 'BETWEEN', 'name' => 'BETWEEN']]
                     ),
@@ -133,7 +133,7 @@ class UserEmailSubscribe extends BaseModel implements TableModelInterface
                     BaseFilter::TYPE => BaseFilter::TYPE_SELECT,
                     BaseFilter::NAME => User::STATUS,
                     BaseFilter::DISPLAY => true,
-                    BaseFilter::PLACEHOLDER => trans('app.Состояние'),
+                    BaseFilter::PLACEHOLDER => trans('user::forms.general.fields.state'),
                     BaseFilter::DATA => User::getStatusList(),
                     BaseFilter::OPERATOR => (new BaseOperator())->getOperator(),
                 ],
@@ -142,15 +142,4 @@ class UserEmailSubscribe extends BaseModel implements TableModelInterface
 
         return $default;
     }
-
-    /**
-     * Возвращает ключ доступа к ACL
-     * @param string $type
-     * @return string
-     */
-    public function getAccessKey($type = 'guest'): string
-    {
-        return strtolower(\FastDog\User\User::class) . '::' . DomainManager::getSiteId() . '::' . $type;
-    }
-
 }

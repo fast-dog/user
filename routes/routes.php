@@ -40,25 +40,25 @@ Route::group([
      * Пользователи - API
      */
     $ctrl = '\FastDog\User\Http\Controllers\Admin\ApiController';
-
-    //сохранение параметров модуля
-    \Route::post('/users/save-module-configurations', array_replace_recursive($baseParameters, [
-        'uses' => $ctrl . '@postSaveModuleConfigurations',
-    ]));
-
-    //сохранение параметров модуля
-    \Route::post('/users/access', array_replace_recursive($baseParameters, [
-        'uses' => $ctrl . '@postAccess',
-    ]));
-    //
-    \Route::get('/user/admin-info', array_replace_recursive($baseParameters, [
-        'uses' => $ctrl . '@getAdminInfo',
-    ]));
-
-    // список активных
-    \Route::get('/user/mailing/process', array_replace_recursive($baseParameters, [
-        'uses' => $ctrl . '@getMailingProcess',
-    ]));
+//
+//    //сохранение параметров модуля
+//    \Route::post('/users/save-module-configurations', array_replace_recursive($baseParameters, [
+//        'uses' => $ctrl . '@postSaveModuleConfigurations',
+//    ]));
+//
+//    //сохранение параметров модуля
+//    \Route::post('/users/access', array_replace_recursive($baseParameters, [
+//        'uses' => $ctrl . '@postAccess',
+//    ]));
+//    //
+//    \Route::get('/user/admin-info', array_replace_recursive($baseParameters, [
+//        'uses' => $ctrl . '@getAdminInfo',
+//    ]));
+//
+//    // список активных
+//    \Route::get('/user/mailing/process', array_replace_recursive($baseParameters, [
+//        'uses' => $ctrl . '@getMailingProcess',
+//    ]));
 
     /**
      * Подписки на рассылку
@@ -66,12 +66,12 @@ Route::group([
     $ctrl = '\FastDog\User\Http\Controllers\Admin\UserSubscribeTableController';
 
     // таблица подписок
-    \Route::post('/user/subscribe', array_replace_recursive($baseParameters, [
+    \Route::post('/users/subscribe', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@list',
     ]));
 
     // обновление
-    \Route::post('/user/subscribe/self-update', array_replace_recursive($baseParameters, [
+    \Route::post('/users/subscribe/update', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@postItemSelfUpdate',
     ]));
     //

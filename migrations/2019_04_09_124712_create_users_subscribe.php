@@ -21,6 +21,7 @@ class CreateUsersSubscribe extends Migration
                 $table->tinyInteger(UserEmailSubscribe::STATE)
                     ->default(UserEmailSubscribe::STATE_PUBLISHED)->comment('Состояние');
                 $table->char(UserEmailSubscribe::SITE_ID, 3)->default('001')->comment('Код сайта');
+                $table->char(UserEmailSubscribe::HASH, 32);
                 $table->timestamps();
                 $table->softDeletes();
 

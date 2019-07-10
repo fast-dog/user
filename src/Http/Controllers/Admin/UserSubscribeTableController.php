@@ -1,20 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dg
- * Date: 16.09.2018
- * Time: 17:25
- */
 
 namespace FastDog\User\Http\Controllers\Admin;
 
 
-use App\Core\BaseModel;
-use App\Core\Table\Interfaces\TableControllerInterface;
-use App\Core\Table\Traits\TableTrait;
-use App\Http\Controllers\Controller;
-use App\Modules\Config\Entity\DomainManager;
-use FastDog\User\Entity\UserEmailSubscribe;
+use FastDog\Core\Http\Controllers\Controller;
+use FastDog\Core\Models\BaseModel;
+use FastDog\Core\Models\DomainManager;
+use FastDog\Core\Table\Interfaces\TableControllerInterface;
+use FastDog\Core\Table\Traits\TableTrait;
+use FastDog\User\Models\UserEmailSubscribe;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
@@ -32,15 +26,9 @@ class UserSubscribeTableController extends Controller implements TableController
     use  TableTrait;
 
     /**
-     * Имя  списка доступа
-     * @var string $accessKey
-     */
-    protected $accessKey = '';
-
-    /**
      * Модель по которой будет осуществляться выборка данных
      *
-     * @var \FastDog\User\User|null $model
+     * @var UserEmailSubscribe $model
      */
     protected $model = null;
 
@@ -62,9 +50,8 @@ class UserSubscribeTableController extends Controller implements TableController
     {
         parent::__construct();
         $this->model = $model;
-        $this->accessKey = $this->model->getAccessKey();
         $this->initTable();
-        $this->page_title = trans('app.Подписки');
+        $this->page_title = trans('user::interface.Подписки');
     }
 
 
@@ -77,7 +64,7 @@ class UserSubscribeTableController extends Controller implements TableController
     public function list(Request $request): JsonResponse
     {
         $result = self::paginate($request);
-        $this->breadcrumbs->push(['url' => false, 'name' => trans('app.Управление')]);
+        $this->breadcrumbs->push(['url' => false, 'name' => trans('user::interface.Управление')]);
 
         return $this->json($result, __METHOD__);
     }
@@ -144,5 +131,14 @@ class UserSubscribeTableController extends Controller implements TableController
         fclose($h);
 
         return response()->download($target)->deleteFileAfterSend(true);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function items(Request $request): JsonResponse
+    {
+        // TODO: Implement items() method.
     }
 }
