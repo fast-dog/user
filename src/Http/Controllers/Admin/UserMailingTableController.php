@@ -22,8 +22,6 @@ class UserMailingTableController extends Controller implements TableControllerIn
 {
     use  TableTrait;
 
-
-
     /**
      * Модель по которой будет осуществляться выборка данных
      *
