@@ -1,18 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dg
- * Date: 006 06.10.18
- * Time: 14:03
- */
 
 namespace FastDog\User\Http\Controllers\Admin;
 
 
-use App\Core\Table\Interfaces\TableControllerInterface;
-use App\Core\Table\Traits\TableTrait;
-use App\Http\Controllers\Controller;
-use FastDog\User\Entity\UserMailingTemplates;
+use FastDog\Core\Http\Controllers\Controller;
+use FastDog\Core\Table\Interfaces\TableControllerInterface;
+use FastDog\Core\Table\Traits\TableTrait;
+use FastDog\User\Models\UserMailingTemplates;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -30,15 +24,9 @@ class UserMailingTemplatesTableController extends Controller implements TableCon
     use  TableTrait;
 
     /**
-     * Имя  списка доступа
-     * @var string $accessKey
-     */
-    protected $accessKey = '';
-
-    /**
      * Модель по которой будет осуществляться выборка данных
      *
-     * @var \FastDog\User\Entity\UserMailingTemplates|null $model
+     * @var \FastDog\User\Models\UserMailingTemplates|null $model
      */
     protected $model = null;
 
@@ -60,9 +48,9 @@ class UserMailingTemplatesTableController extends Controller implements TableCon
     {
         parent::__construct();
         $this->model = $model;
-        $this->accessKey = $this->model->getAccessKey();
         $this->initTable();
-        $this->page_title = trans('app.Рассылки') . ' / ' . trans('app.Шаблоны');
+        $this->page_title = trans('user::interface.Пользователи') . ' :: ' .
+            trans('user::interface.Рассылки') . ' :: ' . trans('user::interface.Шаблоны рассылок');
     }
 
 
@@ -75,7 +63,9 @@ class UserMailingTemplatesTableController extends Controller implements TableCon
     public function list(Request $request): JsonResponse
     {
         $result = self::paginate($request);
-        $this->breadcrumbs->push(['url' => false, 'name' => trans('app.Управление')]);
+        $this->breadcrumbs->push(['url' => '/users/items', 'name' => trans('user::interface.Пользователи')]);
+        $this->breadcrumbs->push(['url' => '/users/mailing', 'name' => trans('user::interface.Рассылки')]);
+        $this->breadcrumbs->push(['url' => false, 'name' => trans('user::interface.Шаблоны рассылок')]);
 
         return $this->json($result, __METHOD__);
     }
@@ -88,5 +78,14 @@ class UserMailingTemplatesTableController extends Controller implements TableCon
     public function getCols(): Collection
     {
         return $this->table->getCols();
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function items(Request $request): JsonResponse
+    {
+        // TODO: Implement items() method.
     }
 }

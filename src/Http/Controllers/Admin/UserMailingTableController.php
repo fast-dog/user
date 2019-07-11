@@ -48,7 +48,8 @@ class UserMailingTableController extends Controller implements TableControllerIn
         parent::__construct();
         $this->model = $model;
         $this->initTable();
-        $this->page_title = trans('user::interface.Рассылки');
+        $this->page_title = trans('user::interface.Пользователи') . ' :: ' .
+            trans('user::interface.Рассылки');
     }
 
 
@@ -61,6 +62,7 @@ class UserMailingTableController extends Controller implements TableControllerIn
     public function list(Request $request): JsonResponse
     {
         $result = self::paginate($request);
+        $this->breadcrumbs->push(['url' => 'users/items', 'name' => trans('user::interface.Пользователи')]);
         $this->breadcrumbs->push(['url' => false, 'name' => trans('user::interface.Управление')]);
 
         return $this->json($result, __METHOD__);

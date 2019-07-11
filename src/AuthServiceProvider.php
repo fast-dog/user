@@ -5,6 +5,7 @@ namespace FastDog\User;
 
 use FastDog\User\Policies\UserPolicy;
 use FastDog\User\Policies\UsersMailingPolicy;
+use FastDog\User\Policies\UsersMailingTemplatesPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 /**
@@ -24,6 +25,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         \FastDog\User\Models\User::class => UserPolicy::class,
         \FastDog\User\Models\UserMailing::class => UsersMailingPolicy::class,
+        \FastDog\User\Models\UserMailingTemplates::class => UsersMailingTemplatesPolicy::class,
     ];
 
     /**
