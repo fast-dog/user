@@ -37,20 +37,20 @@ class UserMailingTemplatesAdminSetEditorForm
     public function handle(EventUserMailingTemplatesAdminPrepare $event)
     {
         $data = $event->getData();
+        /** @var UserMailingTemplates $item */
         $item = $event->getItem();
 
         $result = $event->getResult();
 
 
-
         $result['form'] = [
-            'create_url' => '',
-            'update_url' => '',
+            'create_url' => 'users/mailing/template/save',
+            'update_url' => 'users/mailing/template/save',
             'help' => 'user_mailing_templates',
             'tabs' => (array)[
                 (object)[
                     'id' => 'catalog-item-general-tab',
-                    'name' => trans('app.Основная информация'),
+                    'name' => trans('user::forms.general.title'),
                     'active' => true,
                     'fields' => (array)[
                         [

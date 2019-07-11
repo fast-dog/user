@@ -35,4 +35,7 @@ return [
         'date_create' => 'Дата создания',
         'date_sending' => 'Дата рассылки',
     ],
+    'templates' => [
+        'new' => 'Новый шаблон',
+    ],
 ];

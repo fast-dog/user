@@ -1,19 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dg
- * Date: 021 21.09.18
- * Time: 11:29
- */
 
 namespace FastDog\User\Http\Controllers\Admin;
 
-use App\Core\Form\Interfaces\FormControllerInterface;
-use App\Core\Form\Traits\FormControllerTrait;
-use App\Http\Controllers\Controller;
-use FastDog\User\Entity\UserMailing;
-use FastDog\User\Entity\UserMailingTemplates;
-use FastDog\User\Request\AddMailing;
+use FastDog\Core\Form\Interfaces\FormControllerInterface;
+use FastDog\Core\Form\Traits\FormControllerTrait;
+use FastDog\Core\Http\Controllers\Controller;
+use FastDog\User\Models\UserMailing;
+use FastDog\User\Models\UserMailingTemplates;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -34,7 +27,8 @@ class UserMailingTemplatesFormController extends Controller implements FormContr
     public function __construct(UserMailingTemplates $model)
     {
         $this->model = $model;
-        $this->page_title = trans('app.Рассылки') . ' / ' . trans('app.Шаблоны');
+        $this->page_title = trans('user::interface.Пользователи') . ' :: ' .
+            trans('user::interface.Рассылки') . ' :: ' . trans('user::interface.Шаблоны рассылок');
         parent::__construct();
     }
 
@@ -44,13 +38,16 @@ class UserMailingTemplatesFormController extends Controller implements FormContr
      */
     public function getEditItem(Request $request): JsonResponse
     {
-        $this->breadcrumbs->push(['url' => '/users/mailing', 'name' => trans('app.Управление')]);
-        $this->breadcrumbs->push(['url' => '/users/mailing-templates', 'name' => trans('app.Шаблоны')]);
+        $this->breadcrumbs->push(['url' => '/users/mailing', 'name' => trans('user::interface.Рассылки')]);
+        $this->breadcrumbs->push(['url' => '/users/mailing-templates', 'name' => trans('user::interface.Шаблоны рассылок')]);
 
         $result = $this->getItemData($request);
-        if ($this->item) {
-            $this->breadcrumbs->push(['url' => false, 'name' => $this->item->{UserMailingTemplates::NAME}]);
-        }
+
+        $this->breadcrumbs->push([
+            'url' => false,
+            'name' => ($this->item->id) ? $this->item->{UserMailingTemplates::NAME} : trans('user::forms.templates.new'),
+        ]);
+
 
         return $this->json($result, __METHOD__);
     }

@@ -1,4 +1,5 @@
 <?php
+
 namespace FastDog\User\Http\Controllers\Admin;
 
 
@@ -43,11 +44,11 @@ class UserMailingFormController extends Controller implements FormControllerInte
         $this->breadcrumbs->push(['url' => '/users/mailing', 'name' => trans('user::interface.Управление')]);
 
         $result = $this->getItemData($request);
-        if ($this->item->id) {
-            $this->breadcrumbs->push(['url' => false, 'name' => $this->item->{UserMailing::NAME}]);
-        }else{
-            $this->breadcrumbs->push(['url' => false, 'name' => trans('user::forms.mailing.new') ]);
-        }
+
+        $this->breadcrumbs->push([
+            'url' => false,
+            'name' => ($this->item->id) ? $this->item->{UserMailing::NAME} : trans('user::forms.mailing.new'),
+        ]);
 
         return $this->json($result, __METHOD__);
     }
@@ -88,7 +89,7 @@ class UserMailingFormController extends Controller implements FormControllerInte
          * Создаем процесс отправки
          */
         if ($request->input('create_process', 'N') == 'Y') {
-            $process =  UserMailingProcess::create([
+            $process = UserMailingProcess::create([
                 UserMailingProcess::MAILING_ID => $item->id,
                 UserMailingProcess::CURRENT_STEP => 0,
                 UserMailingProcess::STATE => UserMailingProcess::STATE_READY,
