@@ -2,7 +2,7 @@
 
 namespace FastDog\User\Jobs;
 
-
+use FastDog\Config\Models\Emails;
 use FastDog\User\Models\UserEmailSubscribe;
 use FastDog\User\Models\UserMailing;
 use FastDog\User\Models\UserMailingProcess;
@@ -13,7 +13,6 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use stdClass;
 
 /**
  * Class SendMailing
@@ -51,11 +50,11 @@ class SendMailing implements ShouldQueue
             $template = UserMailingTemplates::where([
                 'id' => $mailing->getTemplateId(),
             ])->first();
-
+            $error = false;
             UserEmailSubscribe::where([
                 UserEmailSubscribe::STATE => UserEmailSubscribe::STATE_PUBLISHED,
                 UserEmailSubscribe::SITE_ID => $mailing->{UserMailing::SITE_ID},
-            ])->get()->each(function (UserEmailSubscribe $item) use ($mailing, $template) {
+            ])->get()->each(function (UserEmailSubscribe $item) use ($mailing, $template, &$error) {
                 try {
                     if ($item->{UserEmailSubscribe::EMAIL}) {
                         $params = [
@@ -64,6 +63,7 @@ class SendMailing implements ShouldQueue
                             'subject' => $mailing->{UserMailing::SUBJECT},
                             'to' => $item->{UserEmailSubscribe::EMAIL},
                         ];
+
                         Emails::send($template, $params);
 
                         UserMailingReport::create([
@@ -75,15 +75,19 @@ class SendMailing implements ShouldQueue
                         ]);
                     }
                 } catch (\Exception $e) {
-                    dump($e);
+                    $error = true;
                     $this->process->update([
-                        UserMailingProcess::STATE => UserMailingProcess::STATE_FINISH,
+                        UserMailingProcess::STATE => UserMailingProcess::STATE_ERROR,
+                        UserMailingProcess::DATA => json_encode($e),
                     ]);
                 }
             });
-            $this->process->update([
-                UserMailingProcess::STATE => UserMailingProcess::STATE_FINISH,
-            ]);
+
+            if ($error === false) {
+                $this->process->update([
+                    UserMailingProcess::STATE => UserMailingProcess::STATE_FINISH,
+                ]);
+            }
         }
     }
 }

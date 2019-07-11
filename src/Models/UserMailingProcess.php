@@ -37,9 +37,15 @@ class UserMailingProcess extends BaseModel
 
     /**
      * Состояние: Отправка завершена
-     * @const string
+     * @const int
      */
     const STATE_FINISH = 2;
+
+    /**
+     * Состояние: Отправка завершена с ошибками
+     * @const int
+     */
+    const STATE_ERROR = 3;
 
     /**
      * @var string $table
@@ -56,9 +62,9 @@ class UserMailingProcess extends BaseModel
     public static function getStatusList(): array
     {
         return [
-            ['id' => self::STATE_READY, 'name' => 'Готово к отправке'],
-            ['id' => self::STATE_PROCESS, 'name' => 'Выполняется отправка'],
-            ['id' => self::STATE_FINISH, 'name' => 'Отправка завершена'],
+            ['id' => self::STATE_READY, 'name' => trans('user::mailing.status_list.ready')],
+            ['id' => self::STATE_PROCESS, 'name' => trans('user::mailing.status_list.process')],
+            ['id' => self::STATE_FINISH, 'name' => trans('user::mailing.status_list.finish')],
         ];
     }
 

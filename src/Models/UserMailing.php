@@ -88,7 +88,7 @@ class UserMailing extends BaseModel implements TableModelInterface
     /**
      * @var array $fillable
      */
-    public $fillable = [self::NAME, self::SUBJECT, self::TEXT, self::STATE, self::SITE_ID, self::TEMPLATE_ID];
+    public $fillable = [self::NAME, self::SUBJECT, self::TEXT, self::STATE, self::SITE_ID, self::TEMPLATE_ID, self::START_AT];
 
     /**
      * @var array $dates
@@ -190,10 +190,10 @@ class UserMailing extends BaseModel implements TableModelInterface
         $default = [
             [
                 [
-                    BaseFilter::NAME => User::EMAIL,
-                    BaseFilter::PLACEHOLDER => 'Email',
+                    BaseFilter::NAME => UserMailingTemplates::NAME,
+                    BaseFilter::PLACEHOLDER => trans('user::mailing.name'),
                     BaseFilter::TYPE => BaseFilter::TYPE_TEXT,
-                    BaseFilter::DISPLAY => false,
+                    BaseFilter::DISPLAY => true,
                     BaseFilter::OPERATOR => (new BaseOperator('LIKE', 'LIKE'))->getOperator(),
                 ],
             ],
@@ -229,7 +229,7 @@ class UserMailing extends BaseModel implements TableModelInterface
      */
     public function getTemplateId(): int
     {
-        return 1;
+        return $this->{self::TEMPLATE_ID};
     }
 
     /**

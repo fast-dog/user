@@ -78,10 +78,29 @@ class UserMailingTemplatesFormController extends Controller implements FormContr
         } else {
             $data[UserMailingTemplates::STATE] = UserMailingTemplates::STATE_PUBLISHED;
             $item = UserMailingTemplates::create($data);
+
+            $request->merge(['id' => $item->id]);
+
+            return $this->getEditItem($request);
         }
 
         $item->storeProperties(collect($request->input('properties', [])));
 
         return $this->json($result);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function postMailingTemplateUpdate(Request $request): JsonResponse
+    {
+        $result = ['success' => true];
+        $ids = $request->input('ids');
+        if (count($ids)) {
+            UserMailingTemplates::whereIn('id', $ids)->delete();
+        }
+
+        return $this->json($result, __METHOD__);
     }
 }

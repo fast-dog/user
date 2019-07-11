@@ -93,17 +93,22 @@ Route::group([
      */
     $ctrl = '\FastDog\User\Http\Controllers\Admin\UserMailingTemplatesFormController';
 
-    // редактирование рассылки
+    // редактирование шаблона рассылки
     \Route::get('/users/mailing/template/{id?}', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@getEditItem',
     ]))->where('id', '[1-90]+');
 
-    // список рассылок
+    // сохранение шаблона рассылки
     \Route::post('/users/mailing/template/save', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@postMailingTemplate',
     ]));
 
-    /**
+    // обновление/удаление шаблона рассылки
+    \Route::post('/users/mailing/templates/update', array_replace_recursive($baseParameters, [
+        'uses' => $ctrl . '@postMailingTemplateUpdate',
+    ]));
+
+    /*
      * Рассылка - таблица
      */
     $ctrl = '\FastDog\User\Http\Controllers\Admin\UserMailingTableController';

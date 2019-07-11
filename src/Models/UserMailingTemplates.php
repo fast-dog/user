@@ -82,10 +82,10 @@ class UserMailingTemplates extends BaseModel implements TableModelInterface
         $default = [
             [
                 [
-                    BaseFilter::NAME => \FastDog\User\Models\User::EMAIL,
-                    BaseFilter::PLACEHOLDER => 'Название',
+                    BaseFilter::NAME => \FastDog\User\Models\UserMailingTemplates::NAME,
+                    BaseFilter::PLACEHOLDER => trans('user::forms.templates.name'),
                     BaseFilter::TYPE => BaseFilter::TYPE_TEXT,
-                    BaseFilter::DISPLAY => false,
+                    BaseFilter::DISPLAY => true,
                     BaseFilter::OPERATOR => (new BaseOperator('LIKE', 'LIKE'))->getOperator(),
                 ],
             ],

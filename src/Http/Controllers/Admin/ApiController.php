@@ -7,15 +7,12 @@ namespace FastDog\User\Http\Controllers\Admin;
 
 use FastDog\Admin\Models\Desktop;
 use FastDog\Core\Http\Controllers\Controller;
-use FastDog\Core\Models\DomainManager;
 use FastDog\Core\Models\ModuleManager;
 use FastDog\User\Models\UserConfig;
 use FastDog\User\Models\UserMailingProcess;
-use FastDog\User\Models\UserMailingTemplates;
 use FastDog\User\Models\UserRegisterStatistic;
 use FastDog\User\Models\UserVisitStatistic;
 use FastDog\User\User;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
