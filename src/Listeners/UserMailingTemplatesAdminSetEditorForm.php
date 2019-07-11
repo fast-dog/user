@@ -57,7 +57,7 @@ class UserMailingTemplatesAdminSetEditorForm
                             'id' => UserMailingTemplates::NAME,
                             'type' => FormFieldTypes::TYPE_TEXT,
                             'name' => UserMailingTemplates::NAME,
-                            'label' => trans('app.Название'),
+                            'label' => trans('user::forms.templates.name'),
                             'css_class' => 'col-sm-12',
                             'form_group' => true,
                             'required' => true,
@@ -65,7 +65,7 @@ class UserMailingTemplatesAdminSetEditorForm
                         ],
                         [
                             'id' => UserMailingTemplates::TEXT,
-                            'label' => trans('app.HTML текст'),
+                            'label' => trans('user::forms.templates.html'),
                             'type' => FormFieldTypes::TYPE_CODE_EDITOR,
                             'name' => UserMailingTemplates::TEXT,
                             'css_class' => 'col-sm-12',
@@ -78,7 +78,7 @@ class UserMailingTemplatesAdminSetEditorForm
                             'id' => UserMailingTemplates::CREATED_AT,
                             'type' => FormFieldTypes::TYPE_DATE,
                             'name' => UserMailingTemplates::CREATED_AT,
-                            'label' => trans('app.Дата создания'),
+                            'label' => trans('user::forms.templates.date_created'),
                             'css_class' => 'col-sm-12',
                             'form_group' => true,
                             'readonly' => true,
@@ -88,7 +88,7 @@ class UserMailingTemplatesAdminSetEditorForm
                 ],
                 (object)[
                     'id' => 'menu-item-extend-tab',
-                    'name' => trans('app.Дополнительно'),
+                    'name' => trans('user::forms.templates.extend'),
                     'fields' => [
                         [
                             'type' => FormFieldTypes::TYPE_COMPONENT_SAMPLE_PROPERTIES,
