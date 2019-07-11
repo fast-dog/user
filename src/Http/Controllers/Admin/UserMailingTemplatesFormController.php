@@ -38,6 +38,7 @@ class UserMailingTemplatesFormController extends Controller implements FormContr
      */
     public function getEditItem(Request $request): JsonResponse
     {
+        $this->breadcrumbs->push(['url' => '/users/items', 'name' => trans('user::interface.Пользователи')]);
         $this->breadcrumbs->push(['url' => '/users/mailing', 'name' => trans('user::interface.Рассылки')]);
         $this->breadcrumbs->push(['url' => '/users/mailing-templates', 'name' => trans('user::interface.Шаблоны рассылок')]);
 

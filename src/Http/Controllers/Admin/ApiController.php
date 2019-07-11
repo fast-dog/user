@@ -3,16 +3,17 @@
 namespace FastDog\User\Http\Controllers\Admin;
 
 
-
-
 use FastDog\Admin\Models\Desktop;
 use FastDog\Core\Http\Controllers\Controller;
+use FastDog\Core\Models\DomainManager;
 use FastDog\Core\Models\ModuleManager;
 use FastDog\User\Models\UserConfig;
 use FastDog\User\Models\UserMailingProcess;
+use FastDog\User\Models\UserMailingTemplates;
 use FastDog\User\Models\UserRegisterStatistic;
 use FastDog\User\Models\UserVisitStatistic;
 use FastDog\User\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -145,12 +146,17 @@ class ApiController extends Controller
     {
         $result = ['success' => true, 'items' => []];
 
+        $this->page_title = trans('user::interface.Пользователи') . ' :: ' .
+            trans('user::interface.Рассылки') . ' :: ' . trans('user::interface.Шаблоны рассылок');
+
+        $this->breadcrumbs->push(['url' => '/users/items', 'name' => trans('user::interface.Пользователи')]);
+        $this->breadcrumbs->push(['url' => '/users/mailing', 'name' => trans('user::interface.Рассылки')]);
+        $this->breadcrumbs->push(['url' => false, 'name' => trans('user::interface.Просмотр задач')]);
+
         /** @var Collection $items */
         $items = UserMailingProcess::orderBy('id', 'desc')->paginate(25);
 
         $items->each(function (UserMailingProcess $process) use (&$result) {
-
-
             array_push($result['items'], $process->getData());
         });
 

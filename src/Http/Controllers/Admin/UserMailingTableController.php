@@ -63,7 +63,7 @@ class UserMailingTableController extends Controller implements TableControllerIn
     {
         $result = self::paginate($request);
         $this->breadcrumbs->push(['url' => 'users/items', 'name' => trans('user::interface.Пользователи')]);
-        $this->breadcrumbs->push(['url' => false, 'name' => trans('user::interface.Управление')]);
+        $this->breadcrumbs->push(['url' => false, 'name' => trans('user::interface.Рассылки')]);
 
         return $this->json($result, __METHOD__);
     }

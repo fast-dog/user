@@ -41,8 +41,8 @@ class UserMailingFormController extends Controller implements FormControllerInte
      */
     public function getEditItem(Request $request): JsonResponse
     {
-        $this->breadcrumbs->push(['url' => '/users/mailing', 'name' => trans('user::interface.Управление')]);
-
+        $this->breadcrumbs->push(['url' => '/users/items', 'name' => trans('user::interface.Пользователи')]);
+        $this->breadcrumbs->push(['url' => '/users/mailing', 'name' => trans('user::interface.Рассылки')]);
         $result = $this->getItemData($request);
 
         $this->breadcrumbs->push([

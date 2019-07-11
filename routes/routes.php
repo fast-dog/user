@@ -55,10 +55,10 @@ Route::group([
 //        'uses' => $ctrl . '@getAdminInfo',
 //    ]));
 //
-//    // список активных
-//    \Route::get('/user/mailing/process', array_replace_recursive($baseParameters, [
-//        'uses' => $ctrl . '@getMailingProcess',
-//    ]));
+    // список активных
+    \Route::get('/users/mailing/process', array_replace_recursive($baseParameters, [
+        'uses' => $ctrl . '@getMailingProcess',
+    ]));
 
     /**
      * Подписки на рассылку
