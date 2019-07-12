@@ -55,6 +55,23 @@ class UserMailingFormController extends Controller implements FormControllerInte
 
 
     /**
+     * Удаление
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function postUpdate(Request $request)
+    {
+        $result = ['success' => true];
+        $ids = $request->input('ids');
+        if (count($ids)) {
+            UserMailing::whereIn('id', $ids)->delete();
+        }
+
+        return $this->json($result, __METHOD__);
+    }
+
+    /**
      * @param AddMailing $request
      * @return JsonResponse
      */

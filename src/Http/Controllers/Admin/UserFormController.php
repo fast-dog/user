@@ -51,7 +51,7 @@ class UserFormController extends Controller implements FormControllerInterface
     }
 
     /**
-     * Удалние пользователей
+     * Удаление пользователей
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse

@@ -22,7 +22,7 @@ Route::group([
     $ctrl = '\FastDog\User\Http\Controllers\Admin\UserFormController';
 
     // редактирование пользователя
-    \Route::get('/user/{id?}', array_replace_recursive($baseParameters, [
+    \Route::get('/users/{id?}', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@getEditItem',
     ]))->where(['id' => '[1-90]+']);
 
@@ -33,7 +33,7 @@ Route::group([
     ]));
 
     //удаление пользователя
-    \Route::post('/user/delete', array_replace_recursive($baseParameters, [
+    \Route::post('/users/delete', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@postUserDelete',
     ]));
     /**
@@ -117,7 +117,7 @@ Route::group([
         'uses' => $ctrl . '@list',
     ]));
 
-    /**
+    /*
      * Рассылка - форма
      */
     $ctrl = '\FastDog\User\Http\Controllers\Admin\UserMailingFormController';
@@ -127,6 +127,9 @@ Route::group([
     ]))->where('id', '[1-90]+');
 
     \Route::post('/users/mailing/save', array_replace_recursive($baseParameters, [
+        'uses' => $ctrl . '@postMailing',
+    ]));
+    \Route::post('/users/mailing/update', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@postMailing',
     ]));
 });
