@@ -27,6 +27,56 @@ class CreateUsersConfig extends Migration
 
             });
             DB::statement("ALTER TABLE `users_config` comment 'Параметры модуля Пользователи'");
+
+            UserConfig::create([
+                UserConfig::NAME => 'Настройки публичного раздела',
+                UserConfig::ALIAS => 'public',
+                UserConfig::DATA => <<<JSON
+[
+  {
+    "name": "Разрешить регистрацию",
+    "alias": "allow_registration",
+    "description": "Разрешить регистрацию на сайте",
+    "type": "select",
+    "value": "N"
+  },
+  {
+    "name": "Требовать подтверждение email",
+    "alias": "registration_confirm",
+    "description": "Разрешить регистрацию на сайте",
+    "type": "select",
+    "value": "Y"
+  }
+]
+JSON
+                ,
+            ]);
+
+            UserConfig::create([
+                UserConfig::NAME => 'Администрирование: Рабочий стол',
+                UserConfig::ALIAS => 'desktop',
+                UserConfig::DATA => <<<JSON
+[
+  {
+    "type": "graph",
+    "name": "Пользователи :: статистика регистраций",
+    "sort": "100",
+    "description": "Отображает график статистики регистраций на главной странице раздела администрирования.",
+    "value": "Y",
+    "data": "FastDog\\User\\Models\\Desktop\\RegisterGraph::getData"
+  },
+  {
+    "type": "table",
+    "name": "Пользователи :: статистика посещений",
+    "description": "Отображает график статистики посещений на главной странице раздела администрирования.",
+    "sort": "100",
+    "value": "Y",
+    "data": "FastDog\\User\\Models\\Desktop\\VisitGraph::getData"
+  }
+]
+JSON
+                ,
+            ]);
         }
     }
 

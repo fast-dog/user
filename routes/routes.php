@@ -51,9 +51,9 @@ Route::group([
 //        'uses' => $ctrl . '@postAccess',
 //    ]));
 //    //
-//    \Route::get('/user/admin-info', array_replace_recursive($baseParameters, [
-//        'uses' => $ctrl . '@getAdminInfo',
-//    ]));
+    \Route::get('/users/configuration', array_replace_recursive($baseParameters, [
+        'uses' => $ctrl . '@getConfiguration',
+    ]));
 //
     // список активных
     \Route::get('/users/mailing/process', array_replace_recursive($baseParameters, [

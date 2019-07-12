@@ -56,17 +56,17 @@ class ApiController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getAdminInfo(Request $request)
+    public function getConfiguration(Request $request)
     {
-        $result = ['success' => true,
-            'items' => [],
-            'page_title' => trans('user::interface.Пользователи'),
-            'breadcrumbs' => [
-                ['url' => '/', 'name' => trans('user::interface.Главная')],
-                ['url' => false, 'name' => trans('user::interface.Настройки')],
-            ],
-        ];
+        $result = ['success' => true, 'items' => []];
+
+        $this->page_title = trans('user::interface.Пользователи') . ' :: ' . trans('user::interface.Настройки');
+
+        $this->breadcrumbs->push(['url' => '/users/items', 'name' => trans('user::interface.Пользователи')]);
+        $this->breadcrumbs->push(['url' => false, 'name' => trans('user::interface.Настройки')]);
+
         $moduleManager = \App::make(ModuleManager::class);
+
         /**
          * @var $moduleManager ModuleManager
          */
