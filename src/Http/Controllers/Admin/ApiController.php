@@ -70,12 +70,12 @@ class ApiController extends Controller
         /**
          * @var $moduleManager ModuleManager
          */
-        $module = $moduleManager->getInstance('FastDog\User\User');
+        $config = $moduleManager->getInstance('user');
 
         /**
          * Параметры модуля  idx => 0
          */
-        array_push($result['items'], (array)$module->getConfig());
+        array_push($result['items'], (array)$config);
 
         /**
          * Статистика базы данных пользователей учитывая доменное разделение idx => 1

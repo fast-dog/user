@@ -40,17 +40,13 @@ Route::group([
      * Пользователи - API
      */
     $ctrl = '\FastDog\User\Http\Controllers\Admin\ApiController';
-//
-//    //сохранение параметров модуля
-//    \Route::post('/users/save-module-configurations', array_replace_recursive($baseParameters, [
-//        'uses' => $ctrl . '@postSaveModuleConfigurations',
-//    ]));
-//
-//    //сохранение параметров модуля
-//    \Route::post('/users/access', array_replace_recursive($baseParameters, [
-//        'uses' => $ctrl . '@postAccess',
-//    ]));
-//    //
+
+    //сохранение параметров модуля
+    \Route::post('/users/save-module-configurations', array_replace_recursive($baseParameters, [
+        'uses' => $ctrl . '@postSaveModuleConfigurations',
+    ]));
+
+
     \Route::get('/users/configuration', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@getConfiguration',
     ]));
