@@ -540,11 +540,11 @@ class User extends UserModel
             'route' => '/users/configuration',
         ]);
 
-        array_push($result['children'], [
-            'icon' => 'fa-info',
-            'name' => trans('user::interface.Информация'),
-            'route' => '/users',
-        ]);
+//        array_push($result['children'], [
+//            'icon' => 'fa-info',
+//            'name' => trans('user::interface.Информация'),
+//            'route' => '/users',
+//        ]);
 
         return $result;
     }
