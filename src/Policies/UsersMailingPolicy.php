@@ -9,7 +9,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 /**
  * Class UsersMailingPolicy
  *
- * @package App\Policies
+ * @package FastDog\User\Policies
  * @version 0.2.0
  * @author Андрей Мартынов <d.g.dev482@gmail.com>
  */
