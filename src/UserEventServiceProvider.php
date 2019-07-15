@@ -2,7 +2,6 @@
 
 namespace FastDog\User;
 
-use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 /**
@@ -26,24 +25,23 @@ class UserEventServiceProvider extends ServiceProvider
             'FastDog\User\Listeners\UserAdminPrepare',//<-- дополнительное событие после формирования массива с данными пользователя
             'FastDog\User\Listeners\UserItemSetEditForm',//<-- ставим форму редактирования
         ],
-        //обновление профиля пользователя
         'FastDog\User\Events\UserUpdate' => [
-            'FastDog\User\Listeners\UpdateProfile',
+            'FastDog\User\Listeners\UpdateProfile',// <-- обновление профиля пользователя
         ],
         'App\Modules\Media\Events\BeforeUploadFile' => [
-            'FastDog\User\Listeners\BeforeUploadFile',
+            'FastDog\User\Listeners\BeforeUploadFile',// <-- перед загрузкой файла (фото пользователя)
         ],
         'App\Modules\Media\Events\AfterUploadFile' => [
-            'FastDog\User\Listeners\AfterUploadFile',
+            'FastDog\User\Listeners\AfterUploadFile',// <-- после загрузки файла (фото пользователя)
         ],
         'App\Modules\Media\Events\BeforeDeleteFile' => [
-            'FastDog\User\Listeners\BeforeDeleteFile',
+            'FastDog\User\Listeners\BeforeDeleteFile',// <-- перед удалением файла (фото пользователя)
         ],
         'App\Modules\Media\Events\AfterDeleteFile' => [
-            'FastDog\User\Listeners\AfterDeleteFile',
+            'FastDog\User\Listeners\AfterDeleteFile',// <-- после удаления файла (фото пользователя)
         ],
         'FastDog\User\Events\UserRegistration' => [
-            'FastDog\User\Listeners\UserRegistration',
+            'FastDog\User\Listeners\UserRegistration',// <-- регистрация пользователя, отправка писем и т.д.
         ],
         'FastDog\User\Events\UserRating' => [
             'FastDog\User\Listeners\UserRating',
@@ -67,6 +65,9 @@ class UserEventServiceProvider extends ServiceProvider
             'FastDog\User\Listeners\UserMailingTemplatesAdminPrepare',//<--
             'FastDog\User\Listeners\UserMailingTemplatesAdminSetEditorForm',//<-- ставим форму редактирования
         ],
+        'FastDog\Core\Events\GetComponentType' => [
+            'FastDog\User\Listeners\GetComponentType',// <-- Добавляем типы в список компонентов
+        ],
     ];
 
 
@@ -76,13 +77,5 @@ class UserEventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-
-
-        //
-    }
-
-    public function register()
-    {
-        //
     }
 }

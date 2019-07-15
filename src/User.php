@@ -274,33 +274,7 @@ class User extends UserModel
     {
         $paths = Arr::first(\Config::get('view.paths'));
 
-        $result = [
-            'id' => 'users',
-            'instance' => __CLASS__,
-            'name' => trans('user::interface.Пользователи'),
-            'items' => [
-                [
-                    'id' => 'messages',
-                    'name' => trans('user::interface.Пользователи') . ' :: ' . trans('user::modules.Личные сообщения'),
-                    'templates' => $this->getTemplates($paths . '/modules/users/messages/*.blade.php'),
-                ],
-                [
-                    'id' => 'login',
-                    'name' => trans('user::interface.Пользователи') . ' :: ' . trans('user::modules.Авторизация пользователя'),
-                    'templates' => $this->getTemplates($paths . '/modules/users/auth/*.blade.php'),
-                ],
-                [
-                    'id' => 'registration',
-                    'name' => trans('user::interface.Пользователи') . ' :: ' . trans('user::modules.Регистрация пользователя'),
-                    'templates' => $this->getTemplates($paths . '/modules/users/registration/*.blade.php'),
-                ],
-                [
-                    'id' => 'subscribe',
-                    'name' => trans('user::interface.Пользователи') . ' :: ' . trans('user::modules.Подписка на рассылку'),
-                    'templates' => $this->getTemplates($paths . '/modules/users/subscribe/*.blade.php'),
-                ],
-            ],
-        ];
+        $result = [  ];
 
         return $result;
     }
