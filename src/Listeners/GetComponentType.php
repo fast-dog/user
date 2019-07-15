@@ -46,22 +46,22 @@ class GetComponentType
                 [
                     'id' => 'messages',
                     'name' => trans('user::interface.Пользователи') . ' :: ' . trans('user::modules.Личные сообщения'),
-                    'templates' => Components::getTemplates($paths . '/modules/users/messages/*.blade.php'),
+                    'templates' => Components::getTemplates($paths . '/vendor/fast_dog/user/components/messages/*.blade.php'),
                 ],
                 [
                     'id' => 'login',
                     'name' => trans('user::interface.Пользователи') . ' :: ' . trans('user::modules.Авторизация пользователя'),
-                    'templates' => Components::getTemplates($paths . '/modules/users/auth/*.blade.php'),
+                    'templates' => Components::getTemplates($paths . '/vendor/fast_dog/user/components/auth/*.blade.php'),
                 ],
                 [
                     'id' => 'registration',
                     'name' => trans('user::interface.Пользователи') . ' :: ' . trans('user::modules.Регистрация пользователя'),
-                    'templates' => Components::getTemplates($paths . '/modules/users/registration/*.blade.php'),
+                    'templates' => Components::getTemplates($paths . '/vendor/fast_dog/user/components/registration/*.blade.php'),
                 ],
                 [
                     'id' => 'subscribe',
                     'name' => trans('user::interface.Пользователи') . ' :: ' . trans('user::modules.Подписка на рассылку'),
-                    'templates' => Components::getTemplates($paths . '/modules/users/subscribe/*.blade.php'),
+                    'templates' => Components::getTemplates($paths . '/vendor/fast_dog/user/components/subscribe/*.blade.php'),
                 ],
             ],
         ]);
