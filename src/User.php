@@ -4,8 +4,8 @@ namespace FastDog\User;
 
 use FastDog\Config\Models\Translate;
 use FastDog\Core\Interfaces\MenuInterface;
+use FastDog\Core\Models\Components;
 use FastDog\Core\Models\DomainManager;
-use FastDog\Core\Module\Components;
 use FastDog\User\Http\Controllers\Site\CabinetController;
 use FastDog\User\Http\Controllers\Site\UserController;
 use FastDog\User\Models\MessageManager;
