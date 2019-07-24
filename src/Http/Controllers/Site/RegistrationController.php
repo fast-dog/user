@@ -1,19 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dg
- * Date: 09.02.2017
- * Time: 10:57
- */
-
 namespace FastDog\User\Http\Controllers\Site;
 
 
 use App\Http\Controllers\Controller;
-use App\Modules\Config\Entity\DomainManager;
-use FastDog\User\Entity\UserConfig;
+use FastDog\Core\Models\DomainManager;
 use FastDog\User\Events\UserRegistration;
 use FastDog\User\Events\UserUpdate;
+use FastDog\User\Models\UserConfig;
 use FastDog\User\Request\Registration;
 use FastDog\User\User;
 
@@ -55,7 +48,6 @@ class RegistrationController extends Controller
             User::EMAIL => $request->input(User::EMAIL),
             User::TYPE => $request->input(User::TYPE, User::USER_TYPE_USER),
             User::STATUS => $request->input(User::STATUS, User::STATUS_ACTIVE),
-            User::GROUP_ID => $request->input(User::GROUP_ID, $roleUser->id),
             User::DATA => json_encode([]),
         ];
         if ($request->has(User::PASSWORD) && ($request->input(User::PASSWORD) !== '')) {
@@ -71,10 +63,10 @@ class RegistrationController extends Controller
 
             $user = User::create($data);
 
-            \Event::fire(new UserRegistration($user));
+            event(new UserRegistration($user));
 
 
-            \Event::fire(new UserUpdate($user, $request));
+            event(new UserUpdate($user, $request));
 
             if ($config !== null && false == $config->can('registration_confirm')) {
                 \Auth::loginUsingId($user->id, true);

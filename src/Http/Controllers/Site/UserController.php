@@ -1,23 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dg
- * Date: 18.01.2017
- * Time: 19:11
- */
 
 namespace FastDog\User\Http\Controllers\Site;
 
 
-use App\Http\Controllers\HomeController;
-use App\Modules\Config\Entity\DomainManager;
-use App\Modules\Config\Entity\Emails;
-use FastDog\User\Entity\UserEmailSubscribe;
-use FastDog\User\User;
+use FastDog\Config\Models\Emails;
+use FastDog\Core\Http\Controllers\Controller;
+use FastDog\Core\Models\DomainManager;
+use FastDog\User\Models\UserEmailSubscribe;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Validator;
 
 /**
  * Публичная часть
@@ -26,7 +17,7 @@ use Illuminate\Validation\Validator;
  * @version 0.2.0
  * @author Андрей Мартынов <d.g.dev482@gmail.com>
  */
-class UserController extends HomeController
+class UserController extends Controller
 {
     use  ThrottlesLogins;
 
@@ -36,22 +27,6 @@ class UserController extends HomeController
      * @var string $redirectTo
      */
     protected $redirectTo = '/cabinet';
-
-    /**
-     * Контент модуля
-     *
-     * Метод генерирует HTML согласно парамтерам пункта меню
-     *
-     * @param Request $request
-     * @param \App\Modules\Menu\Entity\Menu $item
-     * @param $data
-     * @return mixed
-     * @throws \Throwable
-     */
-    public function prepareContent(Request $request, $item, $data): \Illuminate\View\View
-    {
-        return parent::prepareContent($request, $item, $data);
-    }
 
     /**
      * Создание подписки на расылку новостей и рочего контента
@@ -108,9 +83,10 @@ class UserController extends HomeController
             }
             $result['success'] = true;
             if ($request->ajax()) {
-                 return $this->json($result, __METHOD__);
+                return $this->json($result, __METHOD__);
             }
         }
+
         return redirect()->back(302);
     }
 
@@ -139,15 +115,14 @@ class UserController extends HomeController
                 Emails::SITE_ID => DomainManager::getSiteId(),
             ])->first();
             if ($email) {
-                \Session::flash('message_subscribe',trans('public.Ваша подписка отменена.'));
+                \Session::flash('message_subscribe', trans('public.Ваша подписка отменена.'));
                 Emails::send($email->{Emails::ALIAS}, [
                     'to' => $subscribe->{UserEmailSubscribe::EMAIL},
                     Emails::SITE_ID => DomainManager::getSiteId(),
                 ]);
             }
-
-
         }
+
         return redirect('/');
     }
 }
