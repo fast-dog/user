@@ -133,8 +133,10 @@ Route::group([
 
 $ctrl = '\FastDog\User\Http\Controllers\Site\UserController';
 
-//\Route::post('/login', '\FastDog\User\Http\Controllers\Site\LoginController@postLogin');
-//\Route::get('/logout', '\FastDog\User\Http\Controllers\Site\LoginController@logout');
+\Route::get('/login', '\FastDog\User\Http\Controllers\Site\LoginController@login');
+\Route::post('/login', '\FastDog\User\Http\Controllers\Site\LoginController@postLogin');
+
+\Route::get('/logout', '\FastDog\User\Http\Controllers\Site\LoginController@logout');
 
 \Route::post('/subscribe', $ctrl . '@postSubscribe');
 \Route::get('/subscribe/off', $ctrl . '@getSubscribeOff');

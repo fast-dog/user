@@ -2,12 +2,12 @@
 
 namespace FastDog\User\Http\Controllers\Site;
 
-use App\Http\Controllers\Controller;
-use App\Modules\Config\Entity\DomainManager;
-use App\Modules\Config\Entity\Emails;
+
+use FastDog\Core\Http\Controllers\Controller;
+use FastDog\Core\Models\DomainManager;
+use FastDog\User\Models\User;
 use FastDog\User\Request\ResetPassword;
 use Illuminate\Http\Request;
-use FastDog\User\Entity\User;
 use FastDog\User\Request\Login;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -35,6 +35,7 @@ class LoginController extends Controller
     public function __construct()
     {
         parent::__construct();
+
         $this->middleware('guest', ['except' => 'logout']);
         $this->middleware('auth', ['except' => 'postLogin']);
     }
