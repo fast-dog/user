@@ -31,7 +31,7 @@ class CreateUsersConfig extends Migration
             UserConfig::create([
                 UserConfig::NAME => 'Настройки публичного раздела',
                 UserConfig::ALIAS => 'public',
-                UserConfig::DATA => <<<JSON
+                UserConfig::VALUE => <<<JSON
 [
   {
     "name": "Разрешить регистрацию",
@@ -55,7 +55,7 @@ JSON
             UserConfig::create([
                 UserConfig::NAME => 'Администрирование: Рабочий стол',
                 UserConfig::ALIAS => 'desktop',
-                UserConfig::DATA => <<<JSON
+                UserConfig::VALUE => <<<JSON
 [
   {
     "type": "graph",
