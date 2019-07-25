@@ -30,20 +30,20 @@ class CreateUsersConfig extends Migration
             DB::statement("ALTER TABLE `users_config` comment 'Параметры модуля Пользователи'");
 
             UserConfig::create([
-                UserConfig::NAME => trans('user:config.public.name'),
+                UserConfig::NAME => trans('user::config.public.name'),
                 UserConfig::ALIAS => 'public',
                 UserConfig::VALUE => json_encode([
                     [
-                        'name' => trans('user:config.public.registration.name'),
+                        'name' => trans('user::config.public.registration.name'),
                         'alias' => 'allow_registration',
-                        'description' => trans('user:config.public.registration.description'),
+                        'description' => trans('user::config.public.registration.description'),
                         'type' => 'type',
                         'value' => 'N'
                     ],
                     [
-                        'name' => trans('user:config.public.registration_confirm.name'),
+                        'name' => trans('user::config.public.registration_confirm.name'),
                         'alias' => 'allow_registration',
-                        'description' => trans('user:config.public.registration_confirm.description'),
+                        'description' => trans('user::config.public.registration_confirm.description'),
                         'type' => 'type',
                         'value' => 'Y'
                     ]
@@ -51,14 +51,14 @@ class CreateUsersConfig extends Migration
             ]);
 
             UserConfig::create([
-                UserConfig::NAME => trans('user:config.desktop.name'),
+                UserConfig::NAME => trans('user::config.desktop.name'),
                 UserConfig::ALIAS => 'desktop',
                 UserConfig::VALUE => json_encode([
                     [
                         [
-                            'name' => trans('user:config.desktop.table.name'),
+                            'name' => trans('user::config.desktop.table.name'),
                             'alias' => 'allow_registration',
-                            'description' => trans('user:config.desktop.table.description'),
+                            'description' => trans('user::config.desktop.table.description'),
                             'type' => 'graph',
                             'sort' => 100,
                             'value' => 'Y',
