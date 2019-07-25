@@ -43,6 +43,11 @@ class UserConfig extends BaseModel
     public $table = 'users_config';
 
     /**
+     * @var array $fillable
+     */
+    public $fillable = [self::NAME, self::VALUE, self::ALIAS];
+
+    /**
      * Все параметры
      *
      * Возвращает массив всех параметров модуля для построения таблицы в разделе администрирования
