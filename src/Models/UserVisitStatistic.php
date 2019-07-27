@@ -23,6 +23,8 @@ class UserVisitStatistic extends Model
      */
     protected $table = 'users_visit_stat';
 
+    public $fillable = ['value', self::CREATED_AT];
+
     /**
      *
      * @return bool
@@ -43,7 +45,7 @@ class UserVisitStatistic extends Model
     public static function getStatistic($fire_event = true)
     {
         $result = [];
-        $items = self::orderBy('created_at', 'asc')->limit(30)->get();
+        $items = self::orderBy('created_at', 'asc')->limit(100)->get();
         foreach ($items as $item) {
             $time = ($item->created_at->getTimestamp() * 1000);
             array_push($result, [
