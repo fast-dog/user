@@ -55,16 +55,14 @@ class CreateUsersConfig extends Migration
                 UserConfig::ALIAS => 'desktop',
                 UserConfig::VALUE => json_encode([
                     [
-                        [
-                            'name' => trans('user::config.desktop.table.name'),
-                            'alias' => 'allow_registration',
-                            'description' => trans('user::config.desktop.table.description'),
-                            'type' => 'graph',
-                            'sort' => 100,
-                            'value' => 'Y',
-                            'data' => 'FastDog\\User\\Models\\Desktop\\VisitGraph::getData'
-                        ],
-                    ]
+                        'name' => trans('user::config.desktop.table.name'),
+                        'alias' => 'allow_registration',
+                        'description' => trans('user::config.desktop.table.description'),
+                        'type' => 'graph',
+                        'sort' => 100,
+                        'value' => 'Y',
+                        'data' => 'FastDog\\User\\Models\\Desktop\\VisitGraph::getData'
+                    ],
                 ])
             ]);
         }

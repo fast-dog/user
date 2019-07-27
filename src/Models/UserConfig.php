@@ -57,13 +57,9 @@ class UserConfig extends BaseModel
     public static function getAllConfig()
     {
         $result = [];
-        $items = self::orderBy('priority')->get();
-        foreach ($items as $item) {
+        self::orderBy('priority')->get()->each(function(self $item) use (&$result) {
             $data = json_decode($item->{'value'});
-            /**
-             * Проверка состояния блоков на главной странице
-             */
-            if ($item->alias == self::CONFIG_DESKTOP) {
+            if ($item->{self::ALIAS} == self::CONFIG_DESKTOP) {
                 foreach ($data as $key => &$value) {
                     $_item = Desktop::where(Desktop::NAME, $value->name)->withTrashed()->first();
                     if ($_item) {
@@ -76,7 +72,7 @@ class UserConfig extends BaseModel
                 'name' => $item->{self::NAME},
                 'config' => $data,
             ];
-        }
+        });
 
         return (array)$result;
     }

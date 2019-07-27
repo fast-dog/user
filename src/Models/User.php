@@ -489,39 +489,39 @@ class User extends Authenticatable implements TableModelInterface
      */
     public static function getStatistic($fire_event = true)
     {
-        $countActive = self::where(function (Builder $query) {
+        $countActive = self::where(function(Builder $query) {
             $query->where(self::STATUS, self::STATUS_ACTIVE);
             $query->where(self::SITE_ID, DomainManager::getSiteId());
         })->count();
 
-        $countNotConfirmed = self::where(function (Builder $query) {
+        $countNotConfirmed = self::where(function(Builder $query) {
             $query->where(self::STATUS, self::STATUS_NOT_CONFIRMED);
             $query->where(self::SITE_ID, DomainManager::getSiteId());
         })->count();
 
-        $countBanned = self::where(function (Builder $query) {
+        $countBanned = self::where(function(Builder $query) {
             $query->where(self::STATUS, self::STATUS_BANNED);
             $query->where(self::SITE_ID, DomainManager::getSiteId());
         })->count();
 
-        $countDeleted = self::where(function (Builder $query) {
+        $countDeleted = self::where(function(Builder $query) {
             $query->where(self::SITE_ID, DomainManager::getSiteId());
         })->whereNotNull('deleted_at')->withTrashed()->count();
 
-        $total = self::where(function (Builder $query) {
+        $total = self::where(function(Builder $query) {
             $query->where(self::SITE_ID, DomainManager::getSiteId());
         })->withTrashed()->count();
 
         $result = [
             'total' => $total,
             'active' => $countActive,
-            'active_percent' => round((($countActive * 100) / $total), 2),
+            'active_percent' => ($total) ?? round((($countActive * 100) / $total), 2),
             'not_confirmed' => $countNotConfirmed,
-            'not_confirmed_percent' => round((($countNotConfirmed * 100) / $total), 2),
+            'not_confirmed_percent' => ($total) ?? round((($countNotConfirmed * 100) / $total), 2),
             'in_trash' => $countBanned,
-            'in_trash_percent' => round((($countBanned * 100) / $total), 2),
+            'in_trash_percent' => ($total) ?? round((($countBanned * 100) / $total), 2),
             'deleted' => $countDeleted,
-            'deleted_percent' => round((($countDeleted * 100) / $total), 2),
+            'deleted_percent' => ($total) ?? round((($countDeleted * 100) / $total), 2),
             'cache_tags' => (env('CACHE_DRIVER') === 'redis') ? 'Y' : 'N',
         ];
 
@@ -870,7 +870,7 @@ class User extends Authenticatable implements TableModelInterface
     public function getModalData($id): array
     {
         $result = [];
-        self::where('id', $id)->get()->each(function (self $item) use (&$result) {
+        self::where('id', $id)->get()->each(function(self $item) use (&$result) {
             $data = $item->getData();
 
             $result = [
