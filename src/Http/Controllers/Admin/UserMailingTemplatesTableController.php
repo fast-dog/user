@@ -89,26 +89,4 @@ class UserMailingTemplatesTableController extends Controller implements TableCon
     {
         // TODO: Implement items() method.
     }
-
-    /**
-     * @param Request $request
-     * @return JsonResponse
-     * @throws \Exception
-     */
-    public function postUserMailingUpdate(Request $request): JsonResponse
-    {
-        $result = ['success' => false, 'items' => []];
-
-        try {
-            $result['success'] = $this->updatedModel($request->all(), UserMailing::class);
-        } catch (\Exception $e) {
-            return $this->json([
-                'success' => false,
-                'message' => $e->getMessage(),
-                'code' => $e->getCode()
-            ], __METHOD__);
-        }
-
-        return $this->json($result, __METHOD__);
-    }
 }

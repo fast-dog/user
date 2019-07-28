@@ -46,7 +46,7 @@ class UserMailingAdminSetEditorForm
 
         $result['form'] = [
             'create_url' => 'users/mailing/save',
-            'update_url' => 'users/mailing/update',
+            'update_url' => 'users/mailing/save',
             'help' => 'user_mailing',
             'tabs' => (array)[
                 (object)[
