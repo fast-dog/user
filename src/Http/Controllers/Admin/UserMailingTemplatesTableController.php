@@ -6,6 +6,7 @@ namespace FastDog\User\Http\Controllers\Admin;
 use FastDog\Core\Http\Controllers\Controller;
 use FastDog\Core\Table\Interfaces\TableControllerInterface;
 use FastDog\Core\Table\Traits\TableTrait;
+use FastDog\User\Models\UserMailing;
 use FastDog\User\Models\UserMailingTemplates;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
@@ -87,5 +88,27 @@ class UserMailingTemplatesTableController extends Controller implements TableCon
     public function items(Request $request): JsonResponse
     {
         // TODO: Implement items() method.
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function postUserMailingUpdate(Request $request): JsonResponse
+    {
+        $result = ['success' => false, 'items' => []];
+
+        try {
+            $result['success'] = $this->updatedModel($request->all(), UserMailing::class);
+        } catch (\Exception $e) {
+            return $this->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
+            ], __METHOD__);
+        }
+
+        return $this->json($result, __METHOD__);
     }
 }

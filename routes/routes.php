@@ -113,6 +113,9 @@ Route::group([
         'uses' => $ctrl . '@list',
     ]));
 
+    \Route::post('/users/mailing/update', array_replace_recursive($baseParameters, [
+        'uses' => $ctrl . '@postUserMailingUpdate',
+    ]));
     /*
      * Рассылка - форма
      */
@@ -123,9 +126,6 @@ Route::group([
     ]))->where('id', '[1-90]+');
 
     \Route::post('/users/mailing/save', array_replace_recursive($baseParameters, [
-        'uses' => $ctrl . '@postMailing',
-    ]));
-    \Route::post('/users/mailing/update', array_replace_recursive($baseParameters, [
         'uses' => $ctrl . '@postMailing',
     ]));
 });
