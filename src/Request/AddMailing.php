@@ -2,7 +2,6 @@
 
 namespace FastDog\User\Request;
 
-
 use FastDog\User\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -37,6 +36,7 @@ class AddMailing extends FormRequest
             'name' => 'required',
             'subject' => 'required',
             'text' => 'required',
+            'start_at' => 'required',
         ];
     }
 
@@ -46,37 +46,10 @@ class AddMailing extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Поле "Название" обязательно для заполнения.',
-            'subject.required' => 'Поле "Тема" обязательно для заполнения.',
-            'text.required' => 'Поле "HTML Текст" обязательно для заполнения.',
+            'name.required' => trans('user::requests.name_required'),
+            'subject.required' => trans('user::requests.subject_required'),
+            'text.required' => trans('user::requests.text_required'),
+            'start_at.required' => trans('user::requests.start_at_required'),
         ];
-    }
-
-    /**
-     * @return \Illuminate\Contracts\Validation\Validator|mixed
-     */
-    public function getValidatorInstance()
-    {
-        $validator = parent::getValidatorInstance();
-//        $validator->after(function () use ($validator) {
-//            $input = $this->all();
-//            if (!$input['id']) {
-//                $check = User::where(function ($query) use ($input) {
-//                    $query->where('email', $input['email']);
-//                })->first();
-//                if ($check) {
-//                    $validator->errors()->add('email', 'Данный email зарегистрирован...');
-//                }
-//
-//                if (empty($input['password'])) {
-//                    $validator->errors()->add('email', 'Пароль не может быть пустым...');
-//                }
-//                if (empty($input['site_id'])) {
-//                    $validator->errors()->add('email', 'Не выбран Уровень доступа...');
-//                }
-//            }
-//        });
-
-        return $validator;
     }
 }

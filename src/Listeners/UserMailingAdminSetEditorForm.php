@@ -91,6 +91,7 @@ class UserMailingAdminSetEditorForm
                             'label' => trans('user::forms.mailing.access'),
                             'items' => DomainManager::getAccessDomainList(),
                             'css_class' => 'col-sm-12',
+                            'required' => true,
                             'active' => DomainManager::checkIsDefault(),
                         ],
                         [
@@ -113,6 +114,7 @@ class UserMailingAdminSetEditorForm
                             'id' => UserMailing::START_AT,
                             'type' => FormFieldTypes::TYPE_DATE,
                             'name' => UserMailing::START_AT,
+                            'required' => true,
                             'label' => trans('user::forms.mailing.date_sending'),
                             'css_class' => 'col-sm-12',
                             'form_group' => true,

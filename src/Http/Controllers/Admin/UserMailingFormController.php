@@ -79,6 +79,7 @@ class UserMailingFormController extends Controller implements FormControllerInte
     {
         $result = [
             'success' => true,
+            'items' => []
         ];
         $id = $request->input('id');
 
@@ -101,6 +102,7 @@ class UserMailingFormController extends Controller implements FormControllerInte
         } else {
             $data[UserMailing::STATE] = UserMailing::STATE_READY;
             $item = UserMailing::create($data);
+            array_push($result['items'], $item->getData());
         }
         /**
          * Создаем процесс отправки
