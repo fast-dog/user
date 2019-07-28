@@ -63,6 +63,11 @@ class UserMailingTemplates extends BaseModel implements TableModelInterface
                 'key' => self::NAME,
                 'domain' => true,
                 'link' => 'mailing_templates_item',
+                'action' => [
+                    'edit' => true,
+                    'replicate' => true,
+                    'delete' => true,
+                ]
             ],
             [
                 'name' => '#',
