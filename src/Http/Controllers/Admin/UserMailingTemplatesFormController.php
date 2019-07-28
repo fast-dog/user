@@ -93,15 +93,10 @@ class UserMailingTemplatesFormController extends Controller implements FormContr
     /**
      * @param Request $request
      * @return JsonResponse
+     * @throws \Exception
      */
     public function postMailingTemplateUpdate(Request $request): JsonResponse
     {
-        $result = ['success' => true];
-        $ids = $request->input('ids');
-        if (count($ids)) {
-            UserMailingTemplates::whereIn('id', $ids)->delete();
-        }
-
-        return $this->json($result, __METHOD__);
+        return $this->postModelUpdateFromTable($request);
     }
 }

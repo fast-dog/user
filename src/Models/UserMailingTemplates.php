@@ -128,23 +128,23 @@ class UserMailingTemplates extends BaseModel implements TableModelInterface
     {
         $result = [
             [
-                BaseProperties::NAME => 'Email отправителя',
+                BaseProperties::NAME => trans('user::mailing.template.properties.form_address'),
                 BaseProperties::ALIAS => 'FROM_ADDRESS',
                 BaseProperties::VALUE => '',
                 BaseProperties::SORT => 100,
                 BaseProperties::TYPE => BaseProperties::TYPE_STRING,
                 BaseProperties::DATA => json_encode([
-                    'description' => 'Email адрес отправителья письма',
+                    'description' => trans('user::mailing.template.properties.form_address_description'),
                 ]),
             ],
             [
-                BaseProperties::NAME => 'Отправитель письма',
+                BaseProperties::NAME => trans('user::mailing.template.properties.form_name'),
                 BaseProperties::ALIAS => 'FROM_NAME',
                 BaseProperties::VALUE => '',
                 BaseProperties::SORT => 100,
                 BaseProperties::TYPE => BaseProperties::TYPE_STRING,
                 BaseProperties::DATA => json_encode([
-                    'description' => 'Отправитель письма',
+                    'description' => trans('user::mailing.template.properties.form_name_description'),
                 ]),
             ],
         ];
@@ -161,7 +161,7 @@ class UserMailingTemplates extends BaseModel implements TableModelInterface
 
         self::where([
             self::STATE => self::STATE_PUBLISHED,
-        ])->get()->each(function (self $item) use (&$result) {
+        ])->get()->each(function(self $item) use (&$result) {
             array_push($result, $item->getData());
         });
 

@@ -29,7 +29,8 @@ class AppendConfigEmails extends Migration
             /** @var \Illuminate\Support\Collection $properties */
             $properties = $registration->properties();
             $saveProperties = [];
-            $fillProperties = ['FROM_ADDRESS' => config('mail.from.address'),
+            $fillProperties = [
+                'FROM_ADDRESS' => config('mail.from.address'),
                 'SUBJECT' => trans('user::emails.Регистрация пользователя'),
                 'TITLE' => trans('user::emails.Регистрация пользователя')];
             $properties->each(function ($property) use (&$saveProperties, $fillProperties) {
