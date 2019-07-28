@@ -796,6 +796,10 @@ class User extends Authenticatable implements TableModelInterface
                 'domain' => true,
                 'link' => 'user_profile',
                 'show' => true,
+                'action' => [
+                    'edit' => true,
+                    'delete' => true,
+                ]
             ],
             [
                 'name' => trans('core::interface.Дата регистрации'),
