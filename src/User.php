@@ -217,7 +217,7 @@ class User extends UserModel
 
         return [
             'id' => self::MODULE_ID,
-            'menu' => function () use ($paths, $templates_paths) {
+            'menu' => function() use ($paths, $templates_paths) {
                 $result = [];
                 foreach ($this->getMenuType() as $id => $item) {
                     array_push($result, [
@@ -232,10 +232,10 @@ class User extends UserModel
             },
             'templates_paths' => $templates_paths,
             'module_type' => $this->getMenuType(),
-            'admin_menu' => function () {
+            'admin_menu' => function() {
                 return $this->getAdminMenuItems();
             },
-            'access' => function () {
+            'access' => function() {
                 return [
                     '000',
                 ];
@@ -274,7 +274,7 @@ class User extends UserModel
     {
         $paths = Arr::first(\Config::get('view.paths'));
 
-        $result = [  ];
+        $result = [];
 
         return $result;
     }
@@ -494,6 +494,7 @@ class User extends UserModel
             'icon' => 'fa-table',
             'name' => trans('user::interface.Управление'),
             'route' => '/users/items',
+            'new' => '/users/items/0'
         ]);
 
         array_push($result['children'], [
@@ -506,6 +507,7 @@ class User extends UserModel
             'icon' => 'fa-envelope',
             'name' => trans('user::interface.Рассылки'),
             'route' => '/users/mailing',
+            'new' => '/users/mailing/0'
         ]);
 
         array_push($result['children'], [
