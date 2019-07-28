@@ -156,6 +156,11 @@ class UserMailing extends BaseModel implements TableModelInterface
                 'key' => self::NAME,
                 'domain' => true,
                 'link' => 'mailing_item',
+                'action' => [
+                    'edit' => true,
+                    'replicate' => true,
+                    'delete' => true,
+                ]
             ],
             [
                 'name' => trans('user::mailing.date_registration'),
