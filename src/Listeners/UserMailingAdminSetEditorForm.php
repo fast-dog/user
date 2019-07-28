@@ -45,8 +45,8 @@ class UserMailingAdminSetEditorForm
         $result = $event->getResult();
 
         $result['form'] = [
-            'create_url' => '',
-            'update_url' => '',
+            'create_url' => 'users/mailing/save',
+            'update_url' => 'users/mailing/update',
             'help' => 'user_mailing',
             'tabs' => (array)[
                 (object)[
