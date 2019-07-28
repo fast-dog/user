@@ -99,13 +99,16 @@ class UserSubscribeTableController extends Controller implements TableController
     public function postItemSelfUpdate(Request $request)
     {
         $result = ['success' => true, 'items' => []];
-        $data = $request->all();
-        switch ($data['field']) {
-            default:
-                $this->updatedModel($data, UserEmailSubscribe::class);
-                break;
-        }
 
+        try {
+            $this->updatedModel($request->all(), UserEmailSubscribe::class);
+        } catch (\Exception $e) {
+            return $this->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
+            ], __METHOD__);
+        }
         return $this->json($result, __METHOD__);
     }
 
@@ -122,10 +125,10 @@ class UserSubscribeTableController extends Controller implements TableController
         /**
          * @var $items Collection
          */
-        $items = UserEmailSubscribe::where(function (Builder $query) {
+        $items = UserEmailSubscribe::where(function(Builder $query) {
             $query->where(UserEmailSubscribe::SITE_ID, DomainManager::getSiteId());
         })->get();
-        $items->each(function (UserEmailSubscribe $item) use ($h) {
+        $items->each(function(UserEmailSubscribe $item) use ($h) {
             fputcsv($h, [$item->{UserEmailSubscribe::EMAIL}]);
         });
         fclose($h);
