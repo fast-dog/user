@@ -494,7 +494,7 @@ class User extends UserModel
             'icon' => 'fa-table',
             'name' => trans('user::interface.Управление'),
             'route' => '/users/items',
-            'new' => '/users/items/0'
+            'new' => '/users/item/0'
         ]);
 
         array_push($result['children'], [
