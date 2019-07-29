@@ -46,10 +46,10 @@ class AddMailing extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => trans('user::requests.name_required'),
-            'subject.required' => trans('user::requests.subject_required'),
-            'text.required' => trans('user::requests.text_required'),
-            'start_at.required' => trans('user::requests.start_at_required'),
+            'name.required' => trans('user::requests.add_mailing.name_required'),
+            'subject.required' => trans('user::requests.add_mailing.subject_required'),
+            'text.required' => trans('user::requests.add_mailing.text_required'),
+            'start_at.required' => trans('user::requests.add_mailing.start_at_required'),
         ];
     }
 }
