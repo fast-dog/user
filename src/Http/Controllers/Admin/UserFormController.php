@@ -43,9 +43,12 @@ class UserFormController extends Controller implements FormControllerInterface
         $this->breadcrumbs->push(['url' => '/users/items', 'name' => trans('user::interface.Управление')]);
 
         $result = $this->getItemData($request);
-        if ($this->item) {
-            $this->breadcrumbs->push(['url' => false, 'name' => $this->item->{User::EMAIL}]);
-        }
+
+        $this->breadcrumbs->push([
+            'url' => false,
+            'name' => ($this->item->id > 0) ? $this->item->{User::EMAIL} : trans('user::forms.general.new')
+        ]);
+
 
         return $this->json($result, __METHOD__);
     }
