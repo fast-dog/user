@@ -436,16 +436,6 @@ class User extends UserModel
 
 
     /**
-     * Возвращает параметры блоков добавляемых на рабочий стол администратора
-     *
-     * @return array
-     */
-    public function getDesktopWidget(): array
-    {
-        return [];
-    }
-
-    /**
      * Параметры публичного раздела
      *
      * Возвращает параметры публичного раздела
