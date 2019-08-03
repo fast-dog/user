@@ -119,6 +119,7 @@ class User extends UserModel
             if (isset($list[$code])) {
                 $code = $list[$code]['name'];
             }
+
             if ($currentPath !== '') {
                 $description = [];
                 if (file_exists(dirname($currentPath) . '/.description.php') && $description == []) {
@@ -190,21 +191,21 @@ class User extends UserModel
     public function getTemplatesPaths(): array
     {
         return [
-            "user_login" => "/vendor/fast_dog/users/{SITE_ID}/login/*.blade.php",
-            "user_registration" => "/vendor/fast_dog/users/{SITE_ID}/registration/*.blade.php",
-            "user_restore_password" => "/vendor/fast_dog/users/{SITE_ID}/restore_password/*.blade.php",
-            "user_cabinet" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/*.blade.php",
-            "user_cabinet_edit" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/*.blade.php",
-            "user_cabinet_settings" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/settings/*.blade.php",
-            "user_cabinet_messages" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/messages/*.blade.php",
-            "user_cabinet_new_messages" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/messages/*.blade.php",
-            "user_cabinet_my_items" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/items/*.blade.php",
-            "user_cabinet_my_buying" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/buying/*.blade.php",
-            "user_cabinet_favorites" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/favorites/*.blade.php",
-            "user_cabinet_billing" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/billing/*.blade.php",
-            "user_cabinet_choose_buyer" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/*.blade.php",
-            "user_cabinet_add_opinion" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/reviews/*.blade.php",
-            "user_cabinet_add_opinion_buyer" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/reviews/*.blade.php",
+            "user_login" => "/vendor/fast_dog/{SITE_ID}/user/login/*.blade.php",
+            "user_registration" => "/vendor/fast_dog/{SITE_ID}/user/registration/*.blade.php",
+            "user_restore_password" => "/vendor/fast_dog/{SITE_ID}/user/restore_password/*.blade.php",
+            "user_cabinet" => "/vendor/fast_dog/{SITE_ID}/user/cabinet/*.blade.php",
+            "user_cabinet_edit" => "/vendor/fast_dog/{SITE_ID}/user/cabinet/*.blade.php",
+            "user_cabinet_settings" => "/vendor/fast_dog/{SITE_ID}/user/cabinet/settings/*.blade.php",
+            "user_cabinet_messages" => "/vendor/fast_dog/{SITE_ID}/user/cabinet/messages/*.blade.php",
+            "user_cabinet_new_messages" => "/vendor/fast_dog/{SITE_ID}/user/cabinet/messages/*.blade.php",
+            "user_cabinet_my_items" => "/vendor/fast_dog/{SITE_ID}/user/cabinet/items/*.blade.php",
+            "user_cabinet_my_buying" => "/vendor/fast_dog/{SITE_ID}/user/cabinet/buying/*.blade.php",
+            "user_cabinet_favorites" => "/vendor/fast_dog/{SITE_ID}/user/cabinet/favorites/*.blade.php",
+            "user_cabinet_billing" => "/vendor/fast_dog/{SITE_ID}/user/cabinet/billing/*.blade.php",
+            "user_cabinet_choose_buyer" => "/vendor/fast_dog/{SITE_ID}/user/cabinet/*.blade.php",
+            "user_cabinet_add_opinion" => "/vendor/fast_dog/{SITE_ID}/user/cabinet/reviews/*.blade.php",
+            "user_cabinet_add_opinion_buyer" => "/vendor/fast_dog/{SITE_ID}/user/cabinet/reviews/*.blade.php",
         ];
     }
 
