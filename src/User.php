@@ -167,17 +167,18 @@ class User extends UserModel
     public function getMenuType(): array
     {
         return [
-            ['id' => 'user_login', 'name' => trans('user::menu.Пользователи :: Авторизация'), 'sort' => 400],
-            ['id' => 'user_registration', 'name' => trans('user::menu.Пользователи :: Регистрация'), 'sort' => 410],
-            ['id' => 'user_restore_password', 'name' => trans('user::menu.Пользователи :: Восстановление пароля'), 'sort' => 420],
-            ['id' => 'user_cabinet', 'name' => trans('user::menu.Пользователи :: Личный кабинет'), 'sort' => 430],
-            ['id' => 'user_cabinet_edit', 'name' => trans('user::menu.Пользователи :: Личный кабинет (редактирование)'), 'sort' => 440],
-            ['id' => 'user_cabinet_settings', 'name' => trans('user::menu.Пользователи :: Личный кабинет - настройки'), 'sort' => 450],
-            ['id' => 'user_cabinet_messages', 'name' => trans('user::menu.Пользователи :: Личный кабинет - сообщения'), 'sort' => 460],
-            ['id' => 'user_cabinet_new_messages', 'name' => trans('user::menu.Пользователи :: Личный кабинет - новое сообщение'), 'sort' => 470],
-            ['id' => 'user_cabinet_favorites', 'name' => trans('user::menu.Пользователи :: Личный кабинет - закладки'), 'sort' => 480],
-            ['id' => 'user_cabinet_billing', 'name' => trans('user::menu.Пользователи :: Личный кабинет - счет'), 'sort' => 490],
-            ['id' => 'user_logout', 'name' => trans('user::menu.Пользователи :: Выход'), 'sort' => 500],
+            ['id' => 'user_login', 'name' => trans('user::menu.authorization'), 'sort' => 400],
+            ['id' => 'user_registration', 'name' => trans('user::menu.registration'), 'sort' => 410],
+            ['id' => 'user_restore_password', 'name' => trans('user::menu.password_restore'), 'sort' => 420],
+            ['id' => 'user_cabinet', 'name' => trans('user::menu.lk'), 'sort' => 430],
+            ['id' => 'user_cabinet_edit', 'name' => trans('user::menu.lk_edit'), 'sort' => 440],
+            ['id' => 'user_cabinet_settings', 'name' => trans('user::menu.lk_setting'), 'sort' => 450],
+            ['id' => 'user_cabinet_messages', 'name' => trans('user::menu.lk_messages'), 'sort' => 460],
+            ['id' => 'user_cabinet_new_messages', 'name' => trans('user::menu.lk_new_message'), 'sort' => 470],
+            ['id' => 'user_cabinet_favorites', 'name' => trans('user::menu.lk_favorites'), 'sort' => 480],
+            ['id' => 'user_cabinet_billing', 'name' => trans('user::menu.lk_billing'), 'sort' => 490],
+            ['id' => 'user_login', 'name' => trans('user::menu.login'), 'sort' => 495],
+            ['id' => 'user_logout', 'name' => trans('user::menu.logout'), 'sort' => 500],
         ];
     }
 
