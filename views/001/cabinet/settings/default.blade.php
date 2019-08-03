@@ -1,13 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dg
- * Date: 07.02.2017
- * Time: 12:44
- *
- * @var $user \App\Modules\Users\User
- */
-use App\Modules\Users\Entity\Profile\UserProfile;
+
 $activeTab = \Session::get('tab', 'profile');
 ?>
 @extends('public.000.layouts.user_cabinet')

@@ -111,9 +111,11 @@ class User extends UserModel
         $domainsCode = DomainManager::getScopeIds();
 
         $list = DomainManager::getAccessDomainList();
+
         foreach ($domainsCode as $code) {
             $_code = $code;
-            $currentPath = str_replace('modules', 'public/' . $code . '/modules', $paths);
+            $currentPath = str_replace('{SITE_ID}', $code, $paths);
+
             if (isset($list[$code])) {
                 $code = $list[$code]['name'];
             }
@@ -188,21 +190,21 @@ class User extends UserModel
     public function getTemplatesPaths(): array
     {
         return [
-            "user_login" => "/users/login/*.blade.php",
-            "user_registration" => "/users/registration/*.blade.php",
-            "user_restore_password" => "/users/restore_password/*.blade.php",
-            "user_cabinet" => "/users/cabinet/*.blade.php",
-            "user_cabinet_edit" => "/users/cabinet/*.blade.php",
-            "user_cabinet_settings" => "/users/cabinet/settings/*.blade.php",
-            "user_cabinet_messages" => "/users/cabinet/messages/*.blade.php",
-            "user_cabinet_new_messages" => "/users/cabinet/messages/*.blade.php",
-            "user_cabinet_my_items" => "/users/cabinet/items/*.blade.php",
-            "user_cabinet_my_buying" => "/users/cabinet/buying/*.blade.php",
-            "user_cabinet_favorites" => "/users/cabinet/favorites/*.blade.php",
-            "user_cabinet_billing" => "/users/cabinet/billing/*.blade.php",
-            "user_cabinet_choose_buyer" => "/users/cabinet/*.blade.php",
-            "user_cabinet_add_opinion" => "/users/cabinet/reviews/*.blade.php",
-            "user_cabinet_add_opinion_buyer" => "/users/cabinet/reviews/*.blade.php",
+            "user_login" => "/vendor/fast_dog/users/{SITE_ID}/login/*.blade.php",
+            "user_registration" => "/vendor/fast_dog/users/{SITE_ID}/registration/*.blade.php",
+            "user_restore_password" => "/vendor/fast_dog/users/{SITE_ID}/restore_password/*.blade.php",
+            "user_cabinet" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/*.blade.php",
+            "user_cabinet_edit" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/*.blade.php",
+            "user_cabinet_settings" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/settings/*.blade.php",
+            "user_cabinet_messages" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/messages/*.blade.php",
+            "user_cabinet_new_messages" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/messages/*.blade.php",
+            "user_cabinet_my_items" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/items/*.blade.php",
+            "user_cabinet_my_buying" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/buying/*.blade.php",
+            "user_cabinet_favorites" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/favorites/*.blade.php",
+            "user_cabinet_billing" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/billing/*.blade.php",
+            "user_cabinet_choose_buyer" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/*.blade.php",
+            "user_cabinet_add_opinion" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/reviews/*.blade.php",
+            "user_cabinet_add_opinion_buyer" => "/vendor/fast_dog/users/{SITE_ID}/cabinet/reviews/*.blade.php",
         ];
     }
 
@@ -225,7 +227,7 @@ class User extends UserModel
                         'id' => self::MODULE_ID . '::' . $item['id'],
                         'name' => $item['name'],
                         'sort' => $item['sort'],
-                        'templates' => (isset($templates_paths[$id])) ? $this->getTemplates($paths . $templates_paths[$id]) : [],
+                        'templates' => (isset($templates_paths[$item['id']])) ? $this->getTemplates($paths . $templates_paths[$item['id']]) : [],
                         'class' => __CLASS__,
                     ]);
                 }
