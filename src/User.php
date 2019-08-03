@@ -212,7 +212,7 @@ class User extends UserModel
      */
     public function getModuleInfo(): array
     {
-        $paths = Arr::first(\Config::get('view.paths'));
+        $paths = Arr::first(config('view.paths'));
         $templates_paths = $this->getTemplatesPaths();
 
         return [
@@ -228,7 +228,7 @@ class User extends UserModel
                         'class' => __CLASS__,
                     ]);
                 }
-                $result = $result->sort('sort');
+                $result = $result->sortBy('sort');
                 return $result;
             },
             'templates_paths' => $templates_paths,
