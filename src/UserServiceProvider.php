@@ -117,7 +117,7 @@ class UserServiceProvider extends LaravelServiceProvider
 
         $this->publishes([
             __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR =>
-                base_path('resources/views/vendor/fast_dog/' . self::NAME),
+                base_path('resources/views/vendor/fast_dog/'),
         ]);
     }
 
