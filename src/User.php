@@ -4,8 +4,10 @@ namespace FastDog\User;
 
 use FastDog\Config\Models\Translate;
 use FastDog\Core\Interfaces\MenuInterface;
+use FastDog\Core\Models\BaseModel;
 use FastDog\Core\Models\Components;
 use FastDog\Core\Models\DomainManager;
+use FastDog\Menu\Menu;
 use FastDog\User\Http\Controllers\Site\CabinetController;
 use FastDog\User\Http\Controllers\Site\UserController;
 use FastDog\User\Models\MessageManager;
@@ -292,110 +294,109 @@ class User extends UserModel
      * Возвращает маршрут компонента
      *
      * @param Request $request
-     * @param MenuInterface $item
+     * @param MenuInterface|Menu $item
      * @return mixed
      */
     public function getMenuRoute(Request $request, MenuInterface $item): array
     {
         $result = [];
-        if (isset($item->data->type)) {
-            switch ($item->data->type) {
-                case self::TYPE_LOGIN:
-                    array_push($result, 'login');
-                    break;
-                case self::TYPE_LOGOUT:
-                    array_push($result, 'logout');
-                    break;
-                case self::TYPE_CABINET:
-                    array_push($result, $request->input(Menu::ALIAS));
+        $type = $request->input('type.id');
 
-                    return [
-                        'type' => $item->data->type,
-                        'instance' => CabinetController::class,
-                        'route' => implode('/', $result),
-                    ];
-                case self::TYPE_CABINET_SETTINGS:
-                    $roots = $item->getAncestors();
-                    foreach ($roots as $root) {
-                        if ($root->alias && !in_array($root->alias, ['#', '/'])) {
-                            array_push($result, $root->alias);
-                        }
-                    }
+        switch ($type) {
+            case self::MODULE_ID . '::' . self::TYPE_LOGIN:
+                array_push($result, 'login');
+                break;
+            case self::MODULE_ID . '::' . self::TYPE_LOGOUT:
+                array_push($result, 'logout');
+                break;
+            case self::MODULE_ID . '::' . self::TYPE_CABINET:
+                array_push($result, $request->input(BaseModel::ALIAS));
 
-                    if ($request->input(Menu::ALIAS, null)) {
-                        array_push($result, $request->input(Menu::ALIAS, null));
-                    } else {
-                        array_push($result, 'settings');
-                    }
+                return [
+                    'type' => $type,
+                    'instance' => CabinetController::class,
+                    'route' => implode('/', $result),
+                ];
+            case self::MODULE_ID . '::' . self::TYPE_CABINET_SETTINGS:
 
-                    return [
-                        'type' => $item->data->type,
-                        'instance' => CabinetController::class,
-                        'route' => implode('/', $result),
-                    ];
-                case self::TYPE_CABINET_MESSAGES:
-                    if ($item->parent) {
-                        array_push($result, $item->parent->alias);
+                $roots = $item->getAncestors();
+                foreach ($roots as $root) {
+                    if ($root->alias && !in_array($root->alias, ['#', '/'])) {
+                        array_push($result, $root->alias);
                     }
+                }
 
-                    if ($request->input(Menu::ALIAS, null)) {
-                        array_push($result, $request->input(Menu::ALIAS, null));
-                    } else {
-                        array_push($result, 'messages');
-                    }
+                if ($request->input(Menu::ALIAS, null)) {
+                    array_push($result, $request->input(Menu::ALIAS, null));
+                } else {
+                    array_push($result, 'settings');
+                }
 
-                    return [
-                        'type' => $item->data->type,
-                        'instance' => CabinetController::class,
-                        'route' => implode('/', $result),
-                    ];
-                case self::TYPE_CABINET_NEW_MESSAGES:
-                    if ($item->parent) {
-                        array_push($result, $item->parent->alias);
-                    }
-                    if ($request->input(Menu::ALIAS, null)) {
-                        array_push($result, $request->input(Menu::ALIAS, null));
-                    } else {
-                        array_push($result, 'new-messages');
-                    }
+                return [
+                    'type' => $type,
+                    'instance' => CabinetController::class,
+                    'route' => implode('/', $result),
+                ];
+            case self::MODULE_ID . '::' . self::TYPE_CABINET_MESSAGES:
+                if ($item->parent) {
+                    array_push($result, $item->parent->alias);
+                }
 
-                    return [
-                        'type' => $item->data->type,
-                        'instance' => CabinetController::class,
-                        'route' => implode('/', $result),
-                    ];
-                case self::TYPE_REGISTRATION:
-                    array_push($result, 'registration');
-                    break;
-                case self::TYPE_RESTORE_PASSWORD:
-                    array_push($result, 'restore-password');
-                    break;
-                default:
-                    if ($item->parent) {
-                        array_push($result, $item->parent->alias);
-                    }
-                    if ($request->input(Menu::ALIAS, null)) {
-                        array_push($result, $request->input(Menu::ALIAS, null));
-                    } else {
-                        array_push($result, $item->alias);
-                    }
+                if ($request->input(Menu::ALIAS, null)) {
+                    array_push($result, $request->input(Menu::ALIAS, null));
+                } else {
+                    array_push($result, 'messages');
+                }
 
-                    return [
-                        'type' => $item->data->type,
-                        'instance' => CabinetController::class,
-                        'route' => implode('/', $result),
-                    ];
-                    break;
-            }
+                return [
+                    'type' => $type,
+                    'instance' => CabinetController::class,
+                    'route' => implode('/', $result),
+                ];
+            case self::MODULE_ID . '::' . self::TYPE_CABINET_NEW_MESSAGES:
+                if ($item->parent) {
+                    array_push($result, $item->parent->alias);
+                }
+                if ($request->input(Menu::ALIAS, null)) {
+                    array_push($result, $request->input(Menu::ALIAS, null));
+                } else {
+                    array_push($result, 'new-messages');
+                }
 
-            return [
-                'type' => (isset($item->data->type)) ? $item->data->type : 'undefined',
-                'instance' => UserController::class,
-                'route' => implode('/', $result),
-            ];
+                return [
+                    'type' => $type,
+                    'instance' => CabinetController::class,
+                    'route' => implode('/', $result),
+                ];
+            case self::MODULE_ID . '::' . self::TYPE_REGISTRATION:
+                array_push($result, 'registration');
+                break;
+            case self::MODULE_ID . '::' . self::TYPE_RESTORE_PASSWORD:
+                array_push($result, 'restore-password');
+                break;
+            default:
+                if ($item->parent) {
+                    array_push($result, $item->parent->alias);
+                }
+                if ($request->input(BaseModel::ALIAS, null)) {
+                    array_push($result, $request->input(BaseModel::ALIAS, null));
+                } else {
+                    array_push($result, $item->alias);
+                }
+
+                return [
+                    'type' => $type,
+                    'instance' => CabinetController::class,
+                    'route' => implode('/', $result),
+                ];
         }
 
-        return null;
+        return [
+            'type' => ($type) ? $type : 'undefined',
+            'instance' => UserController::class,
+            'route' => implode('/', $result),
+        ];
+
     }
 
 
