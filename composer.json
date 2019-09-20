@@ -12,7 +12,6 @@
     "fideloper/proxy": "^4.0",
     "fast_dog/core": "dev-master",
     "fast_dog/admin": "dev-master",
-    "nahid/talk": "2.1.2",
     "php-curl-class/php-curl-class": "7.2.0",
     "laravel/socialite": "^3.0",
     "socialiteproviders/manager": "^3.0",
