@@ -19,6 +19,7 @@ use stdClass;
  * @package FastDog\User\Models
  * @version 0.2.0
  * @author Андрей Мартынов <d.g.dev482@gmail.com>
+ * @deprecated
  */
 class MessageManager
 {
@@ -50,7 +51,7 @@ class MessageManager
     public function auth($userId)
     {
         $this->userId = $userId;
-        \Talk::setAuthUserId($this->userId);
+       // \Talk::setAuthUserId($this->userId);
     }
 
     /**
@@ -77,7 +78,7 @@ class MessageManager
             $this->getUnreadCount();
         }
 
-        return $this->unreadMessages;
+        return collect([]);// $this->unreadMessages;
     }
 
     /**

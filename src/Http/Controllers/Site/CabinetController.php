@@ -101,138 +101,6 @@ class CabinetController extends HomeController
 
         if (isset($data['data']->route_data->type)) {
             switch ($data['data']->route_data->type) {
-                case User::TYPE_CABINET_MESSAGES:
-                    /**
-                     * @var $messageManager MessageManager
-                     */
-                    $messageManager = \App::make(MessageManager::class);
-                    $messageManager->auth($user->id);
-
-                    $viewData['messageManager'] = $messageManager;
-
-                    if ($request->has('delete_con')) {
-                        $messageManager->deleteConversations($request->input('delete_con'));
-                        \Session::flash('message', trans('public.Чат удален.'));
-
-                        return redirect()->back();
-                    }
-                    $viewData['messages'] = [];
-                    Date::setLocale(config('app.locale'));
-
-                    if (!$request->has('con')) {
-                        if ($request->input('new') === 'Y') {
-                            $messages = $messageManager->getUnreadMessages();
-                            if (null !== $messages) {
-                                foreach ($messages as $message) {
-                                    array_push($viewData['messages'], $this->getMessageData($message));
-                                }
-                            }
-                        } else {
-                            $viewData['inboxes'] = $messageManager->getInbox();
-
-                            foreach ($viewData['inboxes'] as $inbox) {
-                                if ($inbox->thread) {
-                                    $message = $inbox->thread;
-                                    $messageData = $this->getMessageData($message);
-                                    $messageData['conversation_link'] = \FastDog\User\Entity\User::getUserConversationLink($inbox->withUser->id);
-                                    array_push($viewData['messages'], $messageData);
-                                }
-                            }
-                        }
-                    } else if ($request->has('con')) {
-
-                        $viewData['conversation'] = $messageManager->getConversationsById($request->input('con'), 0, self::PAGE_SIZE);
-
-                        $viewData['conversation_pages'] = $messageManager->getPages();
-
-
-                        if ($viewData['conversation']) {
-                            $viewData['conversation_id'] = $request->input('con');
-                            $viewData['recipient'] = User::find($viewData['conversation']->withUser->id);
-
-                            $viewData['messages'] = [];
-                            $lastDay = 0;
-                            Date::setLocale('ru');
-                            foreach ($viewData['conversation']->messages as $message) {
-                                $msgDay = (int)$message->created_at->format('d');
-                                $messageData = $this->getMessageData($message);
-                                $messageData['dateline'] = ($msgDay != $lastDay);
-                                if ($messageData['dateline']) {
-                                    $messageData['dateline_text'] = Date::createFromTimestamp($message->created_at->timestamp)->format('d F');
-                                }
-                                $messageData['answer'] = ($message->sender->id !== $user->id) ? true : false;
-                                $lastDay = (int)$message->created_at->format('d');
-                                if ($message->is_seen == 0 && $message->user_id <> $user->id) {
-                                    $messageManager->makeSeen($message->id);
-                                }
-                                array_push($viewData['messages'], $messageData);
-                            }
-                        }
-                    }
-
-                    if ($user_id = $request->input('user_id', null)) {
-                        /**
-                         * @var $recipient User
-                         */
-                        $recipient = User::find($user_id);
-
-                        //не отправлять самому себе!!!
-                        if ($recipient->id == $user->id) {
-                            $recipient = null;
-                        }
-                        /**
-                         * Проверка возможности отправки сообщения пользователю
-                         */
-                        if ($recipient) {
-                            $serviceConversationId = $messageManager->isConversationExists($recipient->id);
-                            $viewData['recipient'] = $recipient;
-
-                            if ($serviceConversationId) {
-                                return view('redirect', ['to' => 'cabinet/messages?con=' . $serviceConversationId]);
-                                // return redirect('cabinet/messages?con=' . $serviceConversationId);
-                            } else {
-                                $serviceConversation = Conversation::create([
-                                    'user_one' => $user->id,
-                                    'user_two' => $recipient->id,
-                                ]);
-
-                                return view('redirect', ['to' => 'cabinet/messages?con=' . $serviceConversation->id]);
-
-//                                return redirect('cabinet/messages?con=' . $serviceConversation->id);
-                            }
-                        } else {
-                            $request->session()->flash('message', trans('public.Невозможно отправить сообщение выбранному пользователю.'));
-
-                            return view('redirect', ['to' => '/cabinet/messages']);
-                            // return redirect('/cabinet/messages');
-                        }
-                    }
-
-                    if (isset($viewData['recipient']) && $viewData['recipient'] !== null) {
-                        if ($viewData['recipient']->setting->can('send_personal_messages') === false) {
-                            $viewData['disabled_sent'] = true;
-                            $request->session()->flash('message', trans('public.Пользователь :name запретил отправлять ему личные сообщения.', [
-                                'name' => $viewData['recipient']->getName(),
-                            ]));
-                        }
-                    }
-
-                    $viewData['attach'] = $messageManager->getEmptyAttach();
-
-                    break;
-                case User::TYPE_CABINET_NEW_MESSAGES:
-                    /**
-                     * @var $messageManager MessageManager
-                     */
-                    $messageManager = \App::make(MessageManager::class);
-                    $viewData['messageManager'] = $messageManager;
-
-                    $viewData['recipient'] = User::find($request->input('uid'));
-                    $viewData['messages'] = false;
-                    if ($viewData['recipient']) {
-                        $viewData['messages'] = $messageManager->getMessagesByUserId($viewData['recipient']->id);
-                    }
-                    break;
                 case User::TYPE_CABINET_EDIT:
                     $viewData['user_data'] = $user->getData();
                     break;
@@ -473,32 +341,10 @@ class CabinetController extends HomeController
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @deprecated
      */
     public function postNewMessage(Request $request)
     {
-        $message = null;
-        if ($request->input('message', null) !== '') {
-            /**
-             * @var $messageManager MessageManager
-             */
-            $messageManager = \App::make(MessageManager::class);
-            if ($request->input('conversation_id')) {
-                $message = $messageManager->sendMessage($request->input('conversation_id'), $request->input('message'));
-            } else {
-                $message = $messageManager->sendMessageByUserId($request->input('recipient'), $request->input('message'));
-            }
-            \Event::fire(new AddChatMessage($message, $request));
-        }
-
-        if ($request->ajax() && $message) {
-            $messageData = $this->getMessageData($message);
-
-            return response()->json([
-                'success' => true,
-                'message' => $messageData,
-            ]);
-        }
-
         return redirect()->back();
     }
 
