@@ -213,22 +213,23 @@ SQL
     public function getNew()
     {
         $result = [
-            'total' => $this->getUnreadCount(),
+            'total' => 0,// $this->getUnreadCount(),
             'items' => [],
         ];
-        $inbox = $this->getInbox('desc', 0, 5);
-        Carbon::setLocale('ru');
-        foreach ($inbox as $message) {
-            if ($message->thread) {
-                array_push($result['items'], [
-                    'id' => $message->thread->id,
-                    'message' => Str::limit($message->thread->message, 150),
-                    'created_at' => $message->thread->created_at->format('d.m.y H:i'),
-                    'created_at_diff' => $message->thread->humans_time,
-                    'photo' => $message->thread->sender->getPhoto(),
-                ]);
-            }
-        }
+
+//        $inbox = $this->getInbox('desc', 0, 5);
+//        Carbon::setLocale('ru');
+//        foreach ($inbox as $message) {
+//            if ($message->thread) {
+//                array_push($result['items'], [
+//                    'id' => $message->thread->id,
+//                    'message' => Str::limit($message->thread->message, 150),
+//                    'created_at' => $message->thread->created_at->format('d.m.y H:i'),
+//                    'created_at_diff' => $message->thread->humans_time,
+//                    'photo' => $message->thread->sender->getPhoto(),
+//                ]);
+//            }
+//        }
 
         return $result;
     }
