@@ -17,6 +17,7 @@ use Nahid\Talk\Conversations\ConversationRepository as TalkConversationRepositor
  * @package FastDog\User\Conversations
  * @version 0.2.0
  * @author Андрей Мартынов <d.g.dev482@gmail.com>
+ * @deprecated
  */
 class ConversationRepository extends TalkConversationRepository
 {
