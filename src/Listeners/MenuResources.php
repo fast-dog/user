@@ -38,7 +38,11 @@ class MenuResources
         if (!$data['resource']) {
             $data['resource'] = [];
         }
-
+        $data['resource']['user'] = [
+            'id' => 'user',
+            'name' => trans('user::interface.Пользователи'),
+            'items' => collect([])
+        ];
         /**
          * @var $moduleManager ModuleManager
          */
@@ -46,10 +50,18 @@ class MenuResources
 
         $user = $moduleManager->getInstance('user');
 
-        dd($user);
+        $items = (isset($user['menu']) && $user['menu'] instanceof \Closure) ? $user['menu']() : collect([]);
 
+        $items->each(function($item) use (&$data) {
+            $data['resource']['user']['items']->push([
+                'id' => $item['id'],
+                'name' => $item['name'],
+                'sort' => (int)$item['sort'],
+            ]);
+        });
+        $data['resource']['user']['items'] = $data['resource']['user']['items']->sortBy('sort');
         if (config('app.debug')) {
-
+            $data['_events_'][] = __METHOD__;
         }
 
         $event->setData($data);
