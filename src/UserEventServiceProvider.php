@@ -68,6 +68,9 @@ class UserEventServiceProvider extends ServiceProvider
         'FastDog\Core\Events\GetComponentType' => [
             'FastDog\User\Listeners\GetComponentType',// <-- Добавляем типы в список компонентов
         ],
+        'FastDog\Menu\Events\MenuResources' => [
+            'FastDog\User\Listeners\MenuResources',  //<-- добавление ресурсов для создания меню
+        ],
     ];
 
 
