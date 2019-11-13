@@ -1,6 +1,6 @@
 <?php
 
-namespace FastDog\User\Request;
+namespace FastDog\User\Http\Request;
 
 use FastDog\User\User;
 use Illuminate\Foundation\Http\FormRequest;
@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 /**
  * Добавление изображений к сообщению чата
  *
- * @package FastDog\User\Request
+ * @package FastDog\User\Http\Request
  * @version 0.2.0
  * @author Андрей Мартынов <d.g.dev482@gmail.com>
  */

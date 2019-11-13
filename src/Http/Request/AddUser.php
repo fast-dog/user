@@ -1,6 +1,6 @@
 <?php
 
-namespace FastDog\User\Request;
+namespace FastDog\User\Http\Request;
 
 use FastDog\User\Models\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -9,7 +9,7 @@ use Illuminate\Foundation\Http\FormRequest;
 /**
  * Добавление пользователя
  *
- * @package FastDog\User\Request
+ * @package FastDog\User\Http\Request
  * @version 0.2.0
  * @author Андрей Мартынов <d.g.dev482@gmail.com>
  */
@@ -35,7 +35,7 @@ class AddUser extends FormRequest
     {
         if (!$this->has('ids')) {
             return [
-                'email' => 'required|email',
+                'email' => 'required|email|unique:users',
                 'type' => 'required',
             ];
         }
