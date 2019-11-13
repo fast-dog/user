@@ -24,25 +24,25 @@ class AddUser extends FormRequest
         if (!\Auth::guest() && \Auth::getUser()->type == User::USER_TYPE_ADMIN) {
             return true;
         }
-
+        
         return false;
     }
-
+    
     /**
      * @return array
      */
     public function rules()
     {
-        if (!$this->has('ids')) {
+        if (!$this->has('ids') && !$this->input('id', null)) {
             return [
                 'email' => 'required|email|unique:users',
                 'type' => 'required',
             ];
         }
-
+        
         return [];
     }
-
+    
     /**
      * @return array
      */
@@ -52,7 +52,7 @@ class AddUser extends FormRequest
             'email.required' => 'Поле "Контактное лицо" обязательно для заполнения.',
         ];
     }
-
+    
     /**
      * @return \Illuminate\Contracts\Validation\Validator|mixed
      */
@@ -61,7 +61,7 @@ class AddUser extends FormRequest
         $validator = parent::getValidatorInstance();
         $validator->after(function () use ($validator) {
             $input = $this->all();
-
+            
             if (!$this->has('id') && !$this->has('ids')) {
                 $check = User::where(function (Builder $query) use ($input) {
                     $query->where('email', $input['email']);
@@ -69,7 +69,7 @@ class AddUser extends FormRequest
                 if ($check) {
                     $validator->errors()->add('email', 'Данный email зарегистрирован...');
                 }
-
+                
                 if (empty($input['password'])) {
                     $validator->errors()->add('email', 'Пароль не может быть пустым...');
                 }
@@ -78,7 +78,7 @@ class AddUser extends FormRequest
                 }
             }
         });
-
+        
         return $validator;
     }
 }
