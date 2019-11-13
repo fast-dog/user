@@ -1,14 +1,14 @@
 <?php
 
 
-namespace FastDog\User\Request;
+namespace FastDog\User\Http\Request;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Сброс пароля
  *
- * @package FastDog\User\Request
+ * @package FastDog\User\Http\Request
  * @version 0.2.0
  * @author Андрей Мартынов <d.g.dev482@gmail.com>
  */

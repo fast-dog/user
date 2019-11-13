@@ -7,7 +7,7 @@ use FastDog\Core\Models\DomainManager;
 use FastDog\User\Events\UserRegistration;
 use FastDog\User\Events\UserUpdate;
 use FastDog\User\Models\UserConfig;
-use FastDog\User\Request\Registration;
+use FastDog\User\Http\Request\Registration;
 use FastDog\User\User;
 
 /**

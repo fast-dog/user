@@ -98,7 +98,7 @@ class UserRegistration
             $data = (is_string($user->data)) ? json_decode($user->data) : $user->data;
             $data->photo_id = $item->id;
             User::where('id', $user->id)->update([
-                User::DATA => \GuzzleHttp\json_encode($data),
+                User::DATA =>  json_encode($data),
             ]);
         }
     }

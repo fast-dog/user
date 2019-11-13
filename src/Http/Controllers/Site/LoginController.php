@@ -6,9 +6,9 @@ namespace FastDog\User\Http\Controllers\Site;
 use FastDog\Core\Http\Controllers\Controller;
 use FastDog\Core\Models\DomainManager;
 use FastDog\User\Models\User;
-use FastDog\User\Request\ResetPassword;
+use FastDog\User\Http\Request\ResetPassword;
 use Illuminate\Http\Request;
-use FastDog\User\Request\Login;
+use FastDog\User\Http\Request\Login;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 /**

@@ -9,7 +9,7 @@ use FastDog\Core\Http\Controllers\Controller;
 use FastDog\User\Jobs\SendMailing;
 use FastDog\User\Models\UserMailing;
 use FastDog\User\Models\UserMailingProcess;
-use FastDog\User\Request\AddMailing;
+use FastDog\User\Http\Request\AddMailing;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
