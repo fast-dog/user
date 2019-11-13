@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
                 $table->enum(User::STATUS, [User::STATUS_ACTIVE, User::STATUS_NOT_CONFIRMED,
                     User::STATUS_RESTORE_PASSWORD, User::STATUS_BANNED])->default(User::STATUS_NOT_CONFIRMED)
                     ->comment('Состояние');
-                $table->json(User::DATA)->comment('Дополнительные параметры');
+                $table->json(User::DATA)->nullable()->comment('Дополнительные параметры');
 
                 $table->char(User::SITE_ID, 3)->default('001')->comment('Код сайта');
                 $table->enum(User::LANG, ['ru', 'en'])->comment('Код языка')->default('ru');
