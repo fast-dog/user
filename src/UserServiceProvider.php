@@ -41,10 +41,8 @@ class UserServiceProvider extends LaravelServiceProvider
         $this->publishes([__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR =>
             public_path('vendor/fast_dog/' . self::NAME)], 'public');
 
-        /**
-         * @var $moduleManager ModuleManager
-         */
-        $moduleManager = \App::make(ModuleManager::class);
+        /**  @var $moduleManager ModuleManager */
+        $moduleManager = $this->app->make(ModuleManager::class);
         $moduleManager->pushModule(User::MODULE_ID, (new User())->getModuleInfo(true));
 
         $this->commands([
