@@ -3,13 +3,13 @@
 namespace FastDog\User\Models;
 
 
-use FastDog\Core\Models\BaseModel;
-
+use FastDog\Core\Models\Cache;
 use FastDog\Core\Models\DomainManager;
 use FastDog\Core\Table\Filters\BaseFilter;
 use FastDog\Core\Table\Filters\Operator\BaseOperator;
 use FastDog\Core\Table\Interfaces\TableModelInterface;
 use FastDog\Media\Models\Gallery;
+use FastDog\Media\Models\GalleryItem;
 use FastDog\User\Events\GetUserData;
 use FastDog\User\Events\UserAdminPrepare;
 use Carbon\Carbon;
@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
 use Jenssegers\Date\Date;
 
 /**
@@ -312,9 +311,8 @@ class User extends Authenticatable implements TableModelInterface
         if ($resize) {
             $key .= (string)$resize;
         }
-        $isRedis = config('cache.default') == 'redis';
-        $result = ($isRedis) ? \Cache::tags(['user#' . $this->id])->get($key, null) : \Cache::get($key, null);
-        if (null === $result) {
+
+        return app()->make(Cache::class)->get($key, function() use ($resize) {
             if (isset($this->data->photo_id)) {
                 $file = GalleryItem::where('id', $this->data->photo_id)->first();
                 if ($file) {
@@ -348,14 +346,8 @@ class User extends Authenticatable implements TableModelInterface
                     $result = url(self::NO_PHOTO);
                 }
             }
-            if ($isRedis) {
-                \Cache::tags(['user#' . $this->id])->put($key, $result, config('cache.ttl_user', 10));
-            } else {
-                \Cache::put($key, $result, config('cache.ttl_user', 10));
-            }
-        }
+        }, ['user']);
 
-        return $result;
     }
 
     /**
