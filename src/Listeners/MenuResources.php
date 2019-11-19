@@ -69,7 +69,7 @@ class MenuResources
                     'name' => $item['templates']['000']['templates'][0]['name']
                 ];
             }
-            $data['resource']['user']['items']->push();
+            $data['resource']['user']['items']->push($resource);
         });
         $data['resource']['user']['items'] = $data['resource']['user']['items']->sortBy('sort');
         if (config('app.debug')) {
