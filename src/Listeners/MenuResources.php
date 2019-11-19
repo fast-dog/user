@@ -53,11 +53,23 @@ class MenuResources
         $items = (isset($user['menu']) && $user['menu'] instanceof \Closure) ? $user['menu']() : collect([]);
 
         $items->each(function($item) use (&$data) {
-            $data['resource']['user']['items']->push([
+            $resource = [
                 'id' => $item['id'],
                 'name' => $item['name'],
                 'sort' => (int)$item['sort'],
-            ]);
+                'data' => [
+                    'route_instance' => [
+                        'instance' => $item['route_instance']
+                    ]
+                ]
+            ];
+            if (isset($item['templates']['000']['templates'][0])) {
+                $resource['data']['template'] = [
+                    'id' => $item['templates']['000']['templates'][0]['id'],
+                    'name' => $item['templates']['000']['templates'][0]['name']
+                ];
+            }
+            $data['resource']['user']['items']->push();
         });
         $data['resource']['user']['items'] = $data['resource']['user']['items']->sortBy('sort');
         if (config('app.debug')) {

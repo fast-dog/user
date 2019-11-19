@@ -1,29 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dg
- * Date: 08.04.2017
- * Time: 8:43
- */
-
 namespace FastDog\User\Http\Controllers\Site;
 
-use App\Core\BaseModel;
-use App\Http\Controllers\HomeController;
-use App\Modules\Catalog\Entity\CatalogItems;
-use App\Modules\Catalog\Entity\CatalogItemsFavoritesStorage;
-use App\Modules\Config\Entity\DomainManager;
-use App\Modules\Config\Entity\Service;
-use App\Modules\DataSource\DataSource;
-use App\Modules\Media\Entity\Gallery;
-use App\Modules\Media\Entity\GalleryItem;
-use FastDog\User\Entity\MessageManager;
-use FastDog\User\Entity\Profile\UserProfile;
-use FastDog\User\Entity\Profile\UserProfileStat;
-use FastDog\User\Entity\UserServices;
-use FastDog\User\Entity\UserSettings;
-use FastDog\User\Entity\View\UserFavorites;
-use FastDog\User\Events\AddChatMessage;
+
+
 use FastDog\User\Events\PrepareMessage;
 use FastDog\User\Http\Request\AddAttach;
 use FastDog\User\Http\Request\ChangePassword;
@@ -33,8 +12,6 @@ use FastDog\User\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Jenssegers\Date\Date;
-use Nahid\Talk\Conversations\Conversation;
-use Nahid\Talk\Messages\Message;
 
 /**
  * Кабинет пользователя
@@ -60,20 +37,20 @@ class CabinetController extends HomeController
      * Метод генерирует HTML согласно парамтерам пункта меню
      *
      * @param Request $request
-     * @param \App\Modules\Menu\Entity\Menu $item
+     * @param \FastDog\Menu\Menu $item
      * @param $data
      * @return mixed
      * @throws \Throwable
      */
     public function prepareContent(Request $request, $item, $data): \Illuminate\View\View
     {
-        if (\Auth::guest()) {
+        if (auth()->guest()) {
             return redirect(url('login'));
         }
         /**
          * @var $user User
          */
-        $user = \Auth::getUser();
+        $user = auth()->getUser();
 
         $user->{User::DATA} = json_decode($user->{User::DATA});
 
