@@ -34,7 +34,7 @@ class UserMailingTemplatesAdminPrepare
     }
 
     /**
-     * @param EventUserMailingAdminPrepare $event
+     * @param EventUserMailingTemplatesAdminPrepare $event
      * @return void
      */
     public function handle(EventUserMailingTemplatesAdminPrepare $event)

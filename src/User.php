@@ -175,33 +175,18 @@ class User extends UserModel
     public function getMenuType(): array
     {
         return [
-            [
-                'id' => 'user_login',
-                'name' => trans('user::menu.authorization'),
-                'route_instance' => LoginController::class,
-                'sort' => 400
-            ],
-            [
-                'id' => 'user_registration',
-                'route_instance' => RegistrationController::class,
-                'name' => trans('user::menu.registration'),
-                'sort' => 410
-            ],
-            [
-                'id' => 'user_restore_password',
-                'route_instance' => null,
-                'name' => trans('user::menu.password_restore'),
-                'sort' => 420
-            ],
-            ['id' => 'user_cabinet', 'route_instance' => null, 'name' => trans('user::menu.lk'), 'sort' => 430],
-            ['id' => 'user_cabinet_edit', 'route_instance' => null, 'name' => trans('user::menu.lk_edit'), 'sort' => 440],
-            ['id' => 'user_cabinet_settings', 'route_instance' => null, 'name' => trans('user::menu.lk_setting'), 'sort' => 450],
-            ['id' => 'user_cabinet_messages', 'route_instance' => null, 'name' => trans('user::menu.lk_messages'), 'sort' => 460],
-            ['id' => 'user_cabinet_new_messages', 'route_instance' => null, 'name' => trans('user::menu.lk_new_message'), 'sort' => 470],
-            ['id' => 'user_cabinet_favorites', 'route_instance' => null, 'name' => trans('user::menu.lk_favorites'), 'sort' => 480],
-            ['id' => 'user_cabinet_billing', 'route_instance' => null, 'name' => trans('user::menu.lk_billing'), 'sort' => 490],
-            ['id' => 'user_login', 'route_instance' => null, 'name' => trans('user::menu.login'), 'sort' => 495],
-            ['id' => 'user_logout', 'route_instance' => null, 'name' => trans('user::menu.logout'), 'sort' => 500],
+            ['id' => 'user_login', 'name' => trans('user::menu.authorization'), 'route_instance' => LoginController::class, 'sort' => 400],
+            ['id' => 'user_registration', 'route_instance' => RegistrationController::class, 'name' => trans('user::menu.registration'), 'sort' => 410],
+            ['id' => 'user_restore_password', 'route_instance' => null, 'name' => trans('user::menu.password_restore'), 'sort' => 420],
+            ['id' => 'user_cabinet', 'route_instance' => CabinetController::class, 'name' => trans('user::menu.lk'), 'sort' => 430],
+            ['id' => 'user_cabinet_edit', 'route_instance' => CabinetController::class, 'name' => trans('user::menu.lk_edit'), 'sort' => 440],
+            ['id' => 'user_cabinet_settings', 'route_instance' => CabinetController::class, 'name' => trans('user::menu.lk_setting'), 'sort' => 450],
+            ['id' => 'user_cabinet_messages', 'route_instance' => CabinetController::class, 'name' => trans('user::menu.lk_messages'), 'sort' => 460],
+            ['id' => 'user_cabinet_new_messages', 'route_instance' => CabinetController::class, 'name' => trans('user::menu.lk_new_message'), 'sort' => 470],
+            ['id' => 'user_cabinet_favorites', 'route_instance' => CabinetController::class, 'name' => trans('user::menu.lk_favorites'), 'sort' => 480],
+            ['id' => 'user_cabinet_billing', 'route_instance' => CabinetController::class, 'name' => trans('user::menu.lk_billing'), 'sort' => 490],
+//            ['id' => 'user_login', 'route_instance' => LoginController::class, 'name' => trans('user::menu.login'), 'sort' => 495],
+            ['id' => 'user_logout', 'route_instance' => LoginController::class, 'name' => trans('user::menu.logout'), 'sort' => 500],
         ];
     }
 
